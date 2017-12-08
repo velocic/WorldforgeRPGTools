@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Worldforge RPG Tools</string>
+    <string name="save_generator_results_button">Save Results</string>
+</resources>
