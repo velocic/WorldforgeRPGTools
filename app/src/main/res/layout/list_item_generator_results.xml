@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:textSize="14sp"
-    android:padding="5dp"
-    tools:text="Generated Item Name">
+    android:orientation="horizontal">
 
-</TextView>
+    <TextView
+        android:id="@+id/edit_text_generator_result_quantity"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:padding="5dp"
+        tools:text="999"/>
+
+    <TextView
+        android:id="@+id/edit_text_generator_result_name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:padding="5dp"
+        tools:text="Generated Item Name">
+    </TextView>
+</LinearLayout>
+
