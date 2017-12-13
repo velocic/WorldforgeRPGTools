@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter;
+
 public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
 {
     @Override
@@ -18,6 +20,10 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_generators, container, false);
+
+
+        GeneratorImporter generatorImporter = new GeneratorImporter();
+        generatorImporter.importGenerators(getContext());
 
         return view;
     }
