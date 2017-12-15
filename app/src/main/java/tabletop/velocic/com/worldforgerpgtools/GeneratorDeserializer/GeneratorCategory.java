@@ -6,25 +6,42 @@ import java.util.List;
 public class GeneratorCategory
 {
     private String name;
+    private String assetPath;
     private GeneratorCategory parent;
     private List<GeneratorCategory> childCategories;
+    private List<String> generatorJsonDataPaths;
     private List<Generator> generators;
 
-    public GeneratorCategory(String name)
+    public GeneratorCategory(String name, String assetPath)
     {
         this.name = name;
+        this.assetPath = assetPath;
         this.parent = null;
         this.childCategories = new ArrayList<GeneratorCategory>();
+        this.generatorJsonDataPaths = new ArrayList<String>();
         this.generators = new ArrayList<Generator>();
     }
 
-    public GeneratorCategory(String name, GeneratorCategory parent)
+    public GeneratorCategory(String name, String assetPath, GeneratorCategory parent)
     {
         this.name = name;
+        this.assetPath = assetPath;
         this.parent = parent;
         this.childCategories = new ArrayList<GeneratorCategory>();
+        this.generatorJsonDataPaths = new ArrayList<String>();
         this.generators = new ArrayList<Generator>();
     }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getAssetPath()
+    {
+        return assetPath;
+    }
+
 
     public void setParent(GeneratorCategory parent)
     {
@@ -41,9 +58,24 @@ public class GeneratorCategory
         this.childCategories.add(child);
     }
 
+    public List<GeneratorCategory> getChildCategories()
+    {
+        return childCategories;
+    }
+
     public void addGenerator(Generator generator)
     {
         this.generators.add(generator);
+    }
+
+    public void addGeneratorJsonDataPath(String jsonPath)
+    {
+        generatorJsonDataPaths.add(jsonPath);
+    }
+
+    public List<String> getGeneratorJsonDataPaths()
+    {
+        return generatorJsonDataPaths;
     }
 
     public Generator getGenerator(String name)
@@ -59,7 +91,7 @@ public class GeneratorCategory
         for (GeneratorCategory child : childCategories) {
             result = child.getGenerator(name);
             if (result != null) {
-                return result
+                return result;
             }
         }
 
@@ -79,7 +111,7 @@ public class GeneratorCategory
         for (GeneratorCategory category : childCategories) {
             result = category.getCategory(name);
             if (result != null) {
-                return result
+                return result;
             }
         }
 
