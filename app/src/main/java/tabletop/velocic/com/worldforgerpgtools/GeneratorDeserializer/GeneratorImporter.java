@@ -7,6 +7,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class GeneratorImporter
 {
@@ -17,14 +20,15 @@ public class GeneratorImporter
 
     public void importGenerators(Context context)
     {
+        AssetManager assetManager = context.getAssets();
+
         rootGeneratorCategory = loadGeneratorCategories(
             new GeneratorCategory("root", GENERATOR_DATA_FOLDER),
             GENERATOR_DATA_FOLDER,
-            context.getAssets()
+            assetManager
         );
 
-        int debug = 5;
-        //rootGeneratorCategory = populateGenerators(rootGeneratorCategory);
+        rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);
     }
 
     private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, String path, AssetManager assets)
@@ -65,23 +69,39 @@ public class GeneratorImporter
         }
     }
 
-    private GeneratorCategory populateGenerators(GeneratorCategory rootNode)
+    private GeneratorCategory populateGenerators(GeneratorCategory rootNode, AssetManager assets)
     {
-        //Later optimization, lazy load JSON files as needed if loading times or
+        //TODO: Later optimization, lazy load JSON files as needed if loading times or
         //memory usage is too much.
-        //TODO: populate generators at each level with gson
+        Gson gson = new Gson();
         for (GeneratorCategory child : rootNode.getChildCategories()) {
             for (String jsonDataPath : child.getGeneratorJsonDataPaths()) {
-                //parse gson from path
-                //populate into category object
-                //put category object into child
+                //DEBUG - only minormagicitems.json is properly updated to new syntax yet
+                if (!(jsonDataPath.substring(jsonDataPath.lastIndexOf("/") + 1).equals("minormagicitems.json"))) {
+                    continue;
+                }
+                //END DEBUG
+
+                try {
+                    InputStream jsonInputStream = assets.open(jsonDataPath);
+                    Reader jsonInputReader = new InputStreamReader(jsonInputStream);
+
+                    Generator generator = gson.fromJson(jsonInputReader, Generator.class);
+                    child.addGenerator(generator);
+                } catch (IOException e) {
+                    Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize " + jsonDataPath + ": " + e.getMessage());
+                    continue;
+                }
             }
 
-            populateGenerators(child);
+            populateGenerators(child, assets);
         }
 
         return rootNode;
     }
+
+    public GeneratorCategory getRootGeneratorCategory()
+    {
+        return rootGeneratorCategory;
+    }
 }
-
-
