@@ -29,6 +29,7 @@ public class GeneratorImporter
         );
 
         rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);
+        int debug = 5;
     }
 
     private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, String path, AssetManager assets)
@@ -76,11 +77,6 @@ public class GeneratorImporter
         Gson gson = new Gson();
         for (GeneratorCategory child : rootNode.getChildCategories()) {
             for (String jsonDataPath : child.getGeneratorJsonDataPaths()) {
-                //DEBUG - only minormagicitems.json is properly updated to new syntax yet
-                if (!(jsonDataPath.substring(jsonDataPath.lastIndexOf("/") + 1).equals("minormagicitems.json"))) {
-                    continue;
-                }
-                //END DEBUG
 
                 try {
                     InputStream jsonInputStream = assets.open(jsonDataPath);
