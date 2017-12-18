@@ -42,7 +42,6 @@ public class GeneratorCategory
         return assetPath;
     }
 
-
     public void setParent(GeneratorCategory parent)
     {
         this.parent = parent;

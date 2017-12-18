@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +30,6 @@ public class GeneratorImporter
         );
 
         rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);
-        int debug = 5;
     }
 
     private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, String path, AssetManager assets)
@@ -86,6 +86,9 @@ public class GeneratorImporter
                     child.addGenerator(generator);
                 } catch (IOException e) {
                     Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize " + jsonDataPath + ": " + e.getMessage());
+                    continue;
+                } catch (JsonSyntaxException e) {
+                    Log.d(TAG_GENERATOR_IMPORT, "Invalid JSON syntax in " + jsonDataPath + ": " + e.getMessage());
                     continue;
                 }
             }
