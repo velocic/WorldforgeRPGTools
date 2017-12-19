@@ -80,17 +80,8 @@ public class GeneratorCategory
     public Generator getGenerator(String name)
     {
         for (Generator generator : generators) {
-            if (generator.getName() == name) {
+            if (generator.getName().equals(name)) {
                 return generator;
-            }
-        }
-
-        Generator result = null;
-
-        for (GeneratorCategory child : childCategories) {
-            result = child.getGenerator(name);
-            if (result != null) {
-                return result;
             }
         }
 
@@ -100,20 +91,51 @@ public class GeneratorCategory
     public GeneratorCategory getCategory(String name)
     {
         for (GeneratorCategory category : childCategories) {
-            if (category.getName() == name) {
+            if (category.getName().equals(name)) {
                 return category;
             }
         }
 
-        GeneratorCategory result = null;
+        return null;
+    }
 
-        for (GeneratorCategory category : childCategories) {
-            result = category.getCategory(name);
-            if (result != null) {
-                return result;
-            }
+    public GeneratorCategory getCategoryFromFullPath(String fullQualifiedPath, GeneratorCategory node)
+    {
+        if (node == null || fullQualifiedPath.equals(node.getName()) || fullQualifiedPath.equals("")) {
+            return node;
         }
 
-        return null;
+        int slashCharIndex = fullQualifiedPath.indexOf("/");
+
+        //Nothing left to reduce on the path, and the current node does not match somehow
+        if (slashCharIndex == -1) {
+            return null;
+        }
+
+        String nextCategoryName = fullQualifiedPath.substring(0, slashCharIndex);
+        String reducedPath = fullQualifiedPath.substring(slashCharIndex + 1);
+
+        GeneratorCategory nextCategory = node.getCategory(nextCategoryName);
+        return getCategoryFromFullPath(reducedPath, nextCategory);
+    }
+
+    public Generator getGeneratorFromFullPath(String fullQualifiedPath, GeneratorCategory node)
+    {
+        if (node == null) {
+            return null;
+        }
+
+        int slashCharIndex = fullQualifiedPath.indexOf("/");
+
+        //No more path to reduce. Return the generator with name matching fullQualifiedPath
+        if (slashCharIndex == -1) {
+            return node.getGenerator(fullQualifiedPath);
+        }
+
+        //Get the next generator along the path down the tree and recurse
+        String nextCategoryName = fullQualifiedPath.substring(0, slashCharIndex);
+        String reducedPath = fullQualifiedPath.substring(slashCharIndex + 1);
+
+        return getGeneratorFromFullPath(reducedPath, node.getCategory(nextCategoryName));
     }
 }
