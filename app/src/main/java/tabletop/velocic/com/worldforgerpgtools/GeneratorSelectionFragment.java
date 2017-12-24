@@ -30,8 +30,8 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
         generatorImporter.importGenerators(getContext());
 
         ResultRoller roller = new ResultRoller(generatorImporter.getRootGeneratorCategory());
-        //List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Major Magic Items", 5);
-        List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Greater Rings", 5);
+        List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Major Magic Items", 5);
+        //List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Greater Rings", 5);
 
         return view;
     }

@@ -39,7 +39,7 @@ public class TableEntries
             );
         }
 
-        return null;
+        return new SubTableRollRange(1, Integer.MAX_VALUE - 1);
     }
     public int getNumSubTableRolls()
     {
