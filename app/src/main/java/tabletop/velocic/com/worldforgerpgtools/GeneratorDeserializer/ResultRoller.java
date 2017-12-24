@@ -29,8 +29,8 @@ public class ResultRoller
         int tableMaxRollValue = determineTableDiceRange(randomTable.getTable());
 
         for (int i = 0; i < numRolls; ++i) {
-            int actualMinRoll = tableMaxRollValue > minRollValue ? tableMaxRollValue : minRollValue;
-            int actualMaxRoll = tableMaxRollValue > maxRollValue ? tableMaxRollValue : maxRollValue;
+            int actualMinRoll = minRollValue > tableMaxRollValue ? tableMaxRollValue : minRollValue;
+            int actualMaxRoll = tableMaxRollValue < maxRollValue ? tableMaxRollValue : maxRollValue;
             int roll = rng.nextInt((actualMaxRoll - actualMinRoll) + 1) + minRollValue;
 
             for (TableEntries tableEntry : randomTable.getTable()) {
@@ -123,6 +123,8 @@ public class ResultRoller
             if (roll == targetValue) {
                 return true;
             }
+
+            return false;
         }
 
         //Entry contains a range of values. check if roll is between the range

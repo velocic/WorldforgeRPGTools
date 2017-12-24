@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import java.util.List;
+
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter;
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultRoller;
 
 public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
@@ -27,7 +30,7 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
         generatorImporter.importGenerators(getContext());
 
         ResultRoller roller = new ResultRoller(generatorImporter.getRootGeneratorCategory().getCategory("SwordsAndWizardry"));
-        roller.generateResultSet("Items/Major Magic Items", 1);
+        List<ResultItem> results = roller.generateResultSet("Items/Major Magic Items", 5);
 
         return view;
     }
