@@ -10,12 +10,12 @@ public class ResultItem
     private String name;
     private Map<String, String> detailData;
 
-    public ResultItem(String tableGeneratedFrom, String name)
+    public ResultItem(String tableGeneratedFrom, String name, Map<String, String> detailData)
     {
         quantity = 1;
         this.tableGeneratedFrom = tableGeneratedFrom;
         this.name = name;
-        detailData = new HashMap<String, String>();
+        this.detailData = detailData;
     }
 
     public int getQuantity()

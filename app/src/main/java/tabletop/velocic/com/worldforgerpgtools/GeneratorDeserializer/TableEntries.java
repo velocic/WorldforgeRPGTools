@@ -13,12 +13,10 @@ public class TableEntries
     {
         return Name;
     }
-
     public Map<String, String> getMetadata()
     {
         return Metadata;
     }
-
     public String getDiceRange()
     {
         return DiceRange;
@@ -26,5 +24,29 @@ public class TableEntries
     public Map<String, String> getRerollSubTable()
     {
         return RerollSubTable;
+    }
+    public SubTableRollRange getSubTableRollRange()
+    {
+        if (RerollSubTable.containsKey("ValidSubTableEntryRange")) {
+            String range = RerollSubTable.get("ValidSubTableEntryRange");
+            int separatorIndex = range.indexOf("-");
+            String minValue = range.substring(0, separatorIndex);
+            String maxValue = range.substring(separatorIndex + 1);
+
+            return new SubTableRollRange(
+                Integer.parseInt(minValue),
+                Integer.parseInt(maxValue)
+            );
+        }
+
+        return null;
+    }
+    public int getNumSubTableRolls()
+    {
+        if (RerollSubTable.containsKey("NumSubTableRolls")) {
+            int numRerolls = Integer.parseInt(RerollSubTable.get("NumSubTableRolls"));
+        }
+
+        return 1;
     }
 }
