@@ -42,7 +42,7 @@ public class ResultRoller
                     //Some entries on random tables call for a roll on a completely different table
                     //So handle that here with a recursive call + merging the resulting sets of
                     //ResultItems together
-                    if (rerollSubTable.isEmpty() == false) {
+                    if (rerollSubTable != null && rerollSubTable.isEmpty() == false) {
                         String subTableName = rerollSubTable.get("SubTableName");
                         SubTableRollRange rollRange = tableEntry.getSubTableRollRange();
                         int numSubTableRolls = tableEntry.getNumSubTableRolls();
@@ -77,9 +77,8 @@ public class ResultRoller
         for (ResultItem item : resultList) {
             if (item.getName().equals(newItem.getName())) {
                 item.setQuantity(item.getQuantity() + 1);
+                return resultList;
             }
-
-            return resultList;
         }
 
         resultList.add(newItem);
