@@ -131,7 +131,7 @@ public class ResultRoller
         int leftVal = Integer.parseInt(diceRange.substring(0, rangeSeparatorIndex));
         int rightVal = Integer.parseInt(diceRange.substring(rangeSeparatorIndex + 1));
 
-        if (roll >= leftVal || roll <= rightVal) {
+        if (roll >= leftVal && roll <= rightVal) {
             return true;
         }
 
