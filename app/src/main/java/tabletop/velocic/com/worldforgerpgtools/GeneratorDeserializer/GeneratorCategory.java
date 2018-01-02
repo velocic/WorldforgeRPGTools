@@ -62,6 +62,11 @@ public class GeneratorCategory
         return childCategories;
     }
 
+    public GeneratorCategory getChildCategory(int index)
+    {
+        return childCategories.get(index);
+    }
+
     public void addGenerator(Generator generator)
     {
         this.generators.add(generator);
@@ -77,6 +82,16 @@ public class GeneratorCategory
         return generatorJsonDataPaths;
     }
 
+    public int getNumChildCategories()
+    {
+        return childCategories.size();
+    }
+
+    public int getNumGenerators()
+    {
+        return generators.size();
+    }
+
     public Generator getGenerator(String name)
     {
         for (Generator generator : generators) {
@@ -86,6 +101,16 @@ public class GeneratorCategory
         }
 
         return null;
+    }
+
+    public Generator getGenerator(int index)
+    {
+        return generators.get(index);
+    }
+
+    public List<Generator> getGenerators()
+    {
+        return generators;
     }
 
     public GeneratorCategory getCategory(String name)
