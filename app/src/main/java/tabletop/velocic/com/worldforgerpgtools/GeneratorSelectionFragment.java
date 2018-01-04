@@ -2,15 +2,15 @@ package tabletop.velocic.com.worldforgerpgtools;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
 
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory;
@@ -20,6 +20,22 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
 {
     String currentCategoryName = "";
     GeneratorCategory currentCategory = null;
+
+    private static final String ARG_CATEGORY_PATH = "category_path";
+
+    private GridView gridView;
+    private GeneratorSelectionAdapter gridViewAdapter;
+
+    public static GeneratorSelectionFragment newInstance(String categoryPath)
+    {
+        GeneratorSelectionFragment fragment = new GeneratorSelectionFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_CATEGORY_PATH, categoryPath);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -32,18 +48,48 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
     {
         View view = inflater.inflate(R.layout.fragment_generators, container, false);
 
-        //TODO: do this once, instead of per activity instantiation. Probably setup as singleton.
-        GeneratorImporter generatorImporter = new GeneratorImporter();
-        generatorImporter.importGenerators(getContext());
-        currentCategory = generatorImporter.getRootGeneratorCategory();
+        Bundle fragmentArgs = getArguments();
+        if (fragmentArgs != null) {
+            currentCategoryName = fragmentArgs.getString(ARG_CATEGORY_PATH);
+        }
 
-        GridView gridView = (GridView) view.findViewById(R.id.generator_selection);
-        gridView.setAdapter(new GeneratorSelectionAdapter(view.getContext(), currentCategory));
+        GeneratorImporter generatorImporter = GeneratorImporter.getInstance(view.getContext());
+        GeneratorCategory rootCategory = generatorImporter.getRootGeneratorCategory();
+        currentCategory = generatorImporter.getRootGeneratorCategory().getCategoryFromFullPath(currentCategoryName, rootCategory);
+
+        gridView = (GridView) view.findViewById(R.id.generator_selection);
+        gridViewAdapter = new GeneratorSelectionAdapter(view.getContext(), currentCategory);
+        gridView.setAdapter(gridViewAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View gridItemView, int i, long l)
+            {
+                onGridItemClicked(gridItemView);
+            }
+        });
 
         //ResultRoller roller = new ResultRoller(generatorImporter.getRootGeneratorCategory());
         //List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Minor Magic Items", 5);
 
         return view;
+    }
+
+    private void onGridItemClicked(View view)
+    {
+        GeneratorOrCategoryViewHolder viewHolder = (GeneratorOrCategoryViewHolder) view.getTag();
+
+        if (viewHolder.getCategory() == null) {
+            //TODO: open result generation activity
+            return;
+        }
+
+        Fragment subCategoryFragment = newInstance(viewHolder.getCategory().getAssetPath());
+        getActivity().getSupportFragmentManager().beginTransaction()
+            .replace(R.id.fragment_container, subCategoryFragment)
+            .addToBackStack(null)
+            .commit();
     }
 
     private class GeneratorSelectionAdapter extends BaseAdapter
@@ -167,6 +213,9 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
 
             setViewFromGeneratorOrCategory();
         }
+
+        public Generator getGenerator() {return generator;}
+        public GeneratorCategory getCategory() {return category;}
 
         private void setViewFromGeneratorOrCategory()
         {

@@ -15,9 +15,22 @@ import java.io.Reader;
 public class GeneratorImporter
 {
     public static final String TAG_GENERATOR_IMPORT = "GENERATOR IMPORT";
+    public static final String GENERATOR_DATA_FOLDER = "GeneratorData";
 
-    private final String GENERATOR_DATA_FOLDER = "GeneratorData";
+    private static GeneratorImporter importerInstance;
     private GeneratorCategory rootGeneratorCategory;
+
+    private GeneratorImporter() {}
+
+    public static GeneratorImporter getInstance(Context context)
+    {
+        if (importerInstance == null) {
+            importerInstance = new GeneratorImporter();
+            importerInstance.importGenerators(context);
+        }
+
+        return importerInstance;
+    }
 
     public void importGenerators(Context context)
     {

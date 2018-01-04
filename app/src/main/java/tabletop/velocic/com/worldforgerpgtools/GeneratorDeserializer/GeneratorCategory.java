@@ -39,7 +39,18 @@ public class GeneratorCategory
 
     public String getAssetPath()
     {
-        return assetPath;
+        int firstSlashIndex = assetPath.indexOf("/");
+        String firstPathComponent = "";
+
+        if (firstSlashIndex != -1) {
+            firstPathComponent = assetPath.substring(0, firstSlashIndex);
+        }
+
+        if (firstPathComponent.equals(GeneratorImporter.GENERATOR_DATA_FOLDER)) {
+            return assetPath.substring(firstSlashIndex + 1, assetPath.length()) + "/";
+        }
+
+        return assetPath + "/";
     }
 
     public void setParent(GeneratorCategory parent)
