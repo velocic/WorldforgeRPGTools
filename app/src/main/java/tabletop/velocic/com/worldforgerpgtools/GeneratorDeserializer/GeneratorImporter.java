@@ -90,12 +90,12 @@ public class GeneratorImporter
         Gson gson = new Gson();
         for (GeneratorCategory child : rootNode.getChildCategories()) {
             for (String jsonDataPath : child.getGeneratorJsonDataPaths()) {
-
                 try {
                     InputStream jsonInputStream = assets.open(jsonDataPath);
                     Reader jsonInputReader = new InputStreamReader(jsonInputStream);
 
                     Generator generator = gson.fromJson(jsonInputReader, Generator.class);
+                    generator.setAssetPath(jsonDataPath);
                     child.addGenerator(generator);
                 } catch (IOException e) {
                     Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize " + jsonDataPath + ": " + e.getMessage());

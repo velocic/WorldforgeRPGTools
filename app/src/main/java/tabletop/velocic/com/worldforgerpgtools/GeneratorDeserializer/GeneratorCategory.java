@@ -135,6 +135,17 @@ public class GeneratorCategory
         return null;
     }
 
+    public String getGeneratorFullPath(Generator generator)
+    {
+        for (Generator registeredGenerator : generators) {
+            if (registeredGenerator == generator) {
+                return getAssetPath() + generator.getName();
+            }
+        }
+
+        return "";
+    }
+
     public GeneratorCategory getCategoryFromFullPath(String fullQualifiedPath, GeneratorCategory node)
     {
         if (node == null || fullQualifiedPath.equals(node.getName()) || fullQualifiedPath.equals("")) {
