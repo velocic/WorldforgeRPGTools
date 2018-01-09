@@ -71,9 +71,6 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
             }
         });
 
-        //ResultRoller roller = new ResultRoller(generatorImporter.getRootGeneratorCategory());
-        //List<ResultItem> results = roller.generateResultSet("SwordsAndWizardry/Items/Minor Magic Items", 5);
-
         return view;
     }
 
