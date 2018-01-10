@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:padding="5dp"
+        android:gravity="center_horizontal"
         tools:text="999"/>
 
     <TextView
@@ -20,6 +21,7 @@
         android:layout_width="match_parent"
         android:textSize="14sp"
         android:padding="5dp"
+        android:gravity="center_horizontal"
         tools:text="Generated Item Name">
     </TextView>
 </LinearLayout>

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter;
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorResultsFragment;
 
 public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
 {

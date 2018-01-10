@@ -35,7 +35,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="@string/generated_results_table_header_col_1"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             tools:text="Quantity"/>
 
         <TextView
@@ -44,7 +44,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="@string/generated_results_table_header_col_2"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             tools:text="Name"/>
 
     </LinearLayout>

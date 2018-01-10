@@ -1,6 +1,7 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer;
+package tabletop.velocic.com.worldforgerpgtools;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import tabletop.velocic.com.worldforgerpgtools.R;
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory;
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter;
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem;
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultRoller;
 
 public class GeneratorResultsFragment extends android.support.v4.app.Fragment
 {
@@ -89,9 +93,11 @@ public class GeneratorResultsFragment extends android.support.v4.app.Fragment
         @Override
         public void onClick(View v)
         {
-            //Open detail screen for the clicked item
-            //This resultItem's getDetailData() function holds the content
-            //for that screen
+            Fragment detailsFragment = GeneratorResultDetailsFragment.newInstance(result);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, detailsFragment)
+                .addToBackStack(null)
+                .commit();
         }
     }
 
