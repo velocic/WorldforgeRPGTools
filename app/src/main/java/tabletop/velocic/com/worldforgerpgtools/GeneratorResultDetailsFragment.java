@@ -15,6 +15,7 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem;
 public class GeneratorResultDetailsFragment extends android.support.v4.app.Fragment
 {
     private static final String ARG_RESULT_ITEM = "result_item";
+
     private TextView detailTableName;
     private RecyclerView detailList;
 

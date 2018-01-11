@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory;
@@ -19,8 +20,12 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultRolle
 public class GeneratorResultsFragment extends android.support.v4.app.Fragment
 {
     private static final String ARG_GENERATOR_PATH = "generator_path";
+    private static final String INSTANCE_STATE_GENERATED_RESULT_SET = "generated_result_set";
+
     private TextView resultTableName;
     private RecyclerView generatedItemList;
+    private List<ResultItem> resultSet;
+    private String generatorPath;
 
     public static GeneratorResultsFragment newInstance(String generatorPath)
     {
@@ -47,22 +52,49 @@ public class GeneratorResultsFragment extends android.support.v4.app.Fragment
         resultTableName = view.findViewById(R.id.generated_results_table_name);
         generatedItemList = view.findViewById(R.id.generated_item_list);
 
-        String generatorPath = getArguments().getString(ARG_GENERATOR_PATH);
+        ResultItem[] previousResults = (ResultItem[]) getArguments().getParcelableArray(INSTANCE_STATE_GENERATED_RESULT_SET);
+        generatorPath = getArguments().getString(ARG_GENERATOR_PATH);
 
         GeneratorImporter generatorImporter = GeneratorImporter.getInstance(view.getContext());
         GeneratorCategory rootCategory = generatorImporter.getRootGeneratorCategory();
-        ResultRoller roller = new ResultRoller(rootCategory);
+
+        if (previousResults == null) {
+            ResultRoller roller = new ResultRoller(rootCategory);
+            resultSet = roller.generateResultSet(generatorPath,5);
+        } else {
+            resultSet = new ArrayList<ResultItem>();
+            for (ResultItem item : previousResults) {
+                resultSet.add(item);
+            }
+        }
 
         resultTableName.setText(rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory).getName());
-
         generatedItemList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         generatedItemList.setAdapter(
-            new GeneratorResultsAdapter(
-                roller.generateResultSet(generatorPath,5)
-            )
+            new GeneratorResultsAdapter(resultSet)
         );
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        saveState();
+    }
+
+    private void saveState()
+    {
+        ResultItem[] generatedResults = new ResultItem[resultSet.size()];
+
+        for (int i = 0; i < resultSet.size(); ++i) {
+            generatedResults[i] = resultSet.get(i);
+        }
+
+        Bundle args = getArguments();
+        args.putString(ARG_GENERATOR_PATH, generatorPath);
+        args.putParcelableArray(INSTANCE_STATE_GENERATED_RESULT_SET, generatedResults);
     }
 
     private class GeneratorResultsViewHolder extends RecyclerView.ViewHolder
@@ -93,6 +125,8 @@ public class GeneratorResultsFragment extends android.support.v4.app.Fragment
         @Override
         public void onClick(View v)
         {
+            saveState();
+
             Fragment detailsFragment = GeneratorResultDetailsFragment.newInstance(result);
             getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, detailsFragment)
