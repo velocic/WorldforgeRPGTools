@@ -8,4 +8,5 @@
     <string name="submit_new_generator_button">Submit</string>
     <string name="generated_results_table_header_col_1">Quantity</string>
     <string name="generated_results_table_header_col_2">Name</string>
+    <string name="num_generator_results_dialog_title">Number of Results</string>
 </resources>

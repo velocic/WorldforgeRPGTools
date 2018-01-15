@@ -3,12 +3,18 @@ package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer;
 public class Generator
 {
     public String Name;
+    public int DefaultNumResultRolls = 1;
     public TableEntries[] TableEntries;
     public String AssetPath;
 
     public String getName()
     {
         return Name;
+    }
+
+    public int getDefaultNumResultRolls()
+    {
+        return DefaultNumResultRolls;
     }
 
     public void setAssetPath(String assetPath)

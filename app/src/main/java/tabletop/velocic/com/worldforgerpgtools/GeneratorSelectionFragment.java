@@ -1,8 +1,12 @@
 package tabletop.velocic.com.worldforgerpgtools;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,8 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
     GeneratorCategory currentCategory = null;
 
     private static final String ARG_CATEGORY_PATH = "category_path";
+    private static final String DIALOG_NUM_GENERATOR_RESULTS = "DialogNumGeneratorResults";
+    private static final int REQUEST_NUM_GENERATOR_RESULTS = 0;
 
     private GridView gridView;
     private GeneratorSelectionAdapter gridViewAdapter;
@@ -69,6 +75,15 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
                 onGridItemClicked(gridItemView);
             }
         });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View gridItemView, int i, long l)
+            {
+                onGridItemLongClicked(gridItemView);
+                return true;
+            }
+        });
 
         return view;
     }
@@ -94,6 +109,39 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
             .replace(R.id.fragment_container, subCategoryFragment)
             .addToBackStack(null)
             .commit();
+    }
+
+    private void onGridItemLongClicked(View view)
+    {
+        GeneratorOrCategoryViewHolder viewHolder = (GeneratorOrCategoryViewHolder) view.getTag();
+
+        //Don't show the "How many items to generate?" dialog if they're long-pressing on a category
+        if (viewHolder.getCategory() != null) {
+            return;
+        }
+
+        FragmentManager manager = getFragmentManager();
+        NumGeneratorResultsFragment dialog = NumGeneratorResultsFragment.newInstance(currentCategory.getGeneratorFullPath(viewHolder.getGenerator()));
+        dialog.setTargetFragment(GeneratorSelectionFragment.this, REQUEST_NUM_GENERATOR_RESULTS);
+        dialog.show(manager, DIALOG_NUM_GENERATOR_RESULTS);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_NUM_GENERATOR_RESULTS) {
+            int numResultsToGenerate = data.getIntExtra(NumGeneratorResultsFragment.EXTRA_NUM_GENERATOR_RESULTS, 1);
+            String generatorPath = data.getStringExtra(NumGeneratorResultsFragment.EXTRA_GENERATOR_PATH);
+            Fragment generatorFragment = GeneratorResultsFragment.newInstance(generatorPath, numResultsToGenerate);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, generatorFragment)
+                .addToBackStack(null)
+                .commit();
+        }
     }
 
     private class GeneratorSelectionAdapter extends BaseAdapter

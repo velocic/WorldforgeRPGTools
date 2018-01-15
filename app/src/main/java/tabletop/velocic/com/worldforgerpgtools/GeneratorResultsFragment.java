@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter;
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem;
@@ -20,22 +21,30 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultRolle
 public class GeneratorResultsFragment extends android.support.v4.app.Fragment
 {
     private static final String ARG_GENERATOR_PATH = "generator_path";
+    private static final String ARG_NUMBER_OF_RESULTS_OVERRIDE = "number_of_results_override";
     private static final String INSTANCE_STATE_GENERATED_RESULT_SET = "generated_result_set";
+    private final int IGNORE_NUMBER_OF_RESULTS_OVERRIDE = 0;
 
     private TextView resultTableName;
     private RecyclerView generatedItemList;
     private List<ResultItem> resultSet;
     private String generatorPath;
 
-    public static GeneratorResultsFragment newInstance(String generatorPath)
+    public static GeneratorResultsFragment newInstance(String generatorPath, int numberOfResultsOverride)
     {
         GeneratorResultsFragment fragment = new GeneratorResultsFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_GENERATOR_PATH, generatorPath);
+        args.putInt(ARG_NUMBER_OF_RESULTS_OVERRIDE, numberOfResultsOverride);
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    public static GeneratorResultsFragment newInstance(String generatorPath)
+    {
+        return newInstance(generatorPath, 0);
     }
 
     @Override
@@ -52,15 +61,28 @@ public class GeneratorResultsFragment extends android.support.v4.app.Fragment
         resultTableName = view.findViewById(R.id.generated_results_table_name);
         generatedItemList = view.findViewById(R.id.generated_item_list);
 
-        ResultItem[] previousResults = (ResultItem[]) getArguments().getParcelableArray(INSTANCE_STATE_GENERATED_RESULT_SET);
-        generatorPath = getArguments().getString(ARG_GENERATOR_PATH);
+        Bundle fragmentArguments = getArguments();
+
+        ResultItem[] previousResults = (ResultItem[]) fragmentArguments.getParcelableArray(INSTANCE_STATE_GENERATED_RESULT_SET);
+        generatorPath = fragmentArguments.getString(ARG_GENERATOR_PATH);
+        int numberOfResultsOverride = fragmentArguments.getInt(ARG_NUMBER_OF_RESULTS_OVERRIDE);
+
 
         GeneratorImporter generatorImporter = GeneratorImporter.getInstance(view.getContext());
         GeneratorCategory rootCategory = generatorImporter.getRootGeneratorCategory();
+        Generator generator = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory);
+
+        int actualNumberOfResults = 1;
+
+        if (numberOfResultsOverride == IGNORE_NUMBER_OF_RESULTS_OVERRIDE) {
+            actualNumberOfResults = generator.getDefaultNumResultRolls();
+        } else {
+            actualNumberOfResults = numberOfResultsOverride;
+        }
 
         if (previousResults == null) {
             ResultRoller roller = new ResultRoller(rootCategory);
-            resultSet = roller.generateResultSet(generatorPath,5);
+            resultSet = roller.generateResultSet(generatorPath, actualNumberOfResults);
         } else {
             resultSet = new ArrayList<ResultItem>();
             for (ResultItem item : previousResults) {
