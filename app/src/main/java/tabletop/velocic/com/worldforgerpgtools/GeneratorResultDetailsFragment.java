@@ -68,8 +68,6 @@ public class GeneratorResultDetailsFragment extends android.support.v4.app.Fragm
         {
             super(inflater.inflate(R.layout.list_item_generated_item_details, parent, false));
 
-            //TODO: only allows one field right now, but the user can specifiy any number of
-            //key-value titles & content pairs
             descriptionTitle = itemView.findViewById(R.id.user_provided_description_title);
             descriptionContent = itemView.findViewById(R.id.user_provided_description_content);
         }
