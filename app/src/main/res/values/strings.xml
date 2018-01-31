@@ -9,6 +9,6 @@
     <string name="generated_results_table_header_col_1">Quantity</string>
     <string name="generated_results_table_header_col_2">Name</string>
     <string name="num_generator_results_dialog_title">Number of Results</string>
-    <string name="select_category_button">Save</string>
+    <string name="select_category_button">Select</string>
     <string name="textview_currently_selected_category_label">Selected Path:</string>
 </resources>
