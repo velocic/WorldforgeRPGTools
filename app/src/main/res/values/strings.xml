@@ -11,4 +11,5 @@
     <string name="num_generator_results_dialog_title">Number of Results</string>
     <string name="select_category_button">Select</string>
     <string name="textview_currently_selected_category_label">Selected Path:</string>
+    <string name="create_new_generator_menu_item">Create New Generator</string>
 </resources>

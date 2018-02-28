@@ -72,7 +72,7 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
         currentlySelectedCategoryText.setText(currentCategoryName);
 
         gridView = (GridView) view.findViewById(R.id.generator_selection);
-        gridViewAdapter = new GeneratorCategorySelectionAdapter(rootCategory);
+        gridViewAdapter = new GeneratorCategorySelectionAdapter(currentCategory);
         gridView.setAdapter(gridViewAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -96,6 +96,9 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
             - return from that dialog to the "create new generator" fragment, closing
                 the possibly many instances of this fragment between the modal and
                 that screen
+
+            NOTE: fragmentManager popBackStack has an overload that takes an ID,
+            and it will pop every single backstack instance between here and that ID
          */
     }
 
@@ -122,7 +125,7 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
         @Override
         public int getCount()
         {
-            return currentCategoryNode.getNumGenerators();
+            return currentCategoryNode.getNumChildCategories();
         }
 
         @Override

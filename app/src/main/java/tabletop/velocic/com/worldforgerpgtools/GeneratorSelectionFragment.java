@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -46,6 +48,7 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -86,6 +89,29 @@ public class GeneratorSelectionFragment extends android.support.v4.app.Fragment
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.generator_selection_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId()) {
+            case R.id.create_new_generator:
+                Fragment generatorCreationFragment = GeneratorCreationFragment.newInstance();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, generatorCreationFragment)
+                    .addToBackStack(null)
+                    .commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void onGridItemClicked(View view)
