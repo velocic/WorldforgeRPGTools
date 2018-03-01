@@ -1,8 +1,11 @@
 package tabletop.velocic.com.worldforgerpgtools;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
     GeneratorCategory currentCategory = null;
 
     private static final String ARG_CATEGORY_PATH = "category_path";
+    public static final String EXTRA_SELECTED_CATEGORY = "tabletop.velocic.com.worldforgergptools.selected_category";
 
     private Button selectButton;
     private GridView gridView;
@@ -84,6 +88,14 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
             }
         });
 
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                onSelectButtonClicked();
+            }
+        });
+
         return view;
     }
 
@@ -100,6 +112,24 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
             NOTE: fragmentManager popBackStack has an overload that takes an ID,
             and it will pop every single backstack instance between here and that ID
          */
+        sendResult(Activity.RESULT_OK, currentlySelectedCategoryText.getText().toString());
+    }
+
+    private void sendResult(int resultCode, String selectedCategoryPath)
+    {
+        if (getTargetFragment() == null) {
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SELECTED_CATEGORY, selectedCategoryPath);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
+
+        getActivity().getSupportFragmentManager().popBackStack(
+            GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        );
     }
 
     private void onGridItemClicked(View view)
@@ -107,6 +137,9 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
         GeneratorCategoryViewHolder viewHolder = (GeneratorCategoryViewHolder) view.getTag();
 
         Fragment subCategoryFragment = newInstance(viewHolder.getCategory().getAssetPath());
+
+        subCategoryFragment.setTargetFragment(getTargetFragment(), getTargetRequestCode());
+
         getActivity().getSupportFragmentManager().beginTransaction()
             .replace(R.id.fragment_container, subCategoryFragment)
             .addToBackStack(null)

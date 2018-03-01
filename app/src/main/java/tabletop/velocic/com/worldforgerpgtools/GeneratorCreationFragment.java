@@ -1,5 +1,7 @@
 package tabletop.velocic.com.worldforgerpgtools;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +15,10 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorIm
 
 public class GeneratorCreationFragment extends android.support.v4.app.Fragment
 {
+    public static final String BACK_STACK_GENERATOR_CREATION_FRAGMENT = "tabletop.velocic.com.worldforgerpgtools.GeneratorCreationFragment";
+
+    private static final int REQUEST_NEW_CATEGORY_PATH = 0;
+
     private EditText newGeneratorName;
     private TextView newGeneratorCategoryName;
     private Button createNewResultEntryButton;
@@ -52,14 +58,44 @@ public class GeneratorCreationFragment extends android.support.v4.app.Fragment
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_NEW_CATEGORY_PATH) {
+            //Can't set the TextView directly, as this function is called before
+            //onResume, and the TextView state gets lost.
+            setArguments(data.getExtras());
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        Bundle fragmentArgs = getArguments();
+
+        if (fragmentArgs != null) {
+            newGeneratorCategoryName.setText(fragmentArgs.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY));
+        }
+    }
+
     private void onNewGeneratorCategoryNameClicked(View v)
     {
         TextView view = (TextView) v;
         Fragment generatorCategorySelectionFragment = GeneratorCategorySelectionFragment.newInstance(view.getText().toString());
 
+        generatorCategorySelectionFragment.setTargetFragment(GeneratorCreationFragment.this, REQUEST_NEW_CATEGORY_PATH);
+
         getActivity().getSupportFragmentManager().beginTransaction()
             .replace(R.id.fragment_container, generatorCategorySelectionFragment)
-            .addToBackStack(null)
+            .addToBackStack(BACK_STACK_GENERATOR_CREATION_FRAGMENT)
             .commit();
     }
 }
