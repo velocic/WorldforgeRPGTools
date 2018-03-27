@@ -108,9 +108,6 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
             - return from that dialog to the "create new generator" fragment, closing
                 the possibly many instances of this fragment between the modal and
                 that screen
-
-            NOTE: fragmentManager popBackStack has an overload that takes an ID,
-            and it will pop every single backstack instance between here and that ID
          */
         sendResult(Activity.RESULT_OK, currentlySelectedCategoryText.getText().toString());
     }
