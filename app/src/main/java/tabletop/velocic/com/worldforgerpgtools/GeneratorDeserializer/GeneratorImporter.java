@@ -9,10 +9,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -35,13 +38,110 @@ public class GeneratorImporter
             AssetManager assetManager = context.getAssets();
             SharedPreferences sharedPrefs = context.getSharedPreferences(IMPORTER_PREFERENCES_FILE, Context.MODE_PRIVATE);
             SharedPreferences.Editor sharedPrefsEditor = sharedPrefs.edit();
-            importerInstance.oneTimeLocalStorageCopy(assetManager, sharedPrefs, sharedPrefsEditor, GENERATOR_DATA_FOLDER);
+            importerInstance.oneTimeLocalStorageCopy(context, assetManager, sharedPrefs, sharedPrefsEditor, GENERATOR_DATA_FOLDER);
             sharedPrefsEditor.apply();
 
             importerInstance.importGenerators(context);
         }
 
         return importerInstance;
+    }
+
+    private void oneTimeLocalStorageCopy(Context context, AssetManager assets, SharedPreferences sharedPrefs, SharedPreferences.Editor sharedPrefsEditor, String currentPath)
+    {
+        try {
+            String[] contents = assets.list(currentPath);
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+
+            //Path is a non-empty directory
+            if (contents.length > 0) {
+                byte[] hash = md5.digest(currentPath.getBytes());
+                String encodedHash = Base64.encodeToString(hash, Base64.DEFAULT);
+                boolean hasBeenCopied = sharedPrefs.getBoolean(encodedHash, false);
+
+                if (hasBeenCopied == false) {
+                    sharedPrefsEditor.putBoolean(encodedHash, true);
+
+                    //getDir docs say dir should be created if it doesn't already exist
+                    context.getDir(currentPath, Context.MODE_PRIVATE);
+                }
+
+                for (String item : contents) {
+                    oneTimeLocalStorageCopy(context, assets, sharedPrefs, sharedPrefsEditor, currentPath + "/" + item);
+                }
+            } else {
+                //Path is a file
+
+                //Read the source file from assets & hash the file contents
+                InputStream sourceStream = assets.open(currentPath);
+                String encodedHash = createChecksum(sourceStream, "MD5");
+                sourceStream.close();
+
+                boolean hasBeenCopied = sharedPrefs.getBoolean(encodedHash, false);
+
+                if (hasBeenCopied == false) {
+                    sharedPrefsEditor.putBoolean(encodedHash, true);
+
+                    //Reopen the stream to copy the file to the new destination
+                    sourceStream = assets.open(currentPath);
+
+                    //TODO: file writing logic is not correct. read() only reads one byte. Want a buffered 32KiB read loop writing into the new file
+                    //Create a new file in internal storage
+                    String newFilePath = context.getFilesDir() + currentPath;
+                    File file = new File(newFilePath);
+                    FileOutputStream outputStream;
+                    if (file.exists()) {
+                        //Overwrite
+                        outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
+                        outputStream.write(sourceStream.read());
+                    } else {
+                        //Create & write
+                        file.createNewFile();
+                        outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
+                        outputStream.write(sourceStream.read());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Log.d(TAG_GENERATOR_IMPORT, "Failed to one-time copy pre-made tables from assets directory to internal storage: " + e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            Log.d(TAG_GENERATOR_IMPORT, e.getMessage());
+        }
+    }
+
+    private String createChecksum(InputStream input, String digestType)
+    {
+        MessageDigest digest = null;
+        String checksum = "";
+        int numRead = 0;
+
+        try {
+            digest = MessageDigest.getInstance(digestType);
+        } catch (NoSuchAlgorithmException e) {
+            Log.d(TAG_GENERATOR_IMPORT, e.getMessage());
+        }
+
+        if (digest == null) {
+            return checksum;
+        }
+
+        byte[] buffer = new byte[32768];
+
+        try {
+            do {
+                numRead = input.read(buffer);
+                if (numRead > 0) {
+                    digest.update(buffer, 0, numRead);
+                }
+            } while (numRead != -1);
+
+        } catch (IOException e) {
+            Log.d(TAG_GENERATOR_IMPORT, "Failed to calculate checksum: " + e.getMessage());
+        }
+
+        checksum = Base64.encodeToString(digest.digest(), Base64.DEFAULT);
+
+        return checksum;
     }
 
     public void importGenerators(Context context)
@@ -55,41 +155,6 @@ public class GeneratorImporter
         );
 
         rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);
-    }
-
-    private void oneTimeLocalStorageCopy(AssetManager assets, SharedPreferences sharedPrefs, SharedPreferences.Editor sharedPrefsEditor, String currentPath)
-    {
-        try {
-            String[] contents = assets.list(currentPath);
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-
-            byte[] hash = md5.digest(currentPath.getBytes());
-            String encodedHash = Base64.encodeToString(hash, Base64.DEFAULT);
-            boolean hasBeenCopied = sharedPrefs.getBoolean(encodedHash, false);
-
-            //Path is a non-empty directory
-            if (contents.length > 0) {
-                if (hasBeenCopied == false) {
-                    sharedPrefsEditor.putBoolean(encodedHash, true);
-                    //TODO: create folder in internal storage
-                }
-
-                for (String item : contents) {
-                    oneTimeLocalStorageCopy(assets, sharedPrefs, sharedPrefsEditor, currentPath + "/" + item);
-                }
-            } else {
-                //Path is a file
-
-                if (hasBeenCopied == false) {
-                    sharedPrefsEditor.putBoolean(encodedHash, true);
-                    //TODO: create file in internal storage, copy binary data from here to there
-                }
-            }
-        } catch (IOException e) {
-            Log.d(TAG_GENERATOR_IMPORT, "Failed to one-time copy pre-made tables from assets directory to internal storage: " + e.getMessage());
-        } catch (NoSuchAlgorithmException e) {
-            Log.d(TAG_GENERATOR_IMPORT, e.getMessage());
-        }
     }
 
     private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, String path, AssetManager assets)
