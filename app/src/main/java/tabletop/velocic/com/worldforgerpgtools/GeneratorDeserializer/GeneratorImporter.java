@@ -66,6 +66,8 @@ public class GeneratorImporter
                     context.getDir(currentPath, Context.MODE_PRIVATE);
                 }
 
+                //TODO: Don't traverse further if the directory doesn't exist and we didn't add it
+
                 for (String item : contents) {
                     oneTimeLocalStorageCopy(context, assets, sharedPrefs, sharedPrefsEditor, currentPath + "/" + item);
                 }
@@ -85,21 +87,28 @@ public class GeneratorImporter
                     //Reopen the stream to copy the file to the new destination
                     sourceStream = assets.open(currentPath);
 
-                    //TODO: file writing logic is not correct. read() only reads one byte. Want a buffered 32KiB read loop writing into the new file
                     //Create a new file in internal storage
                     String newFilePath = context.getFilesDir() + currentPath;
                     File file = new File(newFilePath);
                     FileOutputStream outputStream;
+
+                    byte[] buffer = new byte[32768];
+
                     if (file.exists()) {
                         //Overwrite
                         outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
-                        outputStream.write(sourceStream.read());
                     } else {
                         //Create & write
                         file.createNewFile();
                         outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
+
+                    }
+
+                    while (sourceStream.read(buffer) > 0) {
                         outputStream.write(sourceStream.read());
                     }
+
+                    outputStream.close();
                 }
             }
         } catch (IOException e) {
