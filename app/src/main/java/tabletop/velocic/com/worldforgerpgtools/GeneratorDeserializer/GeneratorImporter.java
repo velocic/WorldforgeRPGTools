@@ -69,10 +69,6 @@ public class GeneratorImporter
                 if (hasBeenCopied == false && extension == "") {
                     sharedPrefsEditor.putBoolean(encodedHash, true);
 
-                    //Separate the base path (before first slash) from rest of path
-                    //call context.getDir on the base path only to return a File object.
-                    //if any of the path remains, create a new file object using the full currentPath, then call mkdir() on that object to create
-                    //all necessary subdirectories
                     String subDirPathString = context.getFilesDir() + "/" + currentPath;
 
                     //Create subdirectory (getDir can only create at the top-level)
