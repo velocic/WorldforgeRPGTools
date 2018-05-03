@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -59,11 +58,26 @@ public class GeneratorImporter
                 String encodedHash = Base64.encodeToString(hash, Base64.DEFAULT);
                 boolean hasBeenCopied = sharedPrefs.getBoolean(encodedHash, false);
 
-                if (hasBeenCopied == false) {
+                int extensionIndex = currentPath.lastIndexOf(".");
+
+                String extension = "";
+
+                if (extensionIndex != -1) {
+                    extension = currentPath.substring(extensionIndex + 1);
+                }
+
+                if (hasBeenCopied == false && extension == "") {
                     sharedPrefsEditor.putBoolean(encodedHash, true);
 
-                    //getDir docs say dir should be created if it doesn't already exist
-                    context.getDir(currentPath, Context.MODE_PRIVATE);
+                    //Separate the base path (before first slash) from rest of path
+                    //call context.getDir on the base path only to return a File object.
+                    //if any of the path remains, create a new file object using the full currentPath, then call mkdir() on that object to create
+                    //all necessary subdirectories
+                    String subDirPathString = context.getFilesDir() + "/" + currentPath;
+
+                    //Create subdirectory (getDir can only create at the top-level)
+                    File subDirectory = new File(subDirPathString);
+                    subDirectory.mkdir();
                 }
 
                 //TODO: Don't traverse further if the directory doesn't exist and we didn't add it
@@ -88,24 +102,21 @@ public class GeneratorImporter
                     sourceStream = assets.open(currentPath);
 
                     //Create a new file in internal storage
-                    String newFilePath = context.getFilesDir() + currentPath;
+                    String newFilePath = context.getFilesDir() + "/" + currentPath;
                     File file = new File(newFilePath);
                     FileOutputStream outputStream;
 
                     byte[] buffer = new byte[32768];
 
-                    if (file.exists()) {
-                        //Overwrite
-                        outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
-                    } else {
-                        //Create & write
+                    if (file.exists() == false) {
                         file.createNewFile();
-                        outputStream = context.openFileOutput(newFilePath, context.MODE_PRIVATE);
-
                     }
 
-                    while (sourceStream.read(buffer) > 0) {
-                        outputStream.write(sourceStream.read());
+                    outputStream = new FileOutputStream(file);
+
+                    int bytesRead = 0;
+                    while ((bytesRead = sourceStream.read(buffer)) > 0) {
+                        outputStream.write(buffer, 0, bytesRead);
                     }
 
                     outputStream.close();
