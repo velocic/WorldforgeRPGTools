@@ -173,6 +173,40 @@ public class GeneratorImporter
         rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);
     }
 
+    private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, File internalStorageDirectory)
+    {
+        File[] items = internalStorageDirectory.listFiles();
+
+        if (items.length > 0) {
+            for (File item : items) {
+                String fullPath = item.getAbsolutePath();
+                String fileExtension = fullPath.substring(fullPath.lastIndexOf(".") + 1);
+
+                if (item.isDirectory()) {
+                    if (fileExtension.equals("json")) {
+                        parent.addGeneratorJsonDataPath(fullPath);
+                        continue;
+                    }
+
+                    GeneratorCategory childCategory = new GeneratorCategory(item.getName(), fullPath, parent);
+                    parent.addChildCategory(loadGeneratorCategories(childCategory, item));
+                }
+            }
+
+            return parent;
+        }
+
+        String fullPath = internalStorageDirectory.getAbsolutePath();
+        String fileExtension = fullPath.substring(fullPath.lastIndexOf(".") + 1);
+
+        if (fileExtension.isEmpty()) {
+            String categoryName = fullPath.substring(fullPath.lastIndexOf(".") + 1);
+            parent.addChildCategory(new GeneratorCategory(categoryName, fullPath, parent));
+        }
+
+        return parent;
+    }
+
     private GeneratorCategory loadGeneratorCategories(GeneratorCategory parent, String path, AssetManager assets)
     {
         try {
