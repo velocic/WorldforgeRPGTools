@@ -1,0 +1,90 @@
+{
+    "Name": "Unusual Weapons",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "+1 blunt weapon that destroys undead",
+            "Metadata": {
+                "Description": "Such a weapon must be a mace, hammer, sling, or staff (determine type randomly). Lesser types of undead (HD 1-3) do not get a saving throw against destruction."
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "+1 thrown weapon that returns to hand",
+            "Metadata": {
+                "Description": "This axe, javelin, or hammer (determine type randomly) flies back to the thrower's hand."
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "+1 weapon, extra attack",
+            "Metadata": {
+                "Description": "This weapon grants 1 additional attack, once per day."
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "+1, +2 vs. particular type of foe",
+            "Metadata": {
+                "Description": "This weapon normally provides to-hit and damage bonuses of +1, but is +2 vs. a particular type of foe (were-creatures, undead, giants, orcs, dragons, etc.) to be determined randomly."
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "+1, +4 vs. particular type of foe",
+            "Metadata": {
+                "Description": "This weapon normally provides to-hit and damage bonuses of +1, but is +4 vs. a particular type of foe (were-creatures, undead, giants, orcs, dragons, etc.) to be determined randomly."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "+2, +3 vs. particular type of foe",
+            "Metadata": {
+                "Description": "This weapon normally provides to-hit and damage bonuses of +2, but is +3 vs. a particular type of foe (were-creatures, undead, giants, orcs, dragons, etc.) to be determined randomly."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "+4 weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "+5 weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "Flaming Weapon",
+            "Metadata": {
+                "Description": "The weapon burns with enchanted fire when held, inflicting an additional 1d6 points of damage with successful hits in combat. It can also be used as a light source with a 30 foot radius. Roll 1d4-1 for the amount of the weapon bonus (some are not magical except for the enchanted flames)."
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "Freezing Weapon",
+            "Metadata": {
+                "Description": "This weapon is freezing cold, inflicting an additional 1d6 points of damage with successful hits. Roll 1d4-1 for the amount of the weapon bonus."
+            },
+            "DiceRange": "10"
+        },
+        {
+            "Name": "Dancing Weapon",
+            "Metadata": {
+                "Description": "A dancing weapon levitates to fight beside its owner without the need to be held. In the first round it is a +1 weapon, in the second rount it is a +2 weapon, and in the third round it is a +3 weapon. After 3 rounds, the weapon dances no further until it is directed at a new opponent, but is +1 regardless."
+            },
+            "DiceRange": "11"
+        },
+        {
+            "Name": "Intelligent Weapon",
+            "Metadata": {
+                "Description": "Roll 1d3 for the weapon's to-hit bonus. There is a 10% chance that such a weapon may have the ability to cast a particular spell once per day at the wielder's command. The spell will be either Cleric (50%) or Magic-User (50%), and will be of Level 1d3. Such weapons generally can communicate with their bearers, and sometimes (25% chance) can speak audibly. Even if the weapon cannot speak audibly, it will communicate with its wielder by telepathy when held."
+            },
+            "DiceRange": "12"
+        }
+    ]
+}

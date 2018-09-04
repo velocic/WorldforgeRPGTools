@@ -1,0 +1,76 @@
+{
+    "Name": "Magic Staffs",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Absorption (M)",
+            "Metadata": {
+                "Description": "Absorbs up to 100 levels of spells directed at the holder before its absorption properties cease forever. The holder can cast spells from the staff in response to hostile spells, using the staff's stored levels, of the exact level of the hostile spell directed at the caster, but the spell must be chosen from the list of spells the caster has prepared."
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "Beguiling (C, M)",
+            "Metadata": {
+                "Description": "Foes within a 20-foot range must make a saving throw or consider the holder to be a loyal friend for 4d4 rounds (uses one charge)."
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "Command (C, M)",
+            "Metadata": {
+                "Description": "A charge can be used to control humans (as per a Charm Person spell), plants, or animals."
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "Healing (C)",
+            "Metadata": {
+                "Description": "Cures 1d6+1 hit points of damage per charge."
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Power (M)",
+            "Metadata": {
+                "Description": "Casts Light (no charge used), casts Fireball (4d6 damage), cold as a Wand of Cold, Lighting Bolts (4d6 damage), acts as a Ring of Telekinesis (costs one charge), and hits for 2d6 damage (no charge used)."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Resurrection (C)",
+            "Metadata": {
+                "Description": "These staffs only carry 10 charges, but a charge may be used to cast Raise Dead."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Snake (C)",
+            "Metadata": {
+                "Description": "In combat, a Staff of the Snake is +1 to hit and +1 damage. WHen commanded (by using a charge) the staff coils around the target (with a successful hit) and pinions the victim for 1d4x10 minutes. This attack is only useful on a victim about the size of a human or smaller. The staff will slither back to its owner afterwards, at a speed of 24. Only Clerics can employ a Staff of the Snake."
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Striking (C, M)",
+            "Metadata": {
+                "Description": "This staff inflicts 2d6 points of damage with a successful hit (does not use charges)."
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "Withering (C)",
+            "Metadata": {
+                "Description": "The dreaded staff of Withering adds ten years of physical aging with a successful hit."
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "Wizardry (M)",
+            "Metadata": {
+                "Description": "The most powerful of staffs, it is a Staff of Power with additional abilities. At the cost of one charge, it allows Invisibility, summoning elementals (calling 1d4 at a time), Hold Person, a Wall of Fire, Passwall, a Web spell, or Fly."
+            },
+            "DiceRange": "10"
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "Name": "Cursed Armor, Shields, and Weapons",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "-1 weapon or armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1-2"
+        },
+        {
+            "Name": "-2 weapon or armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3-4"
+        },
+        {
+            "Name": "-3 weapon or armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Attracts missiles",
+            "Metadata": {
+                "Description": "Attracts missiles (even those fired at others nearby), and grants +1 to hit on such missiles."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Causes the wearer to run away from combat",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Causes the wearer to charge into combat",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "8"
+        }
+    ]
+}

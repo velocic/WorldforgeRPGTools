@@ -1,0 +1,149 @@
+{
+    "Name": "Lesser Miscellaneous Magical Items",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Arrow of Direction (A)",
+            "Metadata": {
+                "Description": "Such a magic arrow points the direction of whatever the owner requests. It may be used only seven times in a single week. Usable by: All Classes."
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "Bag of Holding (A)",
+            "Metadata": {
+                "Description": "The inside of this bag is larger than the outside. The inside dimensions are roughly 10x5x3 feet, but the bag cannot carry more than 1,000 pounds of weight. If it is not empty, the bag weighs 50 pounds, no matter how much weight it actually contains. Usable by: All Classes."
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "Boots of Elvenkind (A)",
+            "Metadata": {
+                "Description": "The wearer of these boots moves with complete silence. Usable by: All Classes."
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "Boots of Speed or Boots of Leaping (50%/50%) (A)",
+            "Metadata": {
+                "Description": "Boots of Speed double the wearer's movement rate, but require complete rest for a period of time equivalent to the amount of time they were used. Boots of Leaping allow the wearer to make prodigious leaps 10 feet high and up to 30 feet horizontally. These boots also double movement rates, but outdoors only. They do not require the wearer to rest after using them. Usable by: All Classes."
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Bracers of Defense, AC 6[13] (A)",
+            "Metadata": {
+                "Description": "These bracers improve the wearer's armor class to the stated level; there is no effect if the wearer is already armored to the same or higher degree. The armor class granted by the bracers can be increased by magical rings or other protective magics. Usable by: All Classes."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Chime of Opening (A)",
+            "Metadata": {
+                "Description": "Sounding this small chime opens any door, even if the door is barred or Wizard Locked. Usable by: All Classes."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Cloak of Elvenkind (A)",
+            "Metadata": {
+                "Description": "The wearer becomes almost, but not quite, invisible. Usable by: All Classes."
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Cloak of Protection, +1 (C, M, T)",
+            "Metadata": {
+                "Description": "This cloak improves the wearer's armor class by 1, and grants a bonus of +1 on saving throws. Usable by: All but Fighter classes."
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "Cursed Item (A)",
+            "Metadata": {
+                "Description": "See Table 107 for details of cursed items."
+            },
+            "DiceRange": "9",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Items"
+            }
+        },
+        {
+            "Name": "Decanter of Endless Water (A)",
+            "Metadata": {
+                "Description": "This jug pours out one gallon of water per minute when unstoppered. Usable by: All Classes."
+            },
+            "DiceRange": "10"
+        },
+        {
+            "Name": "Dust of Appearance or Disappearance (50%/50%) (A)",
+            "Metadata": {
+                "Description": "Dust of Appearance is tossed in a radius of 10 feet around the user, and makes any invisible, astral, displaced, out-of-phase, or dimensional thing completely visible. The dust generally comes in a pouch, with enough for 20-30 uses. Dust of Disappearance works in the opposite way: when it is sprinkled in a 10-foot radius, everything therein becomes invisible for 5d6 turns. Normal means of detecting invisibility (such as a Detect Invisibility spell) are not strong enough to work against the dust's powerful enchantment. Usable by: All Classes."
+            },
+            "DiceRange": "11"
+        },
+        {
+            "Name": "Dust of Sneezing and Choking (A)",
+            "Metadata": {
+                "Description": "Pouches containing this dust ordinarily contain only enough for one 'dose.' When scattered in a radius of 10 feet, the dust forces all in the area to make a saving throw or die. If the nature of the dust is identified before it is experimented with, it can be used as a devastating thrown weapon. Usable by: All Classes."
+            },
+            "DiceRange": "12"
+        },
+        {
+            "Name": "Gauntlets of Swimming and Climbing (C, F, T)",
+            "Metadata": {
+                "Description": "These gloves permit the wearer to swim at a rate of 18, and climb sheer walls with a 95% chance of success per ten feet of climbing. Usable by: all but Magic-Users."
+            },
+            "DiceRange": "13"
+        },
+        {
+            "Name": "Horseshoes of Speed (horses)",
+            "Metadata": {
+                "Description": "These horseshoes double a horse's movement rate. Usable by: Horses."
+            },
+            "DiceRange": "14"
+        },
+        {
+            "Name": "Luckstone (A)",
+            "Metadata": {
+                "Description": "This stone grants +1 to saving throws and attack rolls. Usable by: All Classes."
+            },
+            "DiceRange": "15"
+        },
+        {
+            "Name": "Manual of Beneficial Exercise (A)",
+            "Metadata": {
+                "Description": "Reading this tome increases the reader's Strength by 1 point (to a maximum of 18). Usable by: All Classes."
+            },
+            "DiceRange": "16"
+        },
+        {
+            "Name": "Pipes of the Sewers (A)",
+            "Metadata": {
+                "Description": "These pipes summon 10d6 giant rats. The piper does not need to concentrate once the rats arrive (which takes 1d4 x 10 minutes), but it is wise to do so. When the rats arrive, there is an immediate 5% chance that they will not obey commands, and if the piper ceases to concentrate on the tune there is a 10% chance that the rats will begin to act of their own free will. Every subsequent round in which the piper fails to concentrate there is another chance to lose control, and the chance increases by 10% each time it is made (first round, 10%, second round 20%, etc.). Usable by: All Classes."
+            },
+            "DiceRange": "17"
+        },
+        {
+            "Name": "Rope of Climbing (A)",
+            "Metadata": {
+                "Description": "This item is a 50-foot length of rope that leaps magically upward when commanded, and can tie and untie itself upon command. Usable by: All Classes."
+            },
+            "DiceRange": "18"
+        },
+        {
+            "Name": "Rope of Entanglement (A)",
+            "Metadata": {
+                "Description": "This rope, on command, twines itself around as many as 2d4+1 human-sized foes. The rope cannot be hit except with a natural roll of 20 (it is magical), and can sustain 20 hit points of damage before fraying and becoming useless. Usable by: All Classes."
+            },
+            "DiceRange": "19"
+        },
+        {
+            "Name": "Spade of Excavation (F)",
+            "Metadata": {
+                "Description": "This ordinary-looking spade digs by itself when commanded, shoveling out one cubic yard (27 cubic feet) per ten minutes (1 turn). Usable by: Fighters only."
+            },
+            "DiceRange": "20"
+        }
+    ]
+}

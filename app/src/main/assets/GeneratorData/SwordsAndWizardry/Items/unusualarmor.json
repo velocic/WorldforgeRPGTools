@@ -1,0 +1,62 @@
+{
+    "Name": "Unusual Armor",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "+4 armor (determine armor type using Table 92)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "+4 shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "+5 armor (determine armor type using Table 92)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "+5 shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Armor of Arrow Deflection",
+            "Metadata": {
+                "Description": "Missiles aimed at such armor have a to-hit penalty of -2."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Demonic Armor",
+            "Metadata": {
+                "Description": "The armor is possessed by a spirit or demon, with effects to be determined by the Referee. In general, such armor would provide both benefits and drawbacks."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Ethereal Armor",
+            "Metadata": {
+                "Description": "Ethereal armor is +3 plate mail that also allows the wearer to become insubstantial and incorporeal 50 times, after which it reverts irrevocably to normal +3 plate mail. In ethereal form, the wearer can attack and be attacked only by ethereal opponents."
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Fiery Armor",
+            "Metadata": {
+                "Description": "Fiery armor is +1 armor that is surrounded by flames. These flames deal 1d3 damage to anyone attacking the wearer with melee weapons."
+            },
+            "DiceRange": "8"
+        }
+    ]
+}

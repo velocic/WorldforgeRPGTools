@@ -1,0 +1,144 @@
+{
+    "Name": "Magic Armor and Weapons",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Cursed armor or shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Armor, Shields, and Weapons"
+            }
+        },
+        {
+            "Name": "+1 missile weapon(s)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "+1 shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "+1 melee weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "+1 armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Cursed Weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "6",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Armor, Shields, and Weapons"
+            }
+        },
+        {
+            "Name": "+2 missile weapon(s)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "+2 shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "+2 melee weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "+2 armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "10"
+        },
+        {
+            "Name": "+2 melee weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "11"
+        },
+        {
+            "Name": "+1 melee weapon with minor ability",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "12"
+        },
+        {
+            "Name": "+3 missile weapon(s)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "13"
+        },
+        {
+            "Name": "+3 melee weapon(s)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "14"
+        },
+        {
+            "Name": "+3 shield",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "15"
+        },
+        {
+            "Name": "+3 armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "16"
+        },
+        {
+            "Name": "Unusual weapon",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "17",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Unusual Weapons"
+            }
+        },
+        {
+            "Name": "Unusual armor",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "18",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Unusual Armor"
+            }
+        }
+    ]
+}

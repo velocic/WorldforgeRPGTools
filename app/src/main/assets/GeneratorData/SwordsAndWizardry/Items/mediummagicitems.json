@@ -1,0 +1,50 @@
+{
+    "Name": "Medium Magic Items",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Potion Trade-Out x3",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Potions",
+                "NumberOfRolls": "3"
+            }
+        },
+        {
+            "Name": "Medium Scroll Trade-Out",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "2",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Scrolls",
+                "ValidSubTableEntryRange": "7-12"
+            }
+        },
+        {
+            "Name": "Medium Magic Armor/Weapon Trade-Out",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Magic Armor and Weapons",
+                "ValidSubTableEntryRange": "7-12"
+            }
+        },
+        {
+            "Name": "Medium Remarkable Magic Items Trade-Out",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "4",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Remarkable Magic Items",
+                "ValidSubTableEntryRange": "21-40"
+            }
+        }
+    ]
+}

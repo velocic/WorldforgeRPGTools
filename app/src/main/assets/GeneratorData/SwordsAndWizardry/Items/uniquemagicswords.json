@@ -1,0 +1,166 @@
+{
+    "Name": "Unique Magic Swords",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Flaming Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword burns with enchanted fire when drawn from its sheath, inflicting an additional 1d6 points of damage with successful hits in combat. It can also be used as a light source with a 30 foot radius when unsheathed."
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "Dancing Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "A dancing sword levitates to fight beside its owner without the need to be held. In the first round it is a +1 weapon, in the second round it is a +2 weapon, and in the third round it is a +3 weapon. After 3 rounds, the sword dances no further until it is directed at a new opponent, but remains a regular +1 sword regardless."
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "Trapfinding Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword detects traps as per the Clerical spell Find Traps."
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "Seeing Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword allows its wielder to see invisible objects."
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Magic Detecting Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword detects magic as per the Detect Magic spell."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Listening Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword allows Clairaudience."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Flying Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword allows the wielder to fly."
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Levitating Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword allows the wielder to levitate, as per the Levitate spell."
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "Healing Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword may be used to heal 1d6 hit points, once per day."
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "Dwarven Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword imbues the wielder with the special abilities of a dwarf, when the sword is drawn."
+            },
+            "DiceRange": "10"
+        },
+        {
+            "Name": "Elven Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword imbues the wielder with the special abilities of an elf, when the sword is drawn."
+            },
+            "DiceRange": "11"
+        },
+        {
+            "Name": "Confusing Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword may be used to cause Confusion to enemies once per day."
+            },
+            "DiceRange": "12"
+        },
+        {
+            "Name": "Deflecting Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword has a 25% chance to deflect arrows before the to-hit roll."
+            },
+            "DiceRange": "13"
+        },
+        {
+            "Name": "Waking Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword awakens its owner when danger is near, but only if the owner is asleep."
+            },
+            "DiceRange": "14"
+        },
+        {
+            "Name": "Creature Detecting Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword detects the presence of a particular type or class of monster."
+            },
+            "DiceRange": "15"
+        },
+        {
+            "Name": "Alignment Sword",
+            "Metadata": {
+                "Intelligence": "None",
+                "Description": "The sword detects Lawful or Chaotic alignments within 20 feet."
+            },
+            "DiceRange": "16"
+        },
+        {
+            "Name": "Disguising Sword",
+            "Metadata": {
+                "Intelligence": "Intelligent: communicates by telepathy to wielder only. Roll 3d6 for intelligence.",
+                "Description": "The sword allows its wielder to change his or her facial appearance and create the appearance of a slightly larger or smaller size, all by illusion."
+            },
+            "DiceRange": "17"
+        },
+        {
+            "Name": "Cursefinding Sword",
+            "Metadata": {
+                "Intelligence": "Intelligent: communicates by telepathy to anyone within 10 feet. Roll 3d6 for intelligence.",
+                "Description": "The sword may detect cursed items with a 50% chance of success."
+            },
+            "DiceRange": "18"
+        },
+        {
+            "Name": "Stonewalking Sword",
+            "Metadata": {
+                "Intelligence": "Intelligent: communicates by telepathy with wielder and can also speak aloud. Roll 3d6 for intelligence.",
+                "Description": "The sword allows the wielder to walk through 20 feet of solid rock, twice per day."
+            },
+            "DiceRange": "19"
+        },
+        {
+            "Name": "Lifewarding Sword",
+            "Metadata": {
+                "Intelligence": "Intelligent: communicates by telepathy to anyone within 10 feet, and can speak aloud. Roll 3d6 for intelligence.",
+                "Description": "The sword makes its wielder immune to all level-draining effects."
+            },
+            "DiceRange": "20"
+        }
+    ]
+}

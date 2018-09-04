@@ -1,0 +1,166 @@
+{
+    "Name": "Remarkable Magic Items",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Lesser Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Wands"
+            }
+        },
+        {
+            "Name": "Lesser Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "2",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Rings"
+            }
+        },
+        {
+            "Name": "Lesser Misc. Magical Item",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3-20",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Miscellaneous Magical Items"
+            }
+        },
+        {
+            "Name": "Lesser Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "21",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Wands"
+            }
+        },
+        {
+            "Name": "Lesser Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "22",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Wands"
+            }
+        },
+        {
+            "Name": "Greater Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "23",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Wands"
+            }
+        },
+        {
+            "Name": "Lesser Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "24",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Rings"
+            }
+        },
+        {
+            "Name": "Lesser Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "25",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Lesser Rings"
+            }
+        },
+        {
+            "Name": "Greater Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "26",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Rings"
+            }
+        },
+        {
+            "Name": "Medium Misc. Magical Item",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "27-40",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Medium Miscellaneous Magical Items"
+            }
+        },
+        {
+            "Name": "Greater Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "41",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Wands"
+            }
+        },
+        {
+            "Name": "Greater Wand",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "42",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Wands"
+            }
+        },
+        {
+            "Name": "Greater Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "43",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Rings"
+            }
+        },
+        {
+            "Name": "Greater Ring",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "44",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Rings"
+            }
+        },
+        {
+            "Name": "Staff",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "45",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Magic Staffs"
+            }
+        },
+        {
+            "Name": "Greater Misc. Magical Item",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "46-60",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Greater Miscellaneous Magical Items"
+            }
+        }
+    ]
+}

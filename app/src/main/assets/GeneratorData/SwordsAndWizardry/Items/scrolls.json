@@ -1,0 +1,150 @@
+{
+    "Name": "Scrolls",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "1 spell, level 1",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "1 spell, level 1d3",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "2 spells, level 1d2 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "3 spells, level 1 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Cursed Scroll",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "5",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Scrolls"
+            }
+        },
+        {
+            "Name": "Protection Scroll (normal duration)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "6",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Protection Scrolls"
+            }
+        },
+        {
+            "Name": "2 spells, level 1d4",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "2 spells, level 1d6+1 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "1 spell level 1d6 (+1 for Clerics, +3 for Magic-Users)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "5 spells, level 1d3 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "10"
+        },
+        {
+            "Name": "Cursed Scroll",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "11",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Scrolls"
+            }
+        },
+        {
+            "Name": "Protection Scroll (double duration)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "12",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Protection Scrolls"
+            }
+        },
+        {
+            "Name": "5 spells, level 1d6 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "13"
+        },
+        {
+            "Name": "6 spells, level 1d6 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "14"
+        },
+        {
+            "Name": "7 spells, level 1d6 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "15"
+        },
+        {
+            "Name": "8 spells, level 1d6 each",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "16"
+        },
+        {
+            "Name": "Cursed Scroll",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "17",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Cursed Scrolls"
+            }
+        },
+        {
+            "Name": "Protection Scroll (triple duration and double effect if applicable)",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "18",
+            "RerollSubTable": {
+                "SubTableName": "SwordsAndWizardry/Items/Protection Scrolls"
+            }
+        }
+    ]
+}

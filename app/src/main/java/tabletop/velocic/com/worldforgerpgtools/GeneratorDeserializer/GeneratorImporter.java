@@ -164,10 +164,15 @@ public class GeneratorImporter
     {
         AssetManager assetManager = context.getAssets();
 
+//        rootGeneratorCategory = loadGeneratorCategories(
+//            new GeneratorCategory("root", GENERATOR_DATA_FOLDER),
+//            GENERATOR_DATA_FOLDER,
+//            assetManager
+//        );
+
         rootGeneratorCategory = loadGeneratorCategories(
             new GeneratorCategory("root", GENERATOR_DATA_FOLDER),
-            GENERATOR_DATA_FOLDER,
-            assetManager
+            new File(context.getFilesDir() + "/" + GENERATOR_DATA_FOLDER)
         );
 
         rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager);

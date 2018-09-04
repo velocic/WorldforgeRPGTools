@@ -1,0 +1,76 @@
+{
+    "Name": "Cursed Items",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Bag of Devouring",
+            "Metadata": {
+                "Description": "A Bag of Devouring functions as a bag of holding, but then devours any item placed into it within 1d4+1 hours."
+            },
+            "DiceRange": "1"
+        },
+        {
+            "Name": "Censer of Hostile Elementals",
+            "Metadata": {
+                "Description": "This is a censer (or brazier, bowl, or stone) that summons elementals--but the elementals are hostile instead of under the summoner's control."
+            },
+            "DiceRange": "2"
+        },
+        {
+            "Name": "Cloak of Poison",
+            "Metadata": {
+                "Description": "Upon donning this cloak, the wearer's body is suffused with magical poisons of many kinds, and dies instantly, without the chance of a saving throw."
+            },
+            "DiceRange": "3"
+        },
+        {
+            "Name": "Crystal Ball of Suggestion",
+            "Metadata": {
+                "Description": "This cursed item does not function as a crystal ball, but rather implants a Suggestion (per the spell) in the viewer's mind. Powerful versions of this item might even implant a Geas."
+            },
+            "DiceRange": "4"
+        },
+        {
+            "Name": "Dancing Boots",
+            "Metadata": {
+                "Description": "These boots function as boots of elvenkind or speed, until the wearer is in combat or fleeing. Suddenly, at that opint, the unfortunate victim will begin to dance a jig, or perhaps a stately pavane."
+            },
+            "DiceRange": "5"
+        },
+        {
+            "Name": "Flask of Stoppered Curses",
+            "Metadata": {
+                "Description": "This flask releases a curse of some kind when its seal is broken."
+            },
+            "DiceRange": "6"
+        },
+        {
+            "Name": "Horn of Collapse",
+            "Metadata": {
+                "Description": "When sounded, this horn causes a blast of destruction straight upwards, destroying any ceiling overhead and causing it to collapse."
+            },
+            "DiceRange": "7"
+        },
+        {
+            "Name": "Medallion of Projecting Thoughts",
+            "Metadata": {
+                "Description": ""
+            },
+            "DiceRange": "8"
+        },
+        {
+            "Name": "Mirror of Opposition",
+            "Metadata": {
+                "Description": "All persons looking into this mirror are attacked by evil versions of themselves, exact duplicates including spells and magic items. When the mirror-opposites are slain, their bodies disappear into mist, and return to the mirror."
+            },
+            "DiceRange": "9"
+        },
+        {
+            "Name": "Robe of Feeblemindedness",
+            "Metadata": {
+                "Description": "Anyone donning this cloak has his or her intelligence reduced to that of a garden snail."
+            },
+            "DiceRange": "10"
+        }
+    ]
+}

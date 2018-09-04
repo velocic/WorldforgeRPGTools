@@ -1,0 +1,167 @@
+{
+    "Name": "Potions",
+    "DefaultNumResultRolls": "1",
+    "TableEntries": [
+        {
+            "Name": "Animal Control",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "1-3"
+        },
+        {
+            "Name": "Clairaudience",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "4-6"
+        },
+        {
+            "Name": "Clairvoyance",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "7-9"
+        },
+        {
+            "Name": "Diminution",
+            "Metadata": {
+                "Description": "This potion causes the drinker to shrink down to six inches tall for 2d6 hours. Taking smaller doses of the potion will result in less of a reduction in size."
+            },
+            "DiceRange": "10-12"
+        },
+        {
+            "Name": "Dragon Control",
+            "Metadata": {
+                "Description": "The drinker gains the ability to control dragons of a certain type after partaking of this type of potion. 1d3 dragons of a specific type (determined randomly by the Referee) can be affected as per Charm Monster."
+            },
+            "DiceRange": "13-15"
+        },
+        {
+            "Name": "Ethereality",
+            "Metadata": {
+                "Description": "The imbiber can move through solid objects but cannot attack. Equipment also becomes ethereal."
+            },
+            "DiceRange": "16-18"
+        },
+        {
+            "Name": "Fire Resistance",
+            "Metadata": {
+                "Description": "The drinker becomes immune to normal fire, gains +2 on saving throws against fire attacks, and suffers only half damage to magic fire attacks that do not permit saving throws."
+            },
+            "DiceRange": "19-21"
+        },
+        {
+            "Name": "Flying",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "22-24"
+        },
+        {
+            "Name": "Frozen Concoction",
+            "Metadata": {
+                "Description": "These potions can be readily identified because they are often one or two degrees cooler than the surrounding temperature. The potion allows the imbiber to climb walls without falling, and not to drop held items in case of being surprised or frightened."
+            },
+            "DiceRange": "25"
+        },
+        {
+            "Name": "Gaseous Form",
+            "Metadata": {
+                "Description": "The user's body turns to a mist, allowing access to any place that is not airtight. Equipment is left behind; only the body becomes gaseous."
+            },
+            "DiceRange": "26-27"
+        },
+        {
+            "Name": "Giant Strength",
+            "Metadata": {
+                "Description": "The character becomes unbelievably strong for the potion's duration, gaining an additional 1d8 to damage rolls and +4 to hit (in addition to any normal bonuses, including existing Strength bonuses)."
+            },
+            "DiceRange": "28-30"
+        },
+        {
+            "Name": "Growth",
+            "Metadata": {
+                "Description": "The character grows to 30 feet in height."
+            },
+            "DiceRange": "31-33"
+        },
+        {
+            "Name": "Heroism",
+            "Metadata": {
+                "Description": "The imbiber gains +2 to attacks and damage."
+            },
+            "DiceRange": "34-36"
+        },
+        {
+            "Name": "Invisibility",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "37-39"
+        },
+        {
+            "Name": "Invulnerability",
+            "Metadata": {
+                "Description": "The drinker gains a bonus of +2 on saving throws; moreover, any opponents attack with a penalty of -2."
+            },
+            "DiceRange": "40-42"
+        },
+        {
+            "Name": "Levitation",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "43-45"
+        },
+        {
+            "Name": "Plant Control",
+            "Metadata": {
+                "Description": "As per the spell."
+            },
+            "DiceRange": "46-48"
+        },
+        {
+            "Name": "Poison",
+            "Metadata": {
+                "Description": "The drinker must make a successful saving throw or die. Some poisons cause instant death; others cause death within a certain number of rounds, or even turns. In the case of a few poisons, failing the saving throw causes damage rather than death - such weaker poisons generally also inflict a small amount of damage even if the saving throw is successful."
+            },
+            "DiceRange": "49-55"
+        },
+        {
+            "Name": "Slipperiness",
+            "Metadata": {
+                "Description": "Except for the soles of the feet and the palms of the hands, the character suddenly has a virtually frictionless surface."
+            },
+            "DiceRange": "56-58"
+        },
+        {
+            "Name": "Treasure Finding",
+            "Metadata": {
+                "Description": "A character drinking this wonderful concoction can detect hoards of treasure within 400 feet."
+            },
+            "DiceRange": "59-61"
+        },
+        {
+            "Name": "Undead Control",
+            "Metadata": {
+                "Description": "The drinker can control undead; 2d4 undead of fewer than 4 HD and 1d4 of undead of 4+ hit dice fall under the imbiber's control, as per the Control Animal spell, after the potion is consumed."
+            },
+            "DiceRange": "62-64"
+        },
+        {
+            "Name": "Extra Healing",
+            "Metadata": {
+                "Description": "This potion is a potent curative; it heas 3d8+3 hit points of damage (duration does not apply)."
+            },
+            "DiceRange": "65-75"
+        },
+        {
+            "Name": "Healing",
+            "Metadata": {
+                "Description": "This potion cures 1d8+1 hit points of damage."
+            },
+            "DiceRange": "76-100"
+        }
+    ]
+}
