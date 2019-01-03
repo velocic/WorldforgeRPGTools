@@ -184,24 +184,30 @@ public class GeneratorImporter
 
         if (items.length > 0) {
             for (File item : items) {
-                String fullPath = item.getAbsolutePath();
+                //Truncate system directories out of the path. Full path begins from the contextual
+                //root of our data files (GeneratorData)
+                String rawPath = item.getAbsolutePath();
+                int generatorDataIndex = rawPath.indexOf("GeneratorData");
+
+                String fullPath = rawPath.substring(generatorDataIndex);
                 String fileExtension = fullPath.substring(fullPath.lastIndexOf(".") + 1);
 
-                if (item.isDirectory()) {
-                    if (fileExtension.equals("json")) {
-                        parent.addGeneratorJsonDataPath(fullPath);
-                        continue;
-                    }
-
-                    GeneratorCategory childCategory = new GeneratorCategory(item.getName(), fullPath, parent);
-                    parent.addChildCategory(loadGeneratorCategories(childCategory, item));
+                if (fileExtension.equals("json")) {
+                    parent.addGeneratorJsonDataPath(fullPath);
+                    continue;
                 }
+
+                GeneratorCategory childCategory = new GeneratorCategory(item.getName(), fullPath, parent);
+                parent.addChildCategory(loadGeneratorCategories(childCategory, item));
             }
 
             return parent;
         }
 
-        String fullPath = internalStorageDirectory.getAbsolutePath();
+        String rawPath = internalStorageDirectory.getAbsolutePath();
+        int generatorDataIndex = rawPath.indexOf("GeneratorData");
+
+        String fullPath = rawPath.substring(generatorDataIndex);
         String fileExtension = fullPath.substring(fullPath.lastIndexOf(".") + 1);
 
         if (fileExtension.isEmpty()) {
