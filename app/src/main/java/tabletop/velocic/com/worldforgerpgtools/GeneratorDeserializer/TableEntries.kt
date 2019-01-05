@@ -1,34 +1,30 @@
 package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
 
+import com.google.gson.annotations.SerializedName
+
 class TableEntries(
-    val Name: String,
-    val Metadata: Map<String, String>,
-    val DiceRange: String,
-    val RerollSubTable: Map<String, String>
+    @SerializedName("Name")
+    val name: String,
+
+    @SerializedName("Metadata")
+    val metadata: Map<String, String>,
+
+    @SerializedName("DiceRange")
+    private val diceRangeString: String,
+
+    @SerializedName("RerollSubTable")
+    val rerollSubTable: Map<String, String>?
 ) {
+    val diceRange
+        get() = parseDiceRangeString(diceRangeString)
+
     fun getSubTableRollRange() : IntRange {
-        //TODO: do we want Int.MAX_VALUE or Int.MAX_VALUE - 1 as the upper range bound?
+        if (rerollSubTable == null) {
+            return 1 until Int.MAX_VALUE
+        }
 
-        if (RerollSubTable.containsKey("ValidSubTableEntryRange")) {
-            val rangeString = RerollSubTable["ValidSubTableEntryRange"];
-            val separatorIndex = rangeString?.indexOf("-") ?: 0
-
-            val (left, right) = if (separatorIndex == 0) {
-                Pair(1, Int.MAX_VALUE - 1)
-            } else {
-                Pair(
-                    rangeString?.substring(0, separatorIndex)?.toInt() ?: 1,
-                    rangeString?.substring(separatorIndex + 1)?.toInt() ?: Int.MAX_VALUE - 1
-                )
-            }
-
-            val (min, max) = if (left < right) {
-                Pair(left, right)
-            } else {
-                Pair(right, left)
-            }
-
-            return min..max
+        if (rerollSubTable.containsKey("ValidSubTableEntryRange")) {
+            return parseDiceRangeString(rerollSubTable["ValidSubTableEntryRange"])
         }
 
         return 1 until Int.MAX_VALUE
@@ -36,6 +32,31 @@ class TableEntries(
 
     fun getNumSubTableRolls() : Int
     {
-        return RerollSubTable["NumSubTableRolls"]?.toInt() ?: 1
+        if (rerollSubTable == null) {
+            return 0
+        }
+
+        return rerollSubTable["NumSubTableRolls"]?.toInt() ?: 1
+    }
+
+    private fun parseDiceRangeString(diceRangeString: String?) : IntRange {
+        val separatorIndex = diceRangeString?.indexOf("-") ?: 0
+
+        val (left, right) = if (separatorIndex == 0) {
+            Pair(1, Int.MAX_VALUE - 1)
+        } else {
+            Pair(
+                diceRangeString?.substring(0, separatorIndex)?.toInt() ?: 1,
+                diceRangeString?.substring(separatorIndex + 1)?.toInt() ?: Int.MAX_VALUE - 1
+            )
+        }
+
+        val (min, max) = if (left < right) {
+            Pair(left, right)
+        } else {
+            Pair(right, left)
+        }
+
+        return min..max
     }
 }
