@@ -47,7 +47,7 @@ class ResultRoller(
                     }
 
                     //Now the simple case. Add the new item directly, or increment an existing value
-                    val newItem = ResultItem(fullyQualifiedGeneratorPath, entry.name, entry.metadata)
+                    val newItem = ResultItem(fullyQualifiedGeneratorPath, entry.name, entry.metadata.toMutableMap())
                     addResultItem(resultSet, newItem)
                 }
             }
