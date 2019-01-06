@@ -40,10 +40,11 @@ class TableEntries(
     }
 
     private fun parseDiceRangeString(diceRangeString: String?) : IntRange {
-        val separatorIndex = diceRangeString?.indexOf("-") ?: 0
+        val separatorIndex = diceRangeString?.indexOf("-") ?: -1
 
-        val (left, right) = if (separatorIndex == 0) {
-            Pair(1, Int.MAX_VALUE - 1)
+        val (left, right) = if (separatorIndex == -1) {
+            val singleItemRange = diceRangeString?.toInt() ?: 1
+            Pair(singleItemRange, singleItemRange)
         } else {
             Pair(
                 diceRangeString?.substring(0, separatorIndex)?.toInt() ?: 1,

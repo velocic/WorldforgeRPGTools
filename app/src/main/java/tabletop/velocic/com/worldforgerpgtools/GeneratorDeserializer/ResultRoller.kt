@@ -15,14 +15,14 @@ class ResultRoller(
         val randomTable = rootGeneratorCategory.getGeneratorFromFullPath(fullyQualifiedGeneratorPath, rootGeneratorCategory).table
         val tableRollRange = determineTableDiceRange(randomTable)
 
-        for (i in 0..numRolls) {
+        for (i in 0 until numRolls) {
             val actualMinRoll = if (minRollValue > tableRollRange.last) tableRollRange.last else minRollValue
             val actualMaxRoll = if (tableRollRange.last < maxRollValue) tableRollRange.last else maxRollValue
 
             val roll = (actualMinRoll..actualMaxRoll).random()
 
             for (entry in randomTable) {
-                val entryIsMatch = roll in tableRollRange
+                val entryIsMatch = roll in entry.diceRange
 
                 if (entryIsMatch) {
                     val rerollSubTable = entry.rerollSubTable ?: mapOf()
@@ -36,7 +36,7 @@ class ResultRoller(
                         val numSubTableRolls = entry.getNumSubTableRolls()
                         val subTableResults = mutableListOf(mutableListOf<ResultItem>())
 
-                        for (subTableRoll in 0..numSubTableRolls) {
+                        for (subTableRoll in 0 until numSubTableRolls) {
                             subTableResults.add(generateResultSet(subTableName, numSubTableRolls, subTableRollRange.first, subTableRollRange.last).toMutableList())
                         }
 
