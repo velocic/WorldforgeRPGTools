@@ -10,7 +10,7 @@ class Generator(
     val defaultNumResultRolls: Int = 1,
 
     @SerializedName("TableEntries")
-    val tableEntries: Array<TableEntries>,
+    val table: Array<TableEntries>,
 
     assetPath: String
 ) {
@@ -30,7 +30,4 @@ class Generator(
 
             return "$field/"
         }
-
-    val table
-        get() = tableEntries
 }
