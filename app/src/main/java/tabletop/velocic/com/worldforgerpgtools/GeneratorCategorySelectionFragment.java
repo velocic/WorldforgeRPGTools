@@ -182,7 +182,7 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
 
                 viewHolder = new GeneratorCategoryViewHolder(
                     currentView,
-                    currentCategoryNode.getChildCategory(i)
+                    currentCategoryNode.childCategories[i]
                 );
 
                 currentView.setTag(viewHolder);
@@ -191,7 +191,7 @@ public class GeneratorCategorySelectionFragment extends android.support.v4.app.F
             }
 
             viewHolder = (GeneratorCategoryViewHolder) currentView.getTag();
-            viewHolder.bind(currentCategoryNode.getChildCategory(i));
+            viewHolder.bind(currentCategoryNode.childCategories[i]);
 
             return currentView;
         }

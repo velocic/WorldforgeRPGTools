@@ -12,7 +12,9 @@ class ResultRoller(
     fun generateResultSet(fullyQualifiedGeneratorPath: String, numRolls: Int = 1, minRollValue: Int, maxRollValue: Int) : List<ResultItem> {
         var resultSet: MutableList<ResultItem> = mutableListOf()
 
-        val randomTable = rootGeneratorCategory.getGeneratorFromFullPath(fullyQualifiedGeneratorPath, rootGeneratorCategory).table
+        val randomTable = rootGeneratorCategory.getGeneratorFromFullPath(fullyQualifiedGeneratorPath, rootGeneratorCategory)?.table
+            ?: return emptyList()
+
         val tableRollRange = determineTableDiceRange(randomTable)
 
         for (i in 0 until numRolls) {
