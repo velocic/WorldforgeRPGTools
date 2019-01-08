@@ -4,14 +4,17 @@ import android.app.Activity
 import android.app.FragmentManager
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
 import kotlinx.android.synthetic.main.activity_fragment.*
 import kotlinx.android.synthetic.main.fragment_generator_categories.*
+import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem
 
 class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     private var currentCategoryName: String = ""
@@ -38,6 +41,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         textview_currently_selected_category.text = currentCategoryName
 
         //TODO: gridViewAdapter port, continue from there
+        generator_selection.adapter = GeneratorCategorySelectionAdapter(currentCategory)
     }
 
     private fun onSelectButtonClicked() {
@@ -85,4 +89,12 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
             return fragment
         }
     }
+}
+
+private class GeneratorCategorySelectionAdapter : RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
+
+}
+
+private class GeneratorCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
 }
