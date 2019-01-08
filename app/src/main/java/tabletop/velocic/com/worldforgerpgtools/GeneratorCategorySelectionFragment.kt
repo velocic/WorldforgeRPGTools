@@ -2,19 +2,20 @@ package tabletop.velocic.com.worldforgerpgtools
 
 import android.app.Activity
 import android.app.FragmentManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
-import kotlinx.android.synthetic.main.activity_fragment.*
 import kotlinx.android.synthetic.main.fragment_generator_categories.*
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem
 
 class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     private var currentCategoryName: String = ""
@@ -41,7 +42,9 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         textview_currently_selected_category.text = currentCategoryName
 
         //TODO: gridViewAdapter port, continue from there
-        generator_selection.adapter = GeneratorCategorySelectionAdapter(currentCategory)
+        //generator_selection.adapter = GeneratorCategorySelectionAdapter(currentCategory)
+
+        return view
     }
 
     private fun onSelectButtonClicked() {
@@ -74,9 +77,10 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
 
     }
 
+
     companion object {
-        val ARG_CATEGORY_PATH = "category_path"
-        val EXTRA_SELECTED_CATEGORY = "tabletop.velocic.com.worldforgerpgtools.selected_category"
+        const val ARG_CATEGORY_PATH = "category_path"
+        const val EXTRA_SELECTED_CATEGORY = "tabletop.velocic.com.worldforgerpgtools.selected_category"
 
         fun newInstance(categoryPath: String) : GeneratorCategorySelectionFragment {
             val fragment = GeneratorCategorySelectionFragment()
@@ -91,10 +95,56 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     }
 }
 
-private class GeneratorCategorySelectionAdapter : RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
+private class GeneratorCategorySelectionAdapter(
+        private val currentCategoryNode: GeneratorCategory,
+        private val context: Context
+) : RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorCategoryViewHolder {
+        val newView = LayoutInflater.from(context).run {
+            inflate(R.layout.grid_item_generators_and_categories, parent, false)
+        }
+
+        return GeneratorCategoryViewHolder(newView)
+    }
+
+    override fun getItemCount(): Int {
+        return currentCategoryNode.numChildCategories
+    }
+
+    override fun onBindViewHolder(holder: GeneratorCategoryViewHolder, position: Int) {
+        holder.bind(currentCategoryNode.childCategories[position])
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return R.layout.grid_item_generators_and_categories
+    }
 }
 
-private class GeneratorCategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+private class GeneratorCategoryViewHolder(
+        private val context: Context,
+        view: View,
+        private var category: GeneratorCategory,
+        private val targetFragment: Fragment
 
+) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    private val categoryIcon = view.findViewById<ImageView>(R.id.generators_and_categories_grid_item_icon)
+    private val categoryText = view.findViewById<TextView>(R.id.generators_and_categories_grid_item_text)
+
+    fun bind(category: GeneratorCategory) {
+        this.category = category
+        categoryIcon.setImageResource(R.drawable.ic_select_generator_category)
+        categoryText.text = category.name
+    }
+
+    override fun onClick(v: View) {
+        val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category.assetPath)
+        subCategoryFragment.setTargetFragment(targetFragment, targetRequestCode)
+
+//        context?.supportFragmentManager?.beginTransaction()
+//                ?.replace(R.id.fragment_container, subCategoryFragment)
+//                ?.addToBackStack(null)
+//                ?.commit()
+    }
 }
+
