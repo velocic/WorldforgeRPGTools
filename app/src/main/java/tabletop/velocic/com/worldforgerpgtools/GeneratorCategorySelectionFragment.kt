@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,10 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
         val view = inflater.inflate(R.layout.fragment_generator_categories, container, false)
 
+        if (context == null || targetFragment == null) {
+            return view
+        }
+
         val fragmentArgs = arguments
         currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
 
@@ -41,8 +47,14 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
 
         textview_currently_selected_category.text = currentCategoryName
 
-        //TODO: gridViewAdapter port, continue from there
-        //generator_selection.adapter = GeneratorCategorySelectionAdapter(currentCategory)
+        generator_selection.setHasFixedSize(true)
+        generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
+        generator_selection.adapter = GeneratorCategorySelectionAdapter(
+            currentCategory,
+            (activity as Context),
+            (targetFragment as GeneratorCategorySelectionFragment),
+            targetRequestCode
+        )
 
         return view
     }
@@ -67,14 +79,12 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
             putExtra(EXTRA_SELECTED_CATEGORY, selectedCategoryPath)
         }
 
-        //TODO: find target fragment here, manually cast it to compile correctly
-        //targetFragment.onActivityResult(targetRequestCode, resultCode, intent)
+        (targetFragment as GeneratorCategorySelectionFragment).onActivityResult(targetRequestCode, resultCode, intent)
 
         activity?.supportFragmentManager?.popBackStack(
             GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
-
     }
 
 
@@ -96,8 +106,10 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
 }
 
 private class GeneratorCategorySelectionAdapter(
-        private val currentCategoryNode: GeneratorCategory,
-        private val context: Context
+        private val currentCategoryNode: GeneratorCategory?,
+        private val context: Context,
+        private val targetFragment: Fragment,
+        private val targetRequestCode: Int
 ) : RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorCategoryViewHolder {
@@ -105,15 +117,15 @@ private class GeneratorCategorySelectionAdapter(
             inflate(R.layout.grid_item_generators_and_categories, parent, false)
         }
 
-        return GeneratorCategoryViewHolder(newView)
+        return GeneratorCategoryViewHolder(context, newView, currentCategoryNode, targetFragment, targetRequestCode)
     }
 
     override fun getItemCount(): Int {
-        return currentCategoryNode.numChildCategories
+        return currentCategoryNode?.numChildCategories ?: 0
     }
 
     override fun onBindViewHolder(holder: GeneratorCategoryViewHolder, position: Int) {
-        holder.bind(currentCategoryNode.childCategories[position])
+        holder.bind(currentCategoryNode?.childCategories?.get(position))
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -124,27 +136,28 @@ private class GeneratorCategorySelectionAdapter(
 private class GeneratorCategoryViewHolder(
         private val context: Context,
         view: View,
-        private var category: GeneratorCategory,
-        private val targetFragment: Fragment
+        private var category: GeneratorCategory?,
+        private val targetFragment: Fragment,
+        private val targetRequestCode: Int
 
 ) : RecyclerView.ViewHolder(view), View.OnClickListener {
     private val categoryIcon = view.findViewById<ImageView>(R.id.generators_and_categories_grid_item_icon)
     private val categoryText = view.findViewById<TextView>(R.id.generators_and_categories_grid_item_text)
 
-    fun bind(category: GeneratorCategory) {
+    fun bind(category: GeneratorCategory?) {
         this.category = category
         categoryIcon.setImageResource(R.drawable.ic_select_generator_category)
-        categoryText.text = category.name
+        categoryText.text = category?.name
     }
 
     override fun onClick(v: View) {
-        val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category.assetPath)
+        val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category?.assetPath ?: "")
         subCategoryFragment.setTargetFragment(targetFragment, targetRequestCode)
 
-//        context?.supportFragmentManager?.beginTransaction()
-//                ?.replace(R.id.fragment_container, subCategoryFragment)
-//                ?.addToBackStack(null)
-//                ?.commit()
+        (context as FragmentActivity).supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, subCategoryFragment)
+                ?.addToBackStack(null)
+                ?.commit()
     }
 }
 
