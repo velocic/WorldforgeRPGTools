@@ -92,6 +92,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         const val ARG_CATEGORY_PATH = "category_path"
         const val EXTRA_SELECTED_CATEGORY = "tabletop.velocic.com.worldforgerpgtools.selected_category"
 
+        @JvmStatic
         fun newInstance(categoryPath: String) : GeneratorCategorySelectionFragment {
             val fragment = GeneratorCategorySelectionFragment()
             val args = Bundle().apply {
