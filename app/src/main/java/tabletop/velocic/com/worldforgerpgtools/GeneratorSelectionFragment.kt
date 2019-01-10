@@ -1,5 +1,6 @@
 package tabletop.velocic.com.worldforgerpgtools
 
+import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -14,7 +15,6 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
 class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,35 +72,66 @@ private class GeneratorSelectionAdapter(
     }
 
     override fun onBindViewHolder(holder: GeneratorOrCategoryViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO: continue here
+        //(holder as GeneratorOrCategoryViewHolder).generator
     }
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
+        return R.layout.grid_item_generators_and_categories
     }
 }
 
 private class GeneratorOrCategoryViewHolder(
     view: View,
-    private var generator: Generator?
-) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    generator: Generator?,
+    private val onClick: (GeneratorOrCategoryViewHolder) -> Unit,
+    private val onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
     private var generatorOrCategoryIcon: ImageView = view.findViewById(R.id.generators_and_categories_grid_item_icon)
     private var generatorOrCategoryText: TextView = view.findViewById(R.id.generators_and_categories_grid_item_text)
-    private var category: GeneratorCategory? = null
+    var generator: Generator? = generator
+        private set
 
-    constructor(view: View, category: GeneratorCategory) : this(view, null) {
+    var category: GeneratorCategory? = null
+        private set
+
+    constructor(
+        view: View,
+        category: GeneratorCategory,
+        onClick: (GeneratorOrCategoryViewHolder) -> Unit,
+        onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
+    ) : this(view, null, onClick, onLongClick) {
         this.category = category
     }
 
     init {
         //if generator != null, set the icon & text as from a category
         //if instead category != null, set the icon & test as from a generator
+        if (generator != null) {
+            generatorOrCategoryIcon.setImageResource(R.drawable.ic_generate_results)
+            generatorOrCategoryText.text = generator?.name
+        } else {
+            generatorOrCategoryIcon?.setImageResource(R.drawable.ic_select_generator_category)
+            generatorOrCategoryText.text = category?.name
+        }
 
         setViewFromGeneratorOrCategory()
     }
 
     override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val viewHolder = v?.tag
+        if (viewHolder != null) {
+            onClick(viewHolder as GeneratorOrCategoryViewHolder)
+        }
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        val viewHolder = v?.tag
+        if (viewHolder != null) {
+            onLongClick(viewHolder as GeneratorOrCategoryViewHolder)
+        }
+
+        return true
     }
 
     fun bind(generator: Generator) {
