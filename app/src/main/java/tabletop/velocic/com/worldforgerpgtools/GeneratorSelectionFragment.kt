@@ -60,7 +60,9 @@ private class GeneratorSelectionAdapter(
 ) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_generators, parent, false)
+
+        return GeneratorOrCategoryViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -72,12 +74,27 @@ private class GeneratorSelectionAdapter(
     }
 
     override fun onBindViewHolder(holder: GeneratorOrCategoryViewHolder, position: Int) {
-        //TODO: continue here
-        //(holder as GeneratorOrCategoryViewHolder).generator
+        val currentCategoryNode = this.currentCategoryNode ?: return
+
+        if (isCategoryIndex(position)) {
+            holder.bind(currentCategoryNode.childCategories[position])
+
+            return
+        }
+
+        holder.bind(currentCategoryNode.generators[position])
     }
 
     override fun getItemViewType(position: Int): Int {
         return R.layout.grid_item_generators_and_categories
+    }
+
+    private fun isCategoryIndex(index: Int) : Boolean {
+        if (index < currentCategoryNode?.numChildCategories ?: Int.MIN_VALUE) {
+            return true
+        }
+
+        return false
     }
 }
 
@@ -97,21 +114,23 @@ private class GeneratorOrCategoryViewHolder(
 
     constructor(
         view: View,
-        category: GeneratorCategory,
+        category: GeneratorCategory?,
         onClick: (GeneratorOrCategoryViewHolder) -> Unit,
         onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
-    ) : this(view, null, onClick, onLongClick) {
+    ) : this(view, null as Generator?, onClick, onLongClick) {
         this.category = category
     }
+
+    constructor(view: View) : this(view, null as Generator?, {}, {})
 
     init {
         //if generator != null, set the icon & text as from a category
         //if instead category != null, set the icon & test as from a generator
         if (generator != null) {
             generatorOrCategoryIcon.setImageResource(R.drawable.ic_generate_results)
-            generatorOrCategoryText.text = generator?.name
+            generatorOrCategoryText.text = generator.name
         } else {
-            generatorOrCategoryIcon?.setImageResource(R.drawable.ic_select_generator_category)
+            generatorOrCategoryIcon.setImageResource(R.drawable.ic_select_generator_category)
             generatorOrCategoryText.text = category?.name
         }
 
