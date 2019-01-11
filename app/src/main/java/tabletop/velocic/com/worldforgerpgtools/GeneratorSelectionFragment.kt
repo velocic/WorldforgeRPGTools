@@ -3,12 +3,12 @@ package tabletop.velocic.com.worldforgerpgtools
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
@@ -35,7 +35,45 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
         val currentCategory = rootCategory.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
-        //TODO: set up recyclerview w/ gridlayoutmanager
+        generator_selection.setHasFixedSize(true)
+        generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
+        generator_selection.adapter = GeneratorSelectionAdapter((activity as Context), currentCategory, this)
+
+        return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+
+        if (requestCode == REQUEST_NUM_GENERATOR_RESULTS) {
+            val numResultsToGenerate = data.getIntExtra(NumGeneratorResultsFragment.EXTRA_NUM_GENERATOR_RESULTS, 1)
+            val generatorPath = data.getStringExtra(NumGeneratorResultsFragment.EXTRA_GENERATOR_PATH)
+            val generatorFragment = GeneratorResultsFragment.newInstance(generatorPath, numResultsToGenerate)
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, generatorFragment)
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.generator_selection_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+        R.id.create_new_generator -> {
+            val generatorCreationFragment = GeneratorCreationFragment.newInstance();
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container, generatorCreationFragment)
+                ?.addToBackStack(null)
+                ?.commit()
+
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
@@ -58,7 +96,8 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
 
 private class GeneratorSelectionAdapter(
     private val context: Context,
-    private val currentCategoryNode: GeneratorCategory?
+    private val currentCategoryNode: GeneratorCategory?,
+    private val targetFragment: GeneratorSelectionFragment
 ) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
@@ -82,14 +121,16 @@ private class GeneratorSelectionAdapter(
             }
         }
 
-        val onLongClickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
+        val longClickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
             if (viewHolder.category == null) {
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-                dialog = NumGeneratorResultsFragment.newInstance()
+                val dialog = NumGeneratorResultsFragment.newInstance(currentCategoryNode?.getGeneratorFullPath(viewHolder.generator))
+                dialog.setTargetFragment(targetFragment, GeneratorSelectionFragment.REQUEST_NUM_GENERATOR_RESULTS)
+                dialog.show(fragmentManager, GeneratorSelectionFragment.DIALOG_NUM_GENERATOR_RESULTS)
             }
         }
 
-        return GeneratorOrCategoryViewHolder(view)
+        return GeneratorOrCategoryViewHolder(view, clickHandler, longClickHandler)
     }
 
     override fun getItemCount(): Int {
