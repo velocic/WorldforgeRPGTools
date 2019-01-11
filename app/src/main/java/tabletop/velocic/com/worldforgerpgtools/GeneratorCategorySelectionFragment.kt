@@ -155,10 +155,11 @@ private class GeneratorCategoryViewHolder(
         val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category?.assetPath ?: "")
         subCategoryFragment.setTargetFragment(targetFragment, targetRequestCode)
 
-        (context as FragmentActivity).supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, subCategoryFragment)
-                ?.addToBackStack(null)
-                ?.commit()
+        (context as FragmentActivity).supportFragmentManager?.beginTransaction()?.run {
+            replace(R.id.fragment_container, subCategoryFragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }
 

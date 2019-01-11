@@ -51,10 +51,11 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
             val numResultsToGenerate = data.getIntExtra(NumGeneratorResultsFragment.EXTRA_NUM_GENERATOR_RESULTS, 1)
             val generatorPath = data.getStringExtra(NumGeneratorResultsFragment.EXTRA_GENERATOR_PATH)
             val generatorFragment = GeneratorResultsFragment.newInstance(generatorPath, numResultsToGenerate)
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, generatorFragment)
-                ?.addToBackStack(null)
-                ?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.run {
+                replace(R.id.fragment_container, generatorFragment)
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 
@@ -66,10 +67,11 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
         R.id.create_new_generator -> {
             val generatorCreationFragment = GeneratorCreationFragment.newInstance();
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, generatorCreationFragment)
-                ?.addToBackStack(null)
-                ?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.run {
+                replace(R.id.fragment_container, generatorCreationFragment)
+                addToBackStack(null)
+                commit()
+            }
 
             true
         }
