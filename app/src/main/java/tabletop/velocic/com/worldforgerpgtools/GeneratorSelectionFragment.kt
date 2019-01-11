@@ -1,8 +1,10 @@
 package tabletop.velocic.com.worldforgerpgtools
 
+import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +64,31 @@ private class GeneratorSelectionAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_generators, parent, false)
 
+        val clickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
+            if (viewHolder.category == null) {
+                val generatedResultsFragment = GeneratorResultsFragment.newInstance(
+                    currentCategoryNode?.getGeneratorFullPath(viewHolder.generator)
+                )
+                (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, generatedResultsFragment)
+                    .addToBackStack(null)
+                    .commit()
+            } else {
+                val subCategoryFragment = GeneratorSelectionFragment.newInstance(viewHolder.category?.assetPath ?: "")
+                (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, subCategoryFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+        val onLongClickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
+            if (viewHolder.category == null) {
+                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                dialog = NumGeneratorResultsFragment.newInstance()
+            }
+        }
+
         return GeneratorOrCategoryViewHolder(view)
     }
 
@@ -100,42 +127,16 @@ private class GeneratorSelectionAdapter(
 
 private class GeneratorOrCategoryViewHolder(
     view: View,
-    generator: Generator?,
     private val onClick: (GeneratorOrCategoryViewHolder) -> Unit,
     private val onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
 ) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
     private var generatorOrCategoryIcon: ImageView = view.findViewById(R.id.generators_and_categories_grid_item_icon)
     private var generatorOrCategoryText: TextView = view.findViewById(R.id.generators_and_categories_grid_item_text)
-    var generator: Generator? = generator
+    var generator: Generator? = null
         private set
 
     var category: GeneratorCategory? = null
         private set
-
-    constructor(
-        view: View,
-        category: GeneratorCategory?,
-        onClick: (GeneratorOrCategoryViewHolder) -> Unit,
-        onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
-    ) : this(view, null as Generator?, onClick, onLongClick) {
-        this.category = category
-    }
-
-    constructor(view: View) : this(view, null as Generator?, {}, {})
-
-    init {
-        //if generator != null, set the icon & text as from a category
-        //if instead category != null, set the icon & test as from a generator
-        if (generator != null) {
-            generatorOrCategoryIcon.setImageResource(R.drawable.ic_generate_results)
-            generatorOrCategoryText.text = generator.name
-        } else {
-            generatorOrCategoryIcon.setImageResource(R.drawable.ic_select_generator_category)
-            generatorOrCategoryText.text = category?.name
-        }
-
-        setViewFromGeneratorOrCategory()
-    }
 
     override fun onClick(v: View?) {
         val viewHolder = v?.tag

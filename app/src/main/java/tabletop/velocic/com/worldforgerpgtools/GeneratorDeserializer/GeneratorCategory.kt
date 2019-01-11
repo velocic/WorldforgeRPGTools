@@ -49,7 +49,11 @@ class GeneratorCategory(
             it.name == name
         }
 
-    fun getGeneratorFullPath(generator: Generator) : String {
+    fun getGeneratorFullPath(generator: Generator?) : String {
+        if (generator == null) {
+            return ""
+        }
+
         val resultGenerator = generators.find {
             it == generator
         }
