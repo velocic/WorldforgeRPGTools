@@ -3,13 +3,16 @@ package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.util.Base64
 import java.io.File
+import java.io.InputStream
 import java.security.MessageDigest
 
 object GeneratorImporter {
     const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
     const val GENERATOR_DATA_FOLDER = "GeneratorData"
     const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
+    private const val BUFFER_SIZE = 32768
 
     private val rootGeneratorCategory: GeneratorCategory? = null
 
@@ -54,13 +57,43 @@ object GeneratorImporter {
                 oneTimeLocalStorageCopy(context, assetManager, sharedPrefs, prefsEditor, "$currentPath/$it")
             }
         } else {
-            //TODO
+            //Path is a file
+
+            //Read the source file from assets & hash the file contents
+            var sourceStream = assetManager.open(currentPath)
+            val encodedHash = createChecksum(sourceStream, "MD5")
+            val hasBeenCopied = sharedPrefs.getBoolean(encodedHash, true)
+
+            if (!hasBeenCopied) {
+                prefsEditor.putBoolean(encodedHash, true)
+
+                //Reopen the stream to copy the file to the new destination
+                sourceStream = assetManager.open(currentPath)
+
+                //Create a new file in internal storage
+                val file = File("${context.filesDir}/$currentPath")
+                val buffer = ByteArray(BUFFER_SIZE)
+            }
         }
 
     }
 
-
     private fun importGenerators(context: Context) {
+    }
 
+    private fun createChecksum(input: InputStream, digestType: String) : String {
+        val digest = MessageDigest.getInstance(digestType) ?: return ""
+        var numBytesRead: Int
+        val buffer = ByteArray(BUFFER_SIZE)
+
+        do {
+            numBytesRead = input.read(buffer)
+
+            if (numBytesRead > 0) {
+                digest.update(buffer, 0, numBytesRead)
+            }
+        } while (numBytesRead != -1)
+
+        return Base64.encodeToString(digest.digest(), Base64.DEFAULT)
     }
 }
