@@ -4,14 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Base64
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.security.MessageDigest
 
 object GeneratorImporter {
-    const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
-    const val GENERATOR_DATA_FOLDER = "GeneratorData"
-    const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
+    private const val GENERATOR_DATA_FOLDER = "GeneratorData"
+    private const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
+    private const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
     private const val BUFFER_SIZE = 32768
 
     private val rootGeneratorCategory: GeneratorCategory? = null
@@ -49,7 +54,13 @@ object GeneratorImporter {
             if (!hasBeenCopied && extension == "") {
                 prefsEditor.putBoolean(encodedHash, true)
                 val subDirPathString = "${context.filesDir}/$currentPath"
-                File(subDirPathString).mkdir()
+
+                try {
+                    File(subDirPathString).mkdir()
+                } catch (e: IOException) {
+                    Log.d(TAG_GENERATOR_IMPORT, "Failed to one-time copy premade tables from assets directory to internal storage: ${e.message}")
+                    return
+                }
             }
 
             //TODO: Don't traverse further if the directory doesn't exist and we didn't add it
@@ -73,12 +84,63 @@ object GeneratorImporter {
                 //Create a new file in internal storage
                 val file = File("${context.filesDir}/$currentPath")
                 val buffer = ByteArray(BUFFER_SIZE)
+
+                if (!file.exists()) {
+                    try {
+                        file.createNewFile()
+                    } catch (e: IOException) {
+                        Log.d(TAG_GENERATOR_IMPORT, "Failed to copy $currentPath from assets directory into internal storage: ${e.message}")
+                    }
+                }
+
+                val outputStream = FileOutputStream(file)
+                var bytesRead = 0
+
+                do {
+                    bytesRead = sourceStream.read(buffer)
+                    outputStream.write(buffer, 0, bytesRead)
+                } while (bytesRead > 0)
+
+                outputStream.close()
             }
         }
-
     }
 
     private fun importGenerators(context: Context) {
+        val assetManager = context.assets
+
+        rootGeneratorCategory = loadGeneratorCategories(
+            GeneratorCategory("root", GENERATOR_DATA_FOLDER),
+            File("${context.filesDir}/$GENERATOR_DATA_FOLDER")
+        )
+
+        rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager)
+    }
+
+    private fun loadGeneratorCategories(parent: GeneratorCategory, internalStorageDirectory: File) : GeneratorCategory {
+        //TODO
+    }
+
+    private fun populateGenerators(rootNode: GeneratorCategory, assets: AssetManager) : GeneratorCategory {
+        val gson = Gson()
+
+        for (child in rootNode.childCategories) {
+            for (jsonDataPath in child.generatorJsonDataPaths) {
+                try {
+
+                } catch (e: IOException) {
+                    Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize $jsonDataPath: ${e.message}")
+                    continue
+                } catch (e: JsonSyntaxException) {
+                    Log.d(TAG_GENERATOR_IMPORT, "Invalid JSON syntax in $jsonDataPath: ${e.message}")
+                    continue
+                }
+            }
+
+            populateGenerators(child, assets)
+        }
+
+        return rootNode
     }
 
     private fun createChecksum(input: InputStream, digestType: String) : String {
