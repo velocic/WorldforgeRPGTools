@@ -7,19 +7,17 @@ import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.security.MessageDigest
 
 object GeneratorImporter {
-    private const val GENERATOR_DATA_FOLDER = "GeneratorData"
+    const val GENERATOR_DATA_FOLDER = "GeneratorData"
     private const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
     private const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
     private const val BUFFER_SIZE = 32768
 
-    private val rootGeneratorCategory: GeneratorCategory? = null
+    var rootGeneratorCategory: GeneratorCategory? = null
+        private set
 
     fun import(context: Context) {
         val assetManager = context.assets
@@ -94,7 +92,7 @@ object GeneratorImporter {
                 }
 
                 val outputStream = FileOutputStream(file)
-                var bytesRead = 0
+                var bytesRead: Int
 
                 do {
                     bytesRead = sourceStream.read(buffer)
@@ -109,16 +107,52 @@ object GeneratorImporter {
     private fun importGenerators(context: Context) {
         val assetManager = context.assets
 
-        rootGeneratorCategory = loadGeneratorCategories(
+
+        val rootGeneratorCategory = loadGeneratorCategories(
             GeneratorCategory("root", GENERATOR_DATA_FOLDER),
             File("${context.filesDir}/$GENERATOR_DATA_FOLDER")
         )
 
-        rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager)
+        this.rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager)
     }
 
-    private fun loadGeneratorCategories(parent: GeneratorCategory, internalStorageDirectory: File) : GeneratorCategory {
-        //TODO
+    private fun loadGeneratorCategories(parent: GeneratorCategory, internalStorageTarget: File) : GeneratorCategory {
+        val files = internalStorageTarget.listFiles()
+
+        if (files.isNotEmpty()) {
+            for (file in files) {
+                //Truncate system directories out of the path. Full path begins from the contextual
+                //root of our data files (GENERATOR_DATA_FOLDER)
+                val rawPath = file.absolutePath
+                val generatorDataIndex = rawPath.indexOf(GENERATOR_DATA_FOLDER)
+
+                val fullPath = rawPath.substring(generatorDataIndex)
+                val fileExtension = file.extension
+
+                if (fileExtension == "json") {
+                    parent.generatorJsonDataPaths.add(fullPath)
+                    continue;
+                }
+
+                val childCategory = GeneratorCategory(file.name, fullPath, parent)
+                parent.childCategories.add(loadGeneratorCategories(childCategory, file))
+            }
+
+            return parent
+        }
+
+        val rawPath = internalStorageTarget.absolutePath
+        val generatorDataIndex = rawPath.indexOf(GENERATOR_DATA_FOLDER)
+
+        val fullPath = rawPath.substring(generatorDataIndex)
+        val fileExtension = internalStorageTarget.extension
+
+        if (fileExtension.isEmpty()) {
+            val categoryName = fullPath.substringAfterLast(".")
+            parent.childCategories.add(GeneratorCategory(categoryName, fullPath, parent))
+        }
+
+        return parent
     }
 
     private fun populateGenerators(rootNode: GeneratorCategory, assets: AssetManager) : GeneratorCategory {
@@ -127,7 +161,11 @@ object GeneratorImporter {
         for (child in rootNode.childCategories) {
             for (jsonDataPath in child.generatorJsonDataPaths) {
                 try {
+                    val jsonInputReader = InputStreamReader(assets.open(jsonDataPath))
+                    val generator = gson.fromJson(jsonInputReader, Generator::class.java)
 
+                    generator.assetPath = jsonDataPath
+                    child.generators.add(generator)
                 } catch (e: IOException) {
                     Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize $jsonDataPath: ${e.message}")
                     continue

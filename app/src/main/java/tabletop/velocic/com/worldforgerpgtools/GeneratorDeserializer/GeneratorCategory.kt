@@ -30,6 +30,15 @@ class GeneratorCategory(
     val numGenerators
         get() = generators.size
 
+    constructor(name: String, assetPath: String, parent: GeneratorCategory?) : this(
+            name,
+            assetPath,
+            parent,
+            mutableListOf<GeneratorCategory>(),
+            mutableListOf<String>(),
+            mutableListOf<Generator>()
+    )
+
     constructor(name: String, assetPath: String) : this(
             name,
             assetPath,

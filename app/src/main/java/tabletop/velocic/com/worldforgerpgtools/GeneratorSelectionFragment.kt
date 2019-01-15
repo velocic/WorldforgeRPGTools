@@ -29,11 +29,10 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         val fragmentArgs = arguments
         val currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
 
-        val generatorImporter = GeneratorImporter.getInstance(view.context)
-        val rootCategory = generatorImporter.rootGeneratorCategory
+        val rootCategory = GeneratorImporter.rootGeneratorCategory
 
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
-        val currentCategory = rootCategory.getCategoryFromFullPath(currentCategoryName, rootCategory)
+        val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
         generator_selection.setHasFixedSize(true)
         generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)

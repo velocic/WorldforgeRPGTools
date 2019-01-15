@@ -37,9 +37,8 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         val fragmentArgs = arguments
         currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
 
-        val generatorImporter = GeneratorImporter.getInstance(view.context)
-        val rootCategory = generatorImporter.rootGeneratorCategory
-        currentCategory = rootCategory.getCategoryFromFullPath(currentCategoryName, rootCategory)
+        val rootCategory = GeneratorImporter.rootGeneratorCategory
+        currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
         button_select_category.setOnClickListener {
             onSelectButtonClicked()
