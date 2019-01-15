@@ -68,8 +68,7 @@ public class GeneratorResultsFragment extends android.support.v4.app.Fragment
         int numberOfResultsOverride = fragmentArguments.getInt(ARG_NUMBER_OF_RESULTS_OVERRIDE);
 
 
-        GeneratorImporter generatorImporter = GeneratorImporter.getInstance(view.getContext());
-        GeneratorCategory rootCategory = generatorImporter.getRootGeneratorCategory();
+        GeneratorCategory rootCategory = GeneratorImporter.getRootGeneratorCategory();
         Generator generator = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory);
 
         int actualNumberOfResults = 1;

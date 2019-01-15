@@ -16,6 +16,7 @@ object GeneratorImporter {
     private const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
     private const val BUFFER_SIZE = 32768
 
+    @JvmStatic
     var rootGeneratorCategory: GeneratorCategory? = null
         private set
 

@@ -1,7 +1,6 @@
 package tabletop.velocic.com.worldforgerpgtools
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +10,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
-import kotlinx.android.synthetic.main.fragment_generators.*
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
@@ -34,9 +33,9 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
         val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
-        generator_selection.setHasFixedSize(true)
-        generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
-        generator_selection.adapter = GeneratorSelectionAdapter((activity as Context), currentCategory, this)
+        view.generator_selection.setHasFixedSize(true)
+        view.generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
+        view.generator_selection.adapter = GeneratorSelectionAdapter((activity as Context), currentCategory, this)
 
         return view
     }
