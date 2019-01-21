@@ -193,17 +193,11 @@ private class GeneratorOrCategoryViewHolder(
     }
 
     override fun onClick(v: View?) {
-        val viewHolder = v?.tag
-        if (viewHolder != null) {
-            onClick(viewHolder as GeneratorOrCategoryViewHolder)
-        }
+        onClick(this)
     }
 
     override fun onLongClick(v: View?): Boolean {
-        val viewHolder = v?.tag
-        if (viewHolder != null) {
-            onLongClick(viewHolder as GeneratorOrCategoryViewHolder)
-        }
+        onLongClick(this)
 
         return true
     }
