@@ -20,7 +20,13 @@ object GeneratorImporter {
     var rootGeneratorCategory: GeneratorCategory? = null
         private set
 
-    fun import(context: Context) {
+    fun import(context: Context?) {
+
+        if (context == null) {
+            Log.d(TAG_GENERATOR_IMPORT, "Received a null context while attempting to import data from the filesystem; aborting.")
+            return
+        }
+
         val assetManager = context.assets
         val sharedPrefs = context.getSharedPreferences(IMPORTER_PREFERENCES_FILE, Context.MODE_PRIVATE)
         val prefsEditor = sharedPrefs.edit()

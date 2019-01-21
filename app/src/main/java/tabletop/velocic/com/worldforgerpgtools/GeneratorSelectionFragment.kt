@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
+import kotlinx.android.synthetic.main.fragment_generators.view.*
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
@@ -23,19 +23,23 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
-        val view = inflater.inflate(R.layout.fragment_generator_categories, container, false)
+        val view = inflater.inflate(R.layout.fragment_generators, container, false)
 
         val fragmentArgs = arguments
         val currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
+
+        GeneratorImporter.import(context)
 
         val rootCategory = GeneratorImporter.rootGeneratorCategory
 
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
         val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
+        //TODO: Setting a hard-coded column size for now. This should be dynamic based on available space
+        //Setting the item width to some fixed value may also be a solution
         view.generator_selection.setHasFixedSize(true)
-        view.generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
-        view.generator_selection.adapter = GeneratorSelectionAdapter((activity as Context), currentCategory, this)
+        view.generator_selection.layoutManager = GridLayoutManager(context, 2)
+        view.generator_selection.adapter = GeneratorSelectionAdapter(context, currentCategory, this)
 
         return view
     }
@@ -95,13 +99,17 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
 }
 
 private class GeneratorSelectionAdapter(
-    private val context: Context,
+    private val context: Context?,
     private val currentCategoryNode: GeneratorCategory?,
     private val targetFragment: GeneratorSelectionFragment
 ) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_generators, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.grid_item_generators_and_categories, parent, false)
+
+        if (context == null) {
+            return GeneratorOrCategoryViewHolder(view, {}, {})
+        }
 
         val clickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
             if (viewHolder.category == null) {
@@ -178,6 +186,11 @@ private class GeneratorOrCategoryViewHolder(
 
     var category: GeneratorCategory? = null
         private set
+
+    init {
+        itemView.setOnClickListener(this)
+        itemView.setOnLongClickListener(this)
+    }
 
     override fun onClick(v: View?) {
         val viewHolder = v?.tag
