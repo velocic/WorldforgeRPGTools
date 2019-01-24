@@ -23,10 +23,6 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     private var currentCategoryName: String = ""
     private var currentCategory: GeneratorCategory? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
         val view = inflater.inflate(R.layout.fragment_generator_categories, container, false)
 
@@ -66,7 +62,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
             - return from that dialog to the "create new generator" fragment, closing
                 the possibly many instances of this fragment between the modal and that screen
          */
-        sendResult(Activity.RESULT_OK, view?.textview_currently_selected_category.toString())
+        sendResult(Activity.RESULT_OK, view?.textview_currently_selected_category?.text.toString())
     }
 
     private fun sendResult(resultCode: Int, selectedCategoryPath: String) {
