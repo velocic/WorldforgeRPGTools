@@ -17,7 +17,7 @@ import android.widget.TextView
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
-import kotlinx.android.synthetic.main.fragment_generator_categories.*
+import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
 
 class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
     private var currentCategoryName: String = ""
@@ -40,18 +40,18 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         val rootCategory = GeneratorImporter.rootGeneratorCategory
         currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
-        button_select_category.setOnClickListener {
+        view.button_select_category.setOnClickListener {
             onSelectButtonClicked()
         }
 
-        textview_currently_selected_category.text = currentCategoryName
+        view.textview_currently_selected_category.text = currentCategoryName
 
-        generator_selection.setHasFixedSize(true)
-        generator_selection.layoutManager = GridLayoutManager(activity, GridLayoutManager.DEFAULT_SPAN_COUNT)
-        generator_selection.adapter = GeneratorCategorySelectionAdapter(
+        view.generator_selection.setHasFixedSize(true)
+        view.generator_selection.layoutManager = GridLayoutManager(activity, 2)
+        view.generator_selection.adapter = GeneratorCategorySelectionAdapter(
             currentCategory,
-            (activity as Context),
-            (targetFragment as GeneratorCategorySelectionFragment),
+            context as Context,
+            targetFragment as GeneratorCreationFragment,
             targetRequestCode
         )
 
@@ -66,7 +66,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
             - return from that dialog to the "create new generator" fragment, closing
                 the possibly many instances of this fragment between the modal and that screen
          */
-        sendResult(Activity.RESULT_OK, textview_currently_selected_category.toString())
+        sendResult(Activity.RESULT_OK, view?.textview_currently_selected_category.toString())
     }
 
     private fun sendResult(resultCode: Int, selectedCategoryPath: String) {
@@ -78,7 +78,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
             putExtra(EXTRA_SELECTED_CATEGORY, selectedCategoryPath)
         }
 
-        (targetFragment as GeneratorCategorySelectionFragment).onActivityResult(targetRequestCode, resultCode, intent)
+        (targetFragment as GeneratorCreationFragment).onActivityResult(targetRequestCode, resultCode, intent)
 
         activity?.supportFragmentManager?.popBackStack(
             GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT,
@@ -143,6 +143,10 @@ private class GeneratorCategoryViewHolder(
 ) : RecyclerView.ViewHolder(view), View.OnClickListener {
     private val categoryIcon = view.findViewById<ImageView>(R.id.generators_and_categories_grid_item_icon)
     private val categoryText = view.findViewById<TextView>(R.id.generators_and_categories_grid_item_text)
+
+    init {
+        itemView.setOnClickListener(::onClick)
+    }
 
     fun bind(category: GeneratorCategory?) {
         this.category = category
