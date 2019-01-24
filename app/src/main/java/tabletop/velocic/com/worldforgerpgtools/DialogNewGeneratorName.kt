@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.dialog_new_generator_name.view.*
 
 class DialogNewGeneratorName : DialogFragment()
 {
-    override fun onCreateDialog(savedInstanceState: Bundle) : Dialog
+    override fun onCreateDialog(savedInstanceState: Bundle?) : Dialog
     {
         val view = LayoutInflater.from(activity).inflate(R.layout.dialog_new_generator_name, null)
         val newGeneratorName = view.new_generator_name
