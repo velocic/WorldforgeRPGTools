@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_create_generator.view.*
 
 class GeneratorCreationFragment : android.support.v4.app.Fragment()
 {
-    private var newGeneratorCategoryName: TextView = TextView(context)
+    private var newGeneratorCategoryName: TextView? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View
@@ -26,7 +26,7 @@ class GeneratorCreationFragment : android.support.v4.app.Fragment()
         val createNewResultEntryButton = view.button_add_generator_possible_result
         val submitGeneratorButton = view.button_submit_new_generator
 
-        newGeneratorCategoryName.setOnClickListener(::onNewGeneratorCategoryNameClicked)
+        newGeneratorCategoryName?.setOnClickListener(::onNewGeneratorCategoryNameClicked)
 
         return view
     }
@@ -36,7 +36,7 @@ class GeneratorCreationFragment : android.support.v4.app.Fragment()
         super.onResume()
 
         arguments?.let {
-            newGeneratorCategoryName.text = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY)
+            newGeneratorCategoryName?.text = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY)
         }
     }
 
@@ -44,7 +44,7 @@ class GeneratorCreationFragment : android.support.v4.app.Fragment()
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode != Activity.RESULT_OK) {
-            return;
+            return
         }
 
         if (requestCode == REQUEST_NEW_CATEGORY_PATH) {

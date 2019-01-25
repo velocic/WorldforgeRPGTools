@@ -68,7 +68,7 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
         R.id.create_new_generator -> {
-            val generatorCreationFragment = GeneratorCreationFragment.newInstance();
+            val generatorCreationFragment = GeneratorCreationFragment.newInstance()
             activity?.supportFragmentManager?.beginTransaction()?.run {
                 replace(R.id.fragment_container, generatorCreationFragment)
                 addToBackStack(null)
