@@ -33,7 +33,9 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         val rootCategory = GeneratorImporter.rootGeneratorCategory
 
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
-        val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
+        val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory) ?:
+            throw IllegalStateException("Every GeneratorSelectionFragment instance should be associated with a valid GeneratorCategory;" +
+                "is $currentCategoryName the correct category name?")
 
         //TODO: Setting a hard-coded column size for now. This should be dynamic based on available space
         //Setting the item width to some fixed value may also be a solution
@@ -100,7 +102,7 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
 
 private class GeneratorSelectionAdapter(
     private val context: Context?,
-    private val currentCategoryNode: GeneratorCategory?,
+    private val currentCategoryNode: GeneratorCategory,
     private val targetFragment: GeneratorSelectionFragment
 ) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
@@ -114,7 +116,8 @@ private class GeneratorSelectionAdapter(
         val clickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
             if (viewHolder.category == null) {
                 val generatedResultsFragment = GeneratorResultsFragment.newInstance(
-                    currentCategoryNode?.getGeneratorFullPath(viewHolder.generator)
+                    currentCategoryNode.getGeneratorFullPath(viewHolder.generator),
+                    0
                 )
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, generatedResultsFragment)
@@ -132,7 +135,7 @@ private class GeneratorSelectionAdapter(
         val longClickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
             if (viewHolder.category == null) {
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-                val dialog = NumGeneratorResultsFragment.newInstance(currentCategoryNode?.getGeneratorFullPath(viewHolder.generator))
+                val dialog = NumGeneratorResultsFragment.newInstance(currentCategoryNode.getGeneratorFullPath(viewHolder.generator))
                 dialog.setTargetFragment(targetFragment, GeneratorSelectionFragment.REQUEST_NUM_GENERATOR_RESULTS)
                 dialog.show(fragmentManager, GeneratorSelectionFragment.DIALOG_NUM_GENERATOR_RESULTS)
             }
