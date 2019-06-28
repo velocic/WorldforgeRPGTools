@@ -146,8 +146,8 @@ private class GeneratorSelectionAdapter(
 
     override fun getItemCount(): Int {
         //TODO: this differs from original java impl, but I think it's correct; verify in testing
-        val numCategories = currentCategoryNode?.numChildCategories ?: 0
-        val numGenerators = currentCategoryNode?.numGenerators ?: 0
+        val numCategories = currentCategoryNode.numChildCategories
+        val numGenerators = currentCategoryNode.numGenerators
 
         return numCategories + numGenerators
     }
@@ -169,7 +169,7 @@ private class GeneratorSelectionAdapter(
     }
 
     private fun isCategoryIndex(index: Int) : Boolean {
-        if (index < currentCategoryNode?.numChildCategories ?: Int.MIN_VALUE) {
+        if (index < currentCategoryNode.numChildCategories) {
             return true
         }
 
