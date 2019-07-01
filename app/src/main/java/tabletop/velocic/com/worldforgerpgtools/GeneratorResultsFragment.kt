@@ -52,9 +52,7 @@ class GeneratorResultsFragment : android.support.v4.app.Fragment()
             untypedParcelable as ResultItem
         }
 
-        val resultSet = previousResults?.let {
-            ResultRoller(rootCategory).generateResultSet(generatorPath, actualNumberOfResults)
-        } ?: previousResults ?: listOf()
+        val resultSet = previousResults ?: ResultRoller(rootCategory).generateResultSet(generatorPath, actualNumberOfResults)
 
         generated_results_table_name.text = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory)?.name
         generated_item_list.layoutManager = LinearLayoutManager(activityInstance)
