@@ -99,11 +99,11 @@ object GeneratorImporter {
                 }
 
                 val outputStream = FileOutputStream(file)
-                var bytesRead = 0
+                var bytesRead = sourceStream.read(buffer)
 
                 while (bytesRead > 0) {
-                    bytesRead = sourceStream.read(buffer)
                     outputStream.write(buffer, 0, bytesRead)
+                    bytesRead = sourceStream.read(buffer)
                 }
 
                 outputStream.close()
