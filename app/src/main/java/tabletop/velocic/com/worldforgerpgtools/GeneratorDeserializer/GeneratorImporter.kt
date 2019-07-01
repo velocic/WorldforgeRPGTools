@@ -78,7 +78,7 @@ object GeneratorImporter {
             //Read the source file from assets & hash the file contents
             var sourceStream = assetManager.open(currentPath)
             val encodedHash = createChecksum(sourceStream, "MD5")
-            val hasBeenCopied = sharedPrefs.getBoolean(encodedHash, true)
+            val hasBeenCopied = sharedPrefs.getBoolean(encodedHash, false)
 
             if (!hasBeenCopied) {
                 prefsEditor.putBoolean(encodedHash, true)
@@ -99,12 +99,12 @@ object GeneratorImporter {
                 }
 
                 val outputStream = FileOutputStream(file)
-                var bytesRead: Int
+                var bytesRead = 0
 
-                do {
+                while (bytesRead > 0) {
                     bytesRead = sourceStream.read(buffer)
                     outputStream.write(buffer, 0, bytesRead)
-                } while (bytesRead > 0)
+                }
 
                 outputStream.close()
             }
@@ -113,7 +113,6 @@ object GeneratorImporter {
 
     private fun importGenerators(context: Context) {
         val assetManager = context.assets
-
 
         val rootGeneratorCategory = loadGeneratorCategories(
             GeneratorCategory("root", GENERATOR_DATA_FOLDER),

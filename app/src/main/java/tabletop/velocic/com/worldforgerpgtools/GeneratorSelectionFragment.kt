@@ -40,6 +40,7 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         //TODO: Setting a hard-coded column size for now. This should be dynamic based on available space
         //Setting the item width to some fixed value may also be a solution
         view.generator_selection.setHasFixedSize(true)
+
         view.generator_selection.layoutManager = GridLayoutManager(context, 2)
         view.generator_selection.adapter = GeneratorSelectionAdapter(context, currentCategory, this)
 
@@ -153,7 +154,7 @@ private class GeneratorSelectionAdapter(
     }
 
     override fun onBindViewHolder(holder: GeneratorOrCategoryViewHolder, position: Int) {
-        val currentCategoryNode = this.currentCategoryNode ?: return
+        val currentCategoryNode = this.currentCategoryNode
 
         if (isCategoryIndex(position)) {
             holder.bind(currentCategoryNode.childCategories[position])
