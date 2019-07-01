@@ -136,6 +136,10 @@ private class GeneratorResultsViewHolder(
             resultName.text = result?.name
         }
 
+    init {
+        view.setOnClickListener(this)
+    }
+
     override fun onClick(v: View?) {
         onPreScreenTransition()
 
