@@ -32,7 +32,7 @@ class GeneratorResultsFragment : android.support.v4.app.Fragment()
         val numberOfResultsOverride = arguments?.getInt(ARG_NUMBER_OF_RESULTS_OVERRIDE) ?: 0
 
         val rootCategory = GeneratorImporter.rootGeneratorCategory ?:
-            throw java.lang.IllegalStateException("Failed to retrieve the root generator category. Has" +
+            throw IllegalStateException("Failed to retrieve the root generator category. Has" +
                 " GeneratorImporter been properly initialized?")
 
         val generator = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory) ?:
@@ -141,12 +141,12 @@ private class GeneratorResultsViewHolder(
     override fun onClick(v: View?) {
         onPreScreenTransition()
 
-        result?.let {
+        result?.let { result ->
             val detailsFragment = GeneratorResultDetailsFragment.newInstance(result)
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, detailsFragment)
-                    .addToBackStack(null)
-                    .commit()
+                .replace(R.id.fragment_container, detailsFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 }
