@@ -40,7 +40,7 @@ class GeneratorResultsFragment : android.support.v4.app.Fragment()
                 "Is $generatorPath the correct target?")
 
         val activityInstance = activity ?: throw IllegalStateException("GeneratorResultsFragment cannot" +
-            " exist without a valid FragmentActivity instance")
+            " exist without a valid FragmentActivity instance.")
 
         val actualNumberOfResults = if (numberOfResultsOverride == 0) {
             generator.defaultNumResultRolls
