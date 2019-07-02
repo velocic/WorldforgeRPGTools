@@ -6,18 +6,15 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import kotlinx.android.synthetic.main.dialog_num_generator_results.*
+import kotlinx.android.synthetic.main.dialog_num_generator_results.view.*
 
 class NumGeneratorResultsFragment : android.support.v4.app.DialogFragment()
 {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_num_generator_results, container, false)
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        picker_num_generator_results.minValue = 1
-        picker_num_generator_results.maxValue = 999
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_num_generator_results, null)
+
+        dialogView.picker_num_generator_results.minValue = 1
+        dialogView.picker_num_generator_results.maxValue = 999
 
         val generatorPath = arguments?.getString(ARG_GENERATOR_PATH)
             ?: throw IllegalStateException("NumGeneratorResultsFragment requires a target Generator" +
@@ -35,9 +32,9 @@ class NumGeneratorResultsFragment : android.support.v4.app.DialogFragment()
         }
 
         return AlertDialog.Builder(activity)
-            .setView(view)
+            .setView(dialogView)
             .setTitle(R.string.num_generator_results_dialog_title)
-            .setPositiveButton(android.R.string.ok) {_, _ -> sendResult(Activity.RESULT_OK, picker_num_generator_results.value)}
+            .setPositiveButton(android.R.string.ok) {_, _ -> sendResult(Activity.RESULT_OK, dialogView.picker_num_generator_results.value)}
             .setNegativeButton(android.R.string.cancel) {_, _ -> sendResult(Activity.RESULT_CANCELED, 0)}
             .create()
     }
