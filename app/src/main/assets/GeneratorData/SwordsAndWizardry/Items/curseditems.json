@@ -33,7 +33,7 @@
         {
             "Name": "Dancing Boots",
             "Metadata": {
-                "Description": "These boots function as boots of elvenkind or speed, until the wearer is in combat or fleeing. Suddenly, at that opint, the unfortunate victim will begin to dance a jig, or perhaps a stately pavane."
+                "Description": "These boots function as boots of elvenkind or speed, until the wearer is in combat or fleeing. Suddenly, at that point, the unfortunate victim will begin to dance a jig, or perhaps a stately pavane."
             },
             "DiceRange": "5"
         },

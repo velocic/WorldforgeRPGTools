@@ -137,7 +137,7 @@ object GeneratorImporter {
 
                 if (fileExtension == "json") {
                     parent.generatorJsonDataPaths.add(fullPath)
-                    continue;
+                    continue
                 }
 
                 val childCategory = GeneratorCategory(file.name, fullPath, parent)

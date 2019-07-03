@@ -1,7 +1,5 @@
 package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
 
-import tabletop.velocic.com.worldforgerpgtools.Extensions.random
-
 class ResultRoller(
     private val rootGeneratorCategory: GeneratorCategory
 ) {
