@@ -5,11 +5,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.dialog_new_generator_name.view.*
 
-class DialogNewGeneratorName : DialogFragment()
+class DialogNewGeneratorName : androidx.fragment.app.DialogFragment()
 {
     override fun onCreateDialog(savedInstanceState: Bundle?) : Dialog
     {

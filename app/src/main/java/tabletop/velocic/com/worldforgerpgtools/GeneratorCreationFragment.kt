@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
 
-class GeneratorCreationFragment : android.support.v4.app.Fragment()
+class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
     private var newGeneratorCategoryName: TextView? = null
 

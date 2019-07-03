@@ -1,9 +1,9 @@
 package tabletop.velocic.com.worldforgerpgtools
 
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_generated_item_details.*
 import kotlinx.android.synthetic.main.list_item_generated_item_details.view.*
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem
 
-class GeneratorResultDetailsFragment : android.support.v4.app.Fragment()
+class GeneratorResultDetailsFragment : androidx.fragment.app.Fragment()
 {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_generated_item_details, container, false)
@@ -29,7 +29,7 @@ class GeneratorResultDetailsFragment : android.support.v4.app.Fragment()
                 " exist without a valid FragmentActivity instance.")
 
         generated_item_detail_table_name.text = detailItem.name
-        generated_item_detail_list.layoutManager = LinearLayoutManager(validatedActivityInstance)
+        generated_item_detail_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(validatedActivityInstance)
         generated_item_detail_list.adapter = ResultDetailsAdapter(validatedActivityInstance, detailItem)
     }
 
@@ -49,9 +49,9 @@ class GeneratorResultDetailsFragment : android.support.v4.app.Fragment()
 }
 
 private class ResultDetailsAdapter(
-    private val activity: FragmentActivity,
-    private val detailItem: ResultItem
-) : RecyclerView.Adapter<ResultDetailsViewHolder>()
+        private val activity: androidx.fragment.app.FragmentActivity,
+        private val detailItem: ResultItem
+) : androidx.recyclerview.widget.RecyclerView.Adapter<ResultDetailsViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultDetailsViewHolder {
         val view = LayoutInflater.from(activity).inflate(R.layout.list_item_generated_item_details, parent, false)
@@ -73,7 +73,7 @@ private class ResultDetailsAdapter(
 }
 private class ResultDetailsViewHolder(
     view: View
-) : RecyclerView.ViewHolder(view)
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 {
     private val descriptionTitle = itemView.user_provided_description_title
     private val descriptionContent = itemView.user_provided_description_content

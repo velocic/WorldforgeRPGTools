@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,7 +15,7 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCa
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
-class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
+class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,7 +41,7 @@ class GeneratorSelectionFragment : android.support.v4.app.Fragment() {
         //Setting the item width to some fixed value may also be a solution
         view.generator_selection.setHasFixedSize(true)
 
-        view.generator_selection.layoutManager = GridLayoutManager(context, 2)
+        view.generator_selection.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
         view.generator_selection.adapter = GeneratorSelectionAdapter(context, currentCategory, this)
 
         return view
@@ -105,7 +105,7 @@ private class GeneratorSelectionAdapter(
     private val context: Context?,
     private val currentCategoryNode: GeneratorCategory,
     private val targetFragment: GeneratorSelectionFragment
-) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.grid_item_generators_and_categories, parent, false)
@@ -182,7 +182,7 @@ private class GeneratorOrCategoryViewHolder(
     view: View,
     private val onClick: (GeneratorOrCategoryViewHolder) -> Unit,
     private val onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
     private var generatorOrCategoryIcon: ImageView = view.findViewById(R.id.generators_and_categories_grid_item_icon)
     private var generatorOrCategoryText: TextView = view.findViewById(R.id.generators_and_categories_grid_item_text)
     var generator: Generator? = null

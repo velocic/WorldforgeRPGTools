@@ -1,9 +1,9 @@
 package tabletop.velocic.com.worldforgerpgtools
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 class GeneratorSelectionActivity : SingleFragmentActivity() {
-    override fun createFragment(): Fragment {
+    override fun createFragment(): androidx.fragment.app.Fragment {
         return GeneratorSelectionFragment()
     }
 }

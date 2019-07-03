@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorIm
 
 import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
 
-class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
+class GeneratorCategorySelectionFragment : androidx.fragment.app.Fragment() {
     private var currentCategoryName: String = ""
     private var currentCategory: GeneratorCategory? = null
 
@@ -43,7 +43,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
         view.textview_currently_selected_category.text = currentCategoryName
 
         view.generator_selection.setHasFixedSize(true)
-        view.generator_selection.layoutManager = GridLayoutManager(activity, 2)
+        view.generator_selection.layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         view.generator_selection.adapter = GeneratorCategorySelectionAdapter(
             currentCategory,
             context as Context,
@@ -78,7 +78,7 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
 
         activity?.supportFragmentManager?.popBackStack(
             GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE
+            androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
     }
 
@@ -104,9 +104,9 @@ class GeneratorCategorySelectionFragment : android.support.v4.app.Fragment() {
 private class GeneratorCategorySelectionAdapter(
         private val currentCategoryNode: GeneratorCategory?,
         private val context: Context,
-        private val targetFragment: Fragment,
+        private val targetFragment: androidx.fragment.app.Fragment,
         private val targetRequestCode: Int
-) : RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<GeneratorCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorCategoryViewHolder {
         val newView = LayoutInflater.from(context).run {
@@ -133,10 +133,10 @@ private class GeneratorCategoryViewHolder(
         private val context: Context,
         view: View,
         private var category: GeneratorCategory?,
-        private val targetFragment: Fragment,
+        private val targetFragment: androidx.fragment.app.Fragment,
         private val targetRequestCode: Int
 
-) : RecyclerView.ViewHolder(view), View.OnClickListener {
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
     private val categoryIcon = view.findViewById<ImageView>(R.id.generators_and_categories_grid_item_icon)
     private val categoryText = view.findViewById<TextView>(R.id.generators_and_categories_grid_item_text)
 
@@ -154,7 +154,7 @@ private class GeneratorCategoryViewHolder(
         val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category?.assetPath ?: "")
         subCategoryFragment.setTargetFragment(targetFragment, targetRequestCode)
 
-        (context as FragmentActivity).supportFragmentManager?.beginTransaction()?.run {
+        (context as androidx.fragment.app.FragmentActivity).supportFragmentManager?.beginTransaction()?.run {
             replace(R.id.fragment_container, subCategoryFragment)
             addToBackStack(null)
             commit()

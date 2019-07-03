@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.dialog_num_generator_results.view.*
 
-class NumGeneratorResultsFragment : android.support.v4.app.DialogFragment()
+class NumGeneratorResultsFragment : androidx.fragment.app.DialogFragment()
 {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_num_generator_results, null)
