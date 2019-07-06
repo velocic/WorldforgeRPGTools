@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:grid="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/create_generator_title"
@@ -67,7 +66,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/submit_new_generator_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_templates"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -83,93 +82,95 @@
         />
 
     <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/create_generator_templates"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        grid:columnCount="3"
+        app:orientation="horizontal"
+        app:columnCount="3"
+        app:alignmentMode="alignBounds"
         app:layout_constraintTop_toBottomOf="@id/create_generator_template_label"
-        app:layout_constraintBottom_toTopOf="@id/create_generator_button_submit_new_generator"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
 
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d4"
             android:drawableTop="@drawable/ic_generate_results"
         />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d6"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d8"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d10"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d12"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_1d20"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_2d6"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_3d6"
             android:drawableTop="@drawable/ic_generate_results"
             />
         <TextView
-            grid:layout_columnWeight="1"
-            grid:layout_gravity="fill_horizontal"
-            android:layout_width="0dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/distribution_d100"
             android:drawableTop="@drawable/ic_generate_results"
             />
