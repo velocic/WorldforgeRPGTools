@@ -22,8 +22,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 
         //TODO: Finish behavior for this screen after kotlin rewrite is complete
         val newGeneratorName = view.edit_text_create_generator_name
-        val createNewResultEntryButton = view.button_add_generator_possible_result
-        val submitGeneratorButton = view.button_submit_new_generator
+        val submitGeneratorButton = view.create_generator_button_submit_new_generator
 
         newGeneratorCategoryName?.setOnClickListener(::onNewGeneratorCategoryNameClicked)
 
