@@ -10,6 +10,7 @@
         android:id="@+id/generator_contents_main_buttons_edit_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
     />
@@ -18,6 +19,7 @@
         android:id="@+id/generator_contents_main_buttons_split_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_split_merged_dice_roll_range"
         app:layout_constraintStart_toEndOf="@id/generator_contents_main_buttons_edit_details"
         app:layout_constraintTop_toTopOf="@id/generator_contents_main_buttons_edit_details"
     />
@@ -26,6 +28,7 @@
         android:id="@+id/generator_contents_main_buttons_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
         app:layout_constraintStart_toEndOf="@id/generator_contents_main_buttons_split_range"
         app:layout_constraintTop_toTopOf="@id/generator_contents_main_buttons_edit_details"
     />

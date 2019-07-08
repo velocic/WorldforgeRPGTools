@@ -19,7 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/generator_contents_main_body"
+        app:layout_constraintBottom_toBottomOf="@id/generator_contents_main_body"
     />
 
     <include layout="@layout/partial_generator_contents_delete_buttons"
@@ -28,7 +29,8 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/generator_contents_main_body"
+        app:layout_constraintBottom_toBottomOf="@id/generator_contents_main_body"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

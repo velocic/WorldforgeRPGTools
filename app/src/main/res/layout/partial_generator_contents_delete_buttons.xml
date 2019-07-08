@@ -8,6 +8,7 @@
         android:id="@+id/generator_contents_delete_buttons_confirm_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_confirm_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
     />
@@ -16,6 +17,7 @@
         android:id="@+id/generator_contents_delete_buttons_cancel_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel"
         app:layout_constraintStart_toEndOf="@id/generator_contents_delete_buttons_confirm_delete"
         app:layout_constraintTop_toTopOf="@id/generator_contents_delete_buttons_confirm_delete"
     />
