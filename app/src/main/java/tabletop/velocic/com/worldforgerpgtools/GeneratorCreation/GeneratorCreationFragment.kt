@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_fragment.*
 import kotlinx.android.synthetic.main.fragment_create_generator.*
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
-import kotlinx.android.synthetic.main.fragment_create_generator.view.create_generator_template_1d4
 import tabletop.velocic.com.worldforgerpgtools.R
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
@@ -99,4 +97,3 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         }
     }
 }
-

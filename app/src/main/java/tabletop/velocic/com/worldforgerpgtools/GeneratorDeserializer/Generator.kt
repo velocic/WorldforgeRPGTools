@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 class Generator(
     @SerializedName("Name")
-    val name: String,
+    var name: String,
 
     @SerializedName("DefaultNumResultRolls")
-    val defaultNumResultRolls: Int = 1,
+    var defaultNumResultRolls: Int = 1,
 
     @SerializedName("TableEntries")
-    val table: Array<TableEntries>,
+    var table: Array<TableEntries>,
 
     assetPath: String
 ) {

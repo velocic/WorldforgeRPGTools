@@ -4,27 +4,27 @@ import com.google.gson.annotations.SerializedName
 
 class TableEntries(
     @SerializedName("Name")
-    val name: String,
+    var name: String,
 
     @SerializedName("Metadata")
-    val metadata: Map<String, String>,
+    var metadata: Map<String, String>,
 
     @SerializedName("DiceRange")
     private val diceRangeString: String,
 
     @SerializedName("RerollSubTable")
-    val rerollSubTable: Map<String, String>?
+    var rerollSubTable: Map<String, String>?
 ) {
     val diceRange
         get() = parseDiceRangeString(diceRangeString)
 
     fun getSubTableRollRange() : IntRange {
-        if (rerollSubTable == null) {
-            return 1 until Int.MAX_VALUE
-        }
+        val nullCheckedSubTable = rerollSubTable?.let {
+            it
+        } ?: return 1 until Int.MAX_VALUE
 
-        if (rerollSubTable.containsKey("ValidSubTableEntryRange")) {
-            return parseDiceRangeString(rerollSubTable["ValidSubTableEntryRange"])
+        if (nullCheckedSubTable.containsKey("ValidSubTableEntryRange")) {
+            return parseDiceRangeString(nullCheckedSubTable["ValidSubTableEntryRange"])
         }
 
         return 1 until Int.MAX_VALUE
@@ -32,11 +32,11 @@ class TableEntries(
 
     fun getNumSubTableRolls() : Int
     {
-        if (rerollSubTable == null) {
-            return 0
-        }
+        val nullCheckedSubTable = rerollSubTable?.let {
+            it
+        } ?: return 0
 
-        return rerollSubTable["NumSubTableRolls"]?.toInt() ?: 1
+        return nullCheckedSubTable["NumSubTableRolls"]?.toInt() ?: 1
     }
 
     private fun parseDiceRangeString(diceRangeString: String?) : IntRange {
