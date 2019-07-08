@@ -5,12 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_generators.view.*
+import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.GeneratorCreationFragment
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter

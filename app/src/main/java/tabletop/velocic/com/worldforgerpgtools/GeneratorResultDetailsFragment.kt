@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import kotlinx.android.synthetic.main.fragment_generated_item_details.*
 import kotlinx.android.synthetic.main.list_item_generated_item_details.view.*
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem
@@ -36,15 +37,12 @@ class GeneratorResultDetailsFragment : androidx.fragment.app.Fragment()
     companion object {
         const val ARG_RESULT_ITEM = "result_item"
 
-        fun newInstance(resultItem: ResultItem) : GeneratorResultDetailsFragment {
-            val fragment = GeneratorResultDetailsFragment()
-
-            fragment.arguments = Bundle().apply {
-                putParcelable(ARG_RESULT_ITEM, resultItem)
+        fun newInstance(resultItem: ResultItem) : GeneratorResultDetailsFragment =
+            GeneratorResultDetailsFragment().apply {
+                arguments = bundleOf(
+                    Pair(ARG_RESULT_ITEM, resultItem)
+                )
             }
-
-            return fragment
-        }
     }
 }
 

@@ -5,7 +5,7 @@
     <string name="create_generator_category">Category</string>
     <string name="create_generator_name">Name</string>
     <string name="add_generator_possible_result_button">Create New Possible Result</string>
-    <string name="submit_new_generator_button">Submit</string>
+    <string name="submit_button">Submit</string>
     <string name="generated_results_table_header_col_1">Quantity</string>
     <string name="generated_results_table_header_col_2">Name</string>
     <string name="num_generator_results_dialog_title">Number of Results</string>

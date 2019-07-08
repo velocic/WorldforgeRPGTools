@@ -1,14 +1,9 @@
-package tabletop.velocic.com.worldforgerpgtools
+package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +13,7 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCa
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 
 import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
+import tabletop.velocic.com.worldforgerpgtools.R
 
 class GeneratorCategorySelectionFragment : androidx.fragment.app.Fragment() {
     private var currentCategoryName: String = ""
@@ -45,10 +41,10 @@ class GeneratorCategorySelectionFragment : androidx.fragment.app.Fragment() {
         view.generator_selection.setHasFixedSize(true)
         view.generator_selection.layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
         view.generator_selection.adapter = GeneratorCategorySelectionAdapter(
-            currentCategory,
-            context as Context,
-            targetFragment as GeneratorCreationFragment,
-            targetRequestCode
+                currentCategory,
+                context as Context,
+                targetFragment as GeneratorCreationFragment,
+                targetRequestCode
         )
 
         return view
@@ -151,7 +147,8 @@ private class GeneratorCategoryViewHolder(
     }
 
     override fun onClick(v: View) {
-        val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category?.assetPath ?: "")
+        val subCategoryFragment = GeneratorCategorySelectionFragment.newInstance(category?.assetPath
+                ?: "")
         subCategoryFragment.setTargetFragment(targetFragment, targetRequestCode)
 
         (context as androidx.fragment.app.FragmentActivity).supportFragmentManager?.beginTransaction()?.run {
