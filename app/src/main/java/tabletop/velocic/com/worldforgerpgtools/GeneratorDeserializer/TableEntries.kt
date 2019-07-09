@@ -10,7 +10,7 @@ class TableEntries(
     var metadata: Map<String, String>,
 
     @SerializedName("DiceRange")
-    private val diceRangeString: String,
+    var diceRangeString: String,
 
     @SerializedName("RerollSubTable")
     var rerollSubTable: Map<String, String>?
