@@ -15,11 +15,31 @@ private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, n
         dicePool.add(1..dieSize)
     }
 
-    for (currentDieIndex in 0 until dicePool.size) {
+    val allPossibleDieCombinationResults = mutableListOf<Int>()
+
+    //Note: lambdas can't be recursive, so break this into another function
+    val calcCombinationResultsAgainstTargetDie = calcCombinations@ { targetDie: IntRange, remainingDicePool: List<IntRange> ->
+        if (remainingDicePool.isEmpty()) {
+            return@calcCombinations listOf<Int>()
+        }
+
+        val nextDie = remainingDicePool.first()
+
+        val combinationResultProgress = targetDie.flatMap { targetDieFace ->
+            nextDie.map { nextDieFace ->
+                targetDieFace + nextDieFace
+            }
+        }
+
+        return@calcCombinations combinationResultProgress//+ result of next recursive invocation
+    }
+
+    for(currentDieIndex in 0 until dicePool.size) {
         val currentDie = dicePool[currentDieIndex]
         val allOtherDice = dicePool.filterIndexed { otherDieIndex, _ ->
             otherDieIndex != currentDieIndex
         }
-    }
 
+        allPossibleDieCombinationResults.addAll(calcCombinationResultsAgainstTargetDie(currentDie, allOtherDice))
+    }
 }
