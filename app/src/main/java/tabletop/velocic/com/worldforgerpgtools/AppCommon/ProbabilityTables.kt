@@ -1,7 +1,17 @@
 package tabletop.velocic.com.worldforgerpgtools.AppCommon
 
-object ProbabilityTables {
+import kotlin.math.pow
 
+object ProbabilityTables {
+    init {
+        val twoDSixTable = (2..12).map {
+            Pair(it, findProbabilityForTargetInDicePool(it, 6, 2))
+        }
+        val threeDSixTable = (3..18).map {
+            Pair(it, findProbabilityForTargetInDicePool(it, 6, 3))
+        }
+        val debug = 5
+    }
 }
 
 private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, numDie: Int = 1) : Double {
@@ -9,37 +19,47 @@ private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, n
         return 1 / dieSize.toDouble()
     }
 
-    val dicePool = mutableListOf<IntRange>()
+    val dicePool = (0 until numDie).map { 1..dieSize }
 
-    for(i in 0 until numDie) {
-        dicePool.add(1..dieSize)
-    }
+    val allPossibleDieCombinationTotals = mutableListOf<Int>()
 
-    val allPossibleDieCombinationResults = mutableListOf<Int>()
-
-    //Note: lambdas can't be recursive, so break this into another function
-    val calcCombinationResultsAgainstTargetDie = calcCombinations@ { targetDie: IntRange, remainingDicePool: List<IntRange> ->
-        if (remainingDicePool.isEmpty()) {
-            return@calcCombinations listOf<Int>()
-        }
-
-        val nextDie = remainingDicePool.first()
-
-        val combinationResultProgress = targetDie.flatMap { targetDieFace ->
-            nextDie.map { nextDieFace ->
-                targetDieFace + nextDieFace
-            }
-        }
-
-        return@calcCombinations combinationResultProgress//+ result of next recursive invocation
-    }
-
-    for(currentDieIndex in 0 until dicePool.size) {
+    for (currentDieIndex in 0 until dicePool.size) {
         val currentDie = dicePool[currentDieIndex]
-        val allOtherDice = dicePool.filterIndexed { otherDieIndex, _ ->
-            otherDieIndex != currentDieIndex
-        }
+        val reducedDicePool = dicePool.subList(currentDieIndex, dicePool.lastIndex)
 
-        allPossibleDieCombinationResults.addAll(calcCombinationResultsAgainstTargetDie(currentDie, allOtherDice))
+        allPossibleDieCombinationTotals.addAll(
+            calculateCombinationTotalsAgainstDicePool(currentDie, reducedDicePool)
+        )
     }
+
+    val numCombinationsYieldingTargetValue = allPossibleDieCombinationTotals.filter { total ->
+        total == targetValue
+    }.size
+
+    return numCombinationsYieldingTargetValue / dieSize.toDouble().pow(numDie)
+}
+
+private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, dicePool: List<IntRange>) : List<Int> {
+    if (dicePool.isEmpty()) {
+        return listOf()
+    }
+
+    val nextDie = dicePool.first()
+
+    val combinationResultProgress = targetDie.flatMap { targetDieFace ->
+        nextDie.map { nextDieFace ->
+            targetDieFace + nextDieFace
+        }
+    }
+
+    val remainingDicePool = if (dicePool.size > 1) {
+        dicePool.subList(1, dicePool.lastIndex)
+    } else {
+        listOf()
+    }
+
+    return combinationResultProgress + calculateCombinationTotalsAgainstDicePool(
+        targetDie,
+        remainingDicePool
+    )
 }
