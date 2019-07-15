@@ -25,7 +25,7 @@ private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, n
 
     for (currentDieIndex in 0 until dicePool.size) {
         val currentDie = dicePool[currentDieIndex]
-        val reducedDicePool = dicePool.subList(currentDieIndex, dicePool.lastIndex)
+        val reducedDicePool = dicePool.subList(currentDieIndex + 1, dicePool.lastIndex + 1)
 
         allPossibleDieCombinationTotals.addAll(
             calculateCombinationTotalsAgainstDicePool(currentDie, reducedDicePool)
@@ -39,27 +39,59 @@ private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, n
     return numCombinationsYieldingTargetValue / dieSize.toDouble().pow(numDie)
 }
 
-private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, dicePool: List<IntRange>) : List<Int> {
+private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, dicePool: List<IntRange>, totalProgress: List<Int>? = null) : List<Int> {
     if (dicePool.isEmpty()) {
-        return listOf()
+        return totalProgress?.toList() ?: listOf()
+    }
+
+    var currentIterationProgress = totalProgress
+
+    if (currentIterationProgress == null) {
+        currentIterationProgress = targetDie.map { it }
     }
 
     val nextDie = dicePool.first()
 
-    val combinationResultProgress = targetDie.flatMap { targetDieFace ->
+    currentIterationProgress = currentIterationProgress.flatMap { partialCombinationResult ->
         nextDie.map { nextDieFace ->
-            targetDieFace + nextDieFace
+            partialCombinationResult + nextDieFace
         }
     }
 
     val remainingDicePool = if (dicePool.size > 1) {
-        dicePool.subList(1, dicePool.lastIndex)
+        dicePool.subList(1, dicePool.lastIndex + 1)
     } else {
         listOf()
     }
 
-    return combinationResultProgress + calculateCombinationTotalsAgainstDicePool(
+    return calculateCombinationTotalsAgainstDicePool(
         targetDie,
-        remainingDicePool
+        remainingDicePool,
+        currentIterationProgress
     )
 }
+
+//private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, dicePool: List<IntRange>) : List<Int> {
+//    if (dicePool.isEmpty()) {
+//        return listOf()
+//    }
+//
+//    val nextDie = dicePool.first()
+//
+//    val combinationResultProgress = targetDie.flatMap { targetDieFace ->
+//        nextDie.map { nextDieFace ->
+//            targetDieFace + nextDieFace
+//        }
+//    }
+//
+//    val remainingDicePool = if (dicePool.size > 1) {
+//        dicePool.subList(1, dicePool.lastIndex)
+//    } else {
+//        listOf()
+//    }
+//
+//    return combinationResultProgress + calculateCombinationTotalsAgainstDicePool(
+//        targetDie,
+//        remainingDicePool
+//    )
+//}
