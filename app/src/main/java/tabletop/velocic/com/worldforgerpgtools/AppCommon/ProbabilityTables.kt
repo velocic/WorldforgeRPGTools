@@ -10,6 +10,10 @@ object ProbabilityTables {
         val threeDSixTable = (3..18).map {
             Pair(it, findProbabilityForTargetInDicePool(it, 6, 3))
         }
+        val fourDSixTable = (4..24).map {
+            Pair(it, findProbabilityForTargetInDicePool(it, 6, 4))
+        }
+
         val debug = 5
     }
 }
@@ -21,16 +25,10 @@ private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, n
 
     val dicePool = (0 until numDie).map { 1..dieSize }
 
-    val allPossibleDieCombinationTotals = mutableListOf<Int>()
-
-    for (currentDieIndex in 0 until dicePool.size) {
-        val currentDie = dicePool[currentDieIndex]
-        val reducedDicePool = dicePool.subList(currentDieIndex + 1, dicePool.lastIndex + 1)
-
-        allPossibleDieCombinationTotals.addAll(
-            calculateCombinationTotalsAgainstDicePool(currentDie, reducedDicePool)
-        )
-    }
+    val allPossibleDieCombinationTotals = calculateCombinationTotalsAgainstDicePool(
+        dicePool.first(),
+        dicePool.drop(1)
+    )
 
     val numCombinationsYieldingTargetValue = allPossibleDieCombinationTotals.filter { total ->
         total == targetValue
@@ -59,7 +57,7 @@ private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, diceP
     }
 
     val remainingDicePool = if (dicePool.size > 1) {
-        dicePool.subList(1, dicePool.lastIndex + 1)
+        dicePool.drop(1)
     } else {
         listOf()
     }
@@ -70,28 +68,3 @@ private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, diceP
         currentIterationProgress
     )
 }
-
-//private fun calculateCombinationTotalsAgainstDicePool(targetDie: IntRange, dicePool: List<IntRange>) : List<Int> {
-//    if (dicePool.isEmpty()) {
-//        return listOf()
-//    }
-//
-//    val nextDie = dicePool.first()
-//
-//    val combinationResultProgress = targetDie.flatMap { targetDieFace ->
-//        nextDie.map { nextDieFace ->
-//            targetDieFace + nextDieFace
-//        }
-//    }
-//
-//    val remainingDicePool = if (dicePool.size > 1) {
-//        dicePool.subList(1, dicePool.lastIndex)
-//    } else {
-//        listOf()
-//    }
-//
-//    return combinationResultProgress + calculateCombinationTotalsAgainstDicePool(
-//        targetDie,
-//        remainingDicePool
-//    )
-//}
