@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
+import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntries
 import kotlin.math.absoluteValue
 
@@ -26,14 +27,15 @@ class MainUserInput(
 
     }
 
-    //TODO: create probability matrix singleton object that precalculates (lazily) lookup tables
-    //for each table template type. This function will simply look up values using that utility
-//    fun updateResultChance(currentTableSize: Int, dieSize: Int, numDie: Int = 1) =
-//        if (numDie == 1) {
-//            rollRangeSize / dieSize.toDouble()
-//        } else {
-//
-//        }
+    fun updateResultChance(numDie: Int = 1, dieSize: Int) {
+        val formattedChance = ProbabilityTables.get(numDie, dieSize)
+            ?.getProbability(boundTableEntry.diceRange)
+            ?.times(100)
+            ?: throw IllegalArgumentException("${numDie}d$dieSize probability table doesn't exist.")
+
+        val fieldContent = "${"%.2f".format(formattedChance)}%"
+        percentChance.text = fieldContent
+    }
 
     fun updateResult(result: String) {
         boundTableEntry.name = result

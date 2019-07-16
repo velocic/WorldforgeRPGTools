@@ -12,7 +12,36 @@ object ProbabilityTables {
     val twoDSix = ProbabilityTable(2, 6)
     val threeDSix = ProbabilityTable(3, 6)
     val oneDOneHundred = ProbabilityTable(dieSize = 100)
+
+    fun getProbability(targetValue: Int, numDie: Int, dieSize: Int): Double {
+        val findProbabilityForCustomTable = {
+            findProbabilityForTargetInDicePool(targetValue, dieSize, numDie)
+        }
+
+        return when(numDie) {
+            1 -> when (dieSize) {
+                4 -> oneDFour.getProbability(targetValue)
+                6 -> oneDSix.getProbability(targetValue)
+                8 -> oneDEight.getProbability(targetValue)
+                10 -> oneDTen.getProbability(targetValue)
+                12 -> oneDTwelve.getProbability(targetValue)
+                20 -> oneDTwenty.getProbability(targetValue)
+                100 -> oneDOneHundred.getProbability(targetValue)
+                else -> findProbabilityForCustomTable()
+            }
+            2 -> when (dieSize) {
+                6 -> twoDSix.getProbability(targetValue)
+                else -> findProbabilityForCustomTable()
+            }
+            3 -> when (dieSize) {
+                6 -> threeDSix.getProbability(targetValue)
+                else -> findProbabilityForCustomTable()
+            }
+            else -> findProbabilityForCustomTable()
+        }
+    }
 }
+
 
 class ProbabilityTable(
     private val numDie: Int = 1,
