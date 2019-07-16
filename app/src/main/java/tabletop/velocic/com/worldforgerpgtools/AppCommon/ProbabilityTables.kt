@@ -13,12 +13,11 @@ object ProbabilityTables {
     val threeDSix = ProbabilityTable(3, 6)
     val oneDOneHundred = ProbabilityTable(dieSize = 100)
 
-    fun getProbability(targetValue: Int, numDie: Int, dieSize: Int): Double {
-        val findProbabilityForCustomTable = {
-            findProbabilityForTargetInDicePool(targetValue, dieSize, numDie)
-        }
+    //custom table lookup is indexed by Pair(numDie, dieSize)
+    val customTables = HashMap<Pair<Int, Int>, ProbabilityTable>()
 
-        return when(numDie) {
+    fun getProbability(targetValue: Int, numDie: Int, dieSize: Int): Double =
+        when(numDie) {
             1 -> when (dieSize) {
                 4 -> oneDFour.getProbability(targetValue)
                 6 -> oneDSix.getProbability(targetValue)
@@ -27,19 +26,28 @@ object ProbabilityTables {
                 12 -> oneDTwelve.getProbability(targetValue)
                 20 -> oneDTwenty.getProbability(targetValue)
                 100 -> oneDOneHundred.getProbability(targetValue)
-                else -> findProbabilityForCustomTable()
+                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
             }
             2 -> when (dieSize) {
                 6 -> twoDSix.getProbability(targetValue)
-                else -> findProbabilityForCustomTable()
+                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
             }
             3 -> when (dieSize) {
                 6 -> threeDSix.getProbability(targetValue)
-                else -> findProbabilityForCustomTable()
+                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
             }
-            else -> findProbabilityForCustomTable()
+            else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
         }
-    }
+
+//    fun getProbability(targetRange: IntRange, numDie: Int, dieSize: Int): Double =
+//        when
+
+    private fun getCustomTable(numDie: Int, dieSize: Int): ProbabilityTable =
+        customTables.getOrElse(Pair(numDie, dieSize)) {
+            val newCustomTable = ProbabilityTable(numDie, dieSize)
+            customTables[Pair(numDie, dieSize)] = newCustomTable
+            newCustomTable
+        }
 }
 
 
