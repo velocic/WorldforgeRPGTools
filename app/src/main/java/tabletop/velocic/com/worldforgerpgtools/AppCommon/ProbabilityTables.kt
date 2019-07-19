@@ -2,7 +2,10 @@ package tabletop.velocic.com.worldforgerpgtools.AppCommon
 
 import kotlin.math.pow
 
+data class ProbabilityTableKey(val numDie: Int = 1, val dieSize:Int)
+
 object ProbabilityTables {
+
     val oneDFour = ProbabilityTable(dieSize = 4)
     val oneDSix = ProbabilityTable(dieSize = 6)
     val oneDEight = ProbabilityTable(dieSize = 8)
@@ -13,12 +16,11 @@ object ProbabilityTables {
     val threeDSix = ProbabilityTable(3, 6)
     val oneDOneHundred = ProbabilityTable(dieSize = 100)
 
-    //custom table lookup is indexed by Pair(numDie, dieSize)
-    val customTables = HashMap<Pair<Int, Int>, ProbabilityTable>()
+    val customTables = HashMap<ProbabilityTableKey, ProbabilityTable>()
 
-    fun getProbability(targetValue: Int, numDie: Int, dieSize: Int): Double =
-        when(numDie) {
-            1 -> when (dieSize) {
+    fun getProbability(targetValue: Int, targetTable: ProbabilityTableKey): Double =
+        when(targetTable.numDie) {
+            1 -> when (targetTable.dieSize) {
                 4 -> oneDFour.getProbability(targetValue)
                 6 -> oneDSix.getProbability(targetValue)
                 8 -> oneDEight.getProbability(targetValue)
@@ -26,26 +28,46 @@ object ProbabilityTables {
                 12 -> oneDTwelve.getProbability(targetValue)
                 20 -> oneDTwenty.getProbability(targetValue)
                 100 -> oneDOneHundred.getProbability(targetValue)
-                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
+                else -> getCustomTable(targetTable).getProbability(targetValue)
             }
-            2 -> when (dieSize) {
+            2 -> when (targetTable.dieSize) {
                 6 -> twoDSix.getProbability(targetValue)
-                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
+                else -> getCustomTable(targetTable).getProbability(targetValue)
             }
-            3 -> when (dieSize) {
+            3 -> when (targetTable.dieSize) {
                 6 -> threeDSix.getProbability(targetValue)
-                else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
+                else -> getCustomTable(targetTable).getProbability(targetValue)
             }
-            else -> getCustomTable(numDie, dieSize).getProbability(targetValue)
+            else -> getCustomTable(targetTable).getProbability(targetValue)
         }
 
-//    fun getProbability(targetRange: IntRange, numDie: Int, dieSize: Int): Double =
-//        when
+    fun getProbability(targetRange: IntRange, targetTable: ProbabilityTableKey): Double =
+        when(targetTable.numDie) {
+            1 -> when (targetTable.dieSize) {
+                4 -> oneDFour.getProbability(targetRange)
+                6 -> oneDSix.getProbability(targetRange)
+                8 -> oneDEight.getProbability(targetRange)
+                10 -> oneDTen.getProbability(targetRange)
+                12 -> oneDTwelve.getProbability(targetRange)
+                20 -> oneDTwenty.getProbability(targetRange)
+                100 -> oneDOneHundred.getProbability(targetRange)
+                else -> getCustomTable(targetTable).getProbability(targetRange)
+            }
+            2 -> when (targetTable.dieSize) {
+                6 -> twoDSix.getProbability(targetRange)
+                else -> getCustomTable(targetTable).getProbability(targetRange)
+            }
+            3 -> when (targetTable.dieSize) {
+                6 -> threeDSix.getProbability(targetRange)
+                else -> getCustomTable(targetTable).getProbability(targetRange)
+            }
+            else -> getCustomTable(targetTable).getProbability(targetRange)
+        }
 
-    private fun getCustomTable(numDie: Int, dieSize: Int): ProbabilityTable =
-        customTables.getOrElse(Pair(numDie, dieSize)) {
-            val newCustomTable = ProbabilityTable(numDie, dieSize)
-            customTables[Pair(numDie, dieSize)] = newCustomTable
+    private fun getCustomTable(targetTable: ProbabilityTableKey): ProbabilityTable =
+        customTables.getOrElse(targetTable) {
+            val newCustomTable = ProbabilityTable(targetTable.numDie, targetTable.dieSize)
+            customTables[targetTable] = newCustomTable
             newCustomTable
         }
 }
