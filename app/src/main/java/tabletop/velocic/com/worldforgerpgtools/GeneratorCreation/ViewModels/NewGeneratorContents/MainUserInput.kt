@@ -13,38 +13,48 @@ import java.lang.IllegalArgumentException
 import kotlin.math.absoluteValue
 
 class MainUserInput(
-    parent: ViewGroup,
-    private val boundTableEntry: TableEntries
+    parent: ViewGroup
 )
 {
+    private var boundTableEntry: TableEntries? = null
     private val percentChance = parent.generator_contents_percent_chance as TextView
     private val result = parent.generator_contents_result as EditText
     private val rollRange = parent.generator_contents_roll_range as TextView
+    private var isInitialized = false
 
-    init {
-        result.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                boundTableEntry.name = s?.toString()
-                    ?: throw IllegalArgumentException("Attempted to store a user-provided table" +
-                        "result entry, but unexpectedly received a bad Editable. ")
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-        rollRange.text = boundTableEntry.diceRangeString
-    }
+    fun bind(tableEntry: TableEntries) {
+        if (!isInitialized ) {
+            lateInitializeAtFirstBinding()
+        }
 
-    fun updateFromBackingData() {
-        rollRange.text = boundTableEntry.diceRangeString
-        result.setText(boundTableEntry.name, TextView.BufferType.EDITABLE)
+        boundTableEntry = tableEntry
+
+        rollRange.text = boundTableEntry?.diceRangeString
+        result.setText(boundTableEntry?.name, TextView.BufferType.EDITABLE)
     }
 
     fun updateResultChance(numDie: Int = 1, dieSize: Int) {
+        val checkedBoundTableEntry = boundTableEntry ?: return
+
         val scaledProbability = ProbabilityTables.getProbability(
-            boundTableEntry.diceRange, ProbabilityTableKey(numDie, dieSize)
+            checkedBoundTableEntry.diceRange, ProbabilityTableKey(numDie, dieSize)
         ) * 100
 
         val fieldContent = "${"%.2f".format(scaledProbability)}%"
         percentChance.text = fieldContent
+    }
+
+    private fun lateInitializeAtFirstBinding() {
+        result.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                boundTableEntry?.name = s?.toString()
+                    ?: throw IllegalArgumentException("Attempted to store a user-provided table" +
+                            "result entry, but unexpectedly received a bad Editable. ")
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        isInitialized = true
     }
 }

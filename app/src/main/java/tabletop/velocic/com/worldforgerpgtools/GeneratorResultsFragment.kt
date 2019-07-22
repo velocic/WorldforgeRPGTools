@@ -55,7 +55,7 @@ class GeneratorResultsFragment : androidx.fragment.app.Fragment()
         val resultSet = previousResults ?: ResultRoller(rootCategory).generateResultSet(generatorPath, actualNumberOfResults)
 
         generated_results_table_name.text = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory)?.name
-        generated_item_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activityInstance)
+        generated_item_list.layoutManager = LinearLayoutManager(activityInstance)
         generated_item_list.adapter = GeneratorResultsAdapter(activityInstance, resultSet) {
             saveState()
         }
@@ -97,10 +97,10 @@ class GeneratorResultsFragment : androidx.fragment.app.Fragment()
 }
 
 private class GeneratorResultsAdapter(
-        private val activity: androidx.fragment.app.FragmentActivity,
+        private val activity: FragmentActivity,
         private val results: List<ResultItem>,
         private val onPreScreenTransition: () -> Unit
-) : androidx.recyclerview.widget.RecyclerView.Adapter<GeneratorResultsViewHolder>()
+) : RecyclerView.Adapter<GeneratorResultsViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorResultsViewHolder {
         val view = LayoutInflater.from(activity).inflate(
@@ -123,9 +123,9 @@ private class GeneratorResultsAdapter(
 
 private class GeneratorResultsViewHolder(
         view: View,
-        private val fragmentManager: androidx.fragment.app.FragmentManager,
+        private val fragmentManager: FragmentManager,
         private val onPreScreenTransition: () -> Unit
-): androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener
+): RecyclerView.ViewHolder(view), View.OnClickListener
 {
     private val resultQuantity = view.edit_text_generator_result_quantity
     private val resultName = view.edit_text_generator_result_name

@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
+import kotlinx.android.synthetic.main.list_item_generator_contents.view.*
+import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents.MainUserInput
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntries
@@ -28,6 +32,11 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         } ?: customTableSize?.let {
             initializeGeneratorFromCustomTable(customTableSize)
         } ?: throw IllegalStateException("Missing necessary arguments to initialize a new generator.")
+
+        val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
+            " a LayoutInflater from a null Activity instance")
+
+        new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, layoutInflater)
     }
 
     private fun initializeGeneratorFromTemplate(tableTemplate: GeneratorTableTemplate) =
@@ -69,5 +78,36 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
                     Pair(ARG_CUSTOM_TABLE_SIZE, customTableSize)
                 )
             }
+    }
+}
+
+class NewGeneratorContentsAdapter(
+    private val generator: Generator,
+    private val layoutInflater: LayoutInflater
+) : RecyclerView.Adapter<NewGeneratorContentsViewHolder>()
+{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewGeneratorContentsViewHolder {
+        val view = layoutInflater.inflate(R.layout.list_item_generator_contents, parent, false)
+
+        return NewGeneratorContentsViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = generator.table.size
+
+    override fun onBindViewHolder(holder: NewGeneratorContentsViewHolder, position: Int) =
+        holder.bind(generator.table[position], dieSize = generator.table.size)
+
+    override fun getItemViewType(position: Int): Int = R.layout.list_item_generator_contents
+}
+
+class NewGeneratorContentsViewHolder(
+    view: View
+) : RecyclerView.ViewHolder(view)
+{
+    private val mainUserInput = MainUserInput(view.generator_contents_main_body as ViewGroup)
+
+    fun bind(tableEntry: TableEntries, numDie: Int = 1, dieSize: Int) {
+        mainUserInput.bind(tableEntry)
+        mainUserInput.updateResultChance(numDie, dieSize)
     }
 }
