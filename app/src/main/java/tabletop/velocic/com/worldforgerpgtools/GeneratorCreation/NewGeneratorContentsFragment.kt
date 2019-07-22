@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
 import kotlinx.android.synthetic.main.list_item_generator_contents.view.*
@@ -36,6 +37,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
             " a LayoutInflater from a null Activity instance")
 
+        new_generator_contents.layoutManager = LinearLayoutManager(activity)
         new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, layoutInflater)
     }
 
