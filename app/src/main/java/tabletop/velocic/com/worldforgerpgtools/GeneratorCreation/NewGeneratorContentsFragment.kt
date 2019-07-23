@@ -75,16 +75,49 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
     }
 }
 
-class NewGeneratorContentsAdapter(
+private class NewGeneratorContentsAdapter(
     private val generator: Generator,
     private val tableData: ProbabilityTableKey,
     private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<NewGeneratorContentsViewHolder>()
 {
+    private val combineRowsEventState = CombineRowsEventStateTracker()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewGeneratorContentsViewHolder {
         val view = layoutInflater.inflate(R.layout.list_item_generator_contents, parent, false)
 
-        return NewGeneratorContentsViewHolder(view)
+        val combineRowsEventHandler = combineRowsEventHandler@{row: Int, isCancelRequest: Boolean ->
+            if (isCancelRequest) {
+                combineRowsEventState.initialRow = 0
+                combineRowsEventState.currentlyProcessingCombineEvent = false
+                return@combineRowsEventHandler
+            }
+
+            if (combineRowsEventState.currentlyProcessingCombineEvent) {
+                val rowsBeforeTargetRange = generator.table.filterIndexed { index, _ ->
+                    index < minOf(combineRowsEventState.initialRow, row)
+                }
+                val rowsAfterTargetRange = generator.table.filterIndexed { index, _ ->
+                    index > maxOf(combineRowsEventState.initialRow, row)
+                }
+                val collapsedRow = TableEntries(
+                    generator.table[combineRowsEventState.initialRow].name,
+                    generator.table[combineRowsEventState.initialRow].metadata,
+                    "${minOf(combineRowsEventState.initialRow, row)}-${maxOf(combineRowsEventState.initialRow, row)}",
+                    generator.table[combineRowsEventState.initialRow].rerollSubTable
+                )
+
+                generator.table = (rowsBeforeTargetRange + collapsedRow + rowsAfterTargetRange).toTypedArray()
+                notifyDataSetChanged()
+
+                return@combineRowsEventHandler
+            }
+
+            combineRowsEventState.initialRow = row
+            combineRowsEventState.currentlyProcessingCombineEvent = true
+        }
+
+        return NewGeneratorContentsViewHolder(view, combineRowsEventHandler)
     }
 
     override fun getItemCount(): Int = generator.table.size
@@ -95,8 +128,9 @@ class NewGeneratorContentsAdapter(
     override fun getItemViewType(position: Int): Int = R.layout.list_item_generator_contents
 }
 
-class NewGeneratorContentsViewHolder(
-    view: View
+private class NewGeneratorContentsViewHolder(
+    view: View,
+    combineRowsEventHandler: (Int, Boolean) -> Unit
 ) : RecyclerView.ViewHolder(view)
 {
     private val mainUserInput = MainUserInput(view.generator_contents_main_body as ViewGroup)
@@ -106,3 +140,5 @@ class NewGeneratorContentsViewHolder(
         mainUserInput.updateResultChance(tableData)
     }
 }
+
+private data class CombineRowsEventStateTracker(var initialRow: Int = 0, var currentlyProcessingCombineEvent: Boolean = false)
