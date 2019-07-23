@@ -72,12 +72,11 @@ object ProbabilityTables {
         }
 }
 
-
 class ProbabilityTable(
     private val numDie: Int = 1,
     private val dieSize: Int
 ) {
-    private val tableSize = (dieSize * numDie) - (numDie - 1)
+    private val tableSize = getProbabilityTableSize(numDie, dieSize)
     private val tableRange = numDie..(dieSize * numDie)
     private val lookupTable = Array(tableSize) { Pair(false, 0.0) }
 
@@ -105,6 +104,12 @@ class ProbabilityTable(
             findProbabilityForTargetInDicePool(targetValue, dieSize, numDie)
         }.reduce { accumulator, probability -> accumulator + probability }
 }
+
+fun getProbabilityTableSizeFromKey(tableData: ProbabilityTableKey): Int =
+    (tableData.dieSize * tableData.numDie) - (tableData.numDie - 1)
+
+fun getProbabilityTableSize(numDie: Int = 1, dieSize: Int): Int =
+    getProbabilityTableSizeFromKey(ProbabilityTableKey(numDie = numDie, dieSize = dieSize))
 
 private fun findProbabilityForTargetInDicePool(targetValue: Int, dieSize: Int, numDie: Int = 1) : Double {
     if (numDie == 1) {

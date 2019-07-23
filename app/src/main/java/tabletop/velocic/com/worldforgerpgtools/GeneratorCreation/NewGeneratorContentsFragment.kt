@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
 import kotlinx.android.synthetic.main.list_item_generator_contents.view.*
+import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTableKey
+import tabletop.velocic.com.worldforgerpgtools.AppCommon.getProbabilityTableSizeFromKey
 import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents.MainUserInput
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
@@ -18,6 +20,7 @@ import tabletop.velocic.com.worldforgerpgtools.R
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
     private val newGenerator = Generator("Placeholder Name", 1, arrayOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
+    lateinit var tableData: ProbabilityTableKey
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_new_generator_contents, container, false)
@@ -29,36 +32,25 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         val customTableSize = arguments?.getInt(ARG_CUSTOM_TABLE_SIZE)
 
         tableTemplate?.let {
-            initializeGeneratorFromTemplate(it)
+            tableData = it.tableData
         } ?: customTableSize?.let {
-            initializeGeneratorFromCustomTable(customTableSize)
+            tableData = ProbabilityTableKey(dieSize = it)
         } ?: throw IllegalStateException("Missing necessary arguments to initialize a new generator.")
+
+        initializeGenerator(tableData)
 
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
             " a LayoutInflater from a null Activity instance")
 
         new_generator_contents.layoutManager = LinearLayoutManager(activity)
-        new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, layoutInflater)
+        new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, tableData, layoutInflater)
     }
 
-    private fun initializeGeneratorFromTemplate(tableTemplate: GeneratorTableTemplate) =
-        when (tableTemplate) {
-            GeneratorTableTemplate.OneDFour -> newGenerator.table = generateBlankTableEntries(4)
-            GeneratorTableTemplate.OneDSix -> newGenerator.table = generateBlankTableEntries(6)
-            GeneratorTableTemplate.OneDEight -> newGenerator.table = generateBlankTableEntries(8)
-            GeneratorTableTemplate.OneDTen -> newGenerator.table = generateBlankTableEntries(10)
-            GeneratorTableTemplate.OneDTwelve -> newGenerator.table = generateBlankTableEntries(12)
-            GeneratorTableTemplate.OneDTwenty -> newGenerator.table = generateBlankTableEntries(20)
-            GeneratorTableTemplate.TwoDSix -> newGenerator.table = generateBlankTableEntries(11, 2)
-            GeneratorTableTemplate.ThreeDSix -> newGenerator.table = generateBlankTableEntries(16, 3)
-            GeneratorTableTemplate.OneDOneHundred -> newGenerator.table = generateBlankTableEntries(100)
-        }
-
-    private fun initializeGeneratorFromCustomTable(tableSize: Int) {
-        newGenerator.table = generateBlankTableEntries(tableSize)
+    private fun initializeGenerator(tableData: ProbabilityTableKey) {
+        newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
 
-    private fun generateBlankTableEntries(numEntries: Int, startIndex: Int = 1) : Array<TableEntries> =
+    private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : Array<TableEntries> =
         Array(numEntries) { currentIndex ->
             TableEntries("", mapOf(), "${currentIndex + startIndex}", null)
         }
@@ -85,6 +77,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 
 class NewGeneratorContentsAdapter(
     private val generator: Generator,
+    private val tableData: ProbabilityTableKey,
     private val layoutInflater: LayoutInflater
 ) : RecyclerView.Adapter<NewGeneratorContentsViewHolder>()
 {
@@ -97,7 +90,7 @@ class NewGeneratorContentsAdapter(
     override fun getItemCount(): Int = generator.table.size
 
     override fun onBindViewHolder(holder: NewGeneratorContentsViewHolder, position: Int) =
-        holder.bind(generator.table[position], dieSize = generator.table.size)
+        holder.bind(generator.table[position], tableData)
 
     override fun getItemViewType(position: Int): Int = R.layout.list_item_generator_contents
 }
@@ -108,8 +101,8 @@ class NewGeneratorContentsViewHolder(
 {
     private val mainUserInput = MainUserInput(view.generator_contents_main_body as ViewGroup)
 
-    fun bind(tableEntry: TableEntries, numDie: Int = 1, dieSize: Int) {
+    fun bind(tableEntry: TableEntries, tableData: ProbabilityTableKey) {
         mainUserInput.bind(tableEntry)
-        mainUserInput.updateResultChance(numDie, dieSize)
+        mainUserInput.updateResultChance(tableData)
     }
 }

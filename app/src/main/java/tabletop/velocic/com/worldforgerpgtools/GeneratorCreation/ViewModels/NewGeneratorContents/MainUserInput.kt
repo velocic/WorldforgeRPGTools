@@ -33,11 +33,11 @@ class MainUserInput(
         result.setText(boundTableEntry?.name, TextView.BufferType.EDITABLE)
     }
 
-    fun updateResultChance(numDie: Int = 1, dieSize: Int) {
+    fun updateResultChance(tableData: ProbabilityTableKey) {
         val checkedBoundTableEntry = boundTableEntry ?: return
 
         val scaledProbability = ProbabilityTables.getProbability(
-            checkedBoundTableEntry.diceRange, ProbabilityTableKey(numDie, dieSize)
+            checkedBoundTableEntry.diceRange, tableData
         ) * 100
 
         val fieldContent = "${"%.2f".format(scaledProbability)}%"
