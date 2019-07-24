@@ -142,6 +142,8 @@ private class NewGeneratorContentsAdapter(
 
         combineRowsEventState.initialRowIndex = rowIndex
         combineRowsEventState.currentlyProcessingCombineEvent = true
+
+        notifyDataSetChanged()
     }
 }
 
@@ -160,7 +162,7 @@ private class NewGeneratorContentsViewHolder(
         mergeRowsClickHandler = combineRowsEventHandler
     )
     private val mergeRowsFlow = MergeRowsFlowInteractions(
-        rowView.generator_contents_cancel_merge_rows,
+        rowView.generator_contents_merge_rows_buttons as ViewGroup,
         cancelCombineRowsEventHandler
     )
 
@@ -191,12 +193,14 @@ private class NewGeneratorContentsViewHolder(
     private fun transitionToMergeRowsFlow(isInitialSelectedRowForMerge: Boolean) {
         if (isInitialSelectedRowForMerge) {
             itemView.setBackgroundColor(selectedRowColor)
-            mergeRowsFlow.show()
+            mergeRowsFlow.show(isInitialSelectedRowForMerge)
             primaryFlow.hide()
+
+            return
         }
 
         itemView.setBackgroundColor(unselectedRowColor)
-        mergeRowsFlow.hide()
+        mergeRowsFlow.show(isInitialSelectedRowForMerge)
         primaryFlow.hide()
     }
 
