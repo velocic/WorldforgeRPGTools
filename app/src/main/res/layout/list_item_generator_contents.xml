@@ -33,4 +33,15 @@
         app:layout_constraintBottom_toBottomOf="@id/generator_contents_main_body"
     />
 
+    <ImageView
+        android:id="@+id/generator_contents_cancel_merge_rows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/generator_contents_main_body"
+        app:layout_constraintBottom_toBottomOf="@id/generator_contents_main_body"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
