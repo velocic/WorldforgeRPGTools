@@ -18,6 +18,13 @@ class TableEntries(
     val diceRange
         get() = parseDiceRangeString(diceRangeString)
 
+    fun copy(other: TableEntries) {
+        name = other.name
+        metadata = other.metadata
+        diceRangeString = other.diceRangeString
+        rerollSubTable = other.rerollSubTable
+    }
+
     fun getSubTableRollRange() : IntRange {
         val nullCheckedSubTable = rerollSubTable?.let {
             it

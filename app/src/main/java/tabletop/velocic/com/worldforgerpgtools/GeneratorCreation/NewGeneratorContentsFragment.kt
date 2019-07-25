@@ -95,6 +95,7 @@ private class NewGeneratorContentsAdapter(
         return NewGeneratorContentsViewHolder(
             view,
             this::combineRowsEventHandler,
+            this::expandCombinedRowsEventHandler,
             resources
         )
     }
@@ -102,7 +103,7 @@ private class NewGeneratorContentsAdapter(
     override fun getItemCount(): Int = generator.table.size
 
     override fun onBindViewHolder(holder: NewGeneratorContentsViewHolder, position: Int) =
-        holder.bind(position, combineRowsEventState, generator.table[position], tableData)
+        holder.bind(position, generator.table[position], combineRowsEventState, tableData)
 
     override fun getItemViewType(position: Int): Int = R.layout.list_item_generator_contents
 
@@ -150,11 +151,30 @@ private class NewGeneratorContentsAdapter(
 
         notifyDataSetChanged()
     }
+
+    private fun expandCombinedRowsEventHandler(rowIndex: Int) {
+        val targetRow = generator.table[rowIndex]
+        val rangeToSplit = targetRow.diceRange
+
+        if (rangeToSplit.first == rangeToSplit.last) {
+            return
+        }
+
+        val rowsBeforeTargetRange = generator.table.filter { it.diceRange.first < rangeToSplit.first }
+        val rowsAfterTargetRange = generator.table.filter { it.diceRange.last > rangeToSplit.last }
+        val newRows = rangeToSplit.map { TableEntries("", mapOf(), "$it", null) }
+        newRows[0].copy(targetRow)
+        newRows[0].diceRangeString = "${rangeToSplit.first}"
+
+        generator.table = (rowsBeforeTargetRange + newRows + rowsAfterTargetRange).toTypedArray()
+        notifyDataSetChanged()
+    }
 }
 
 private class NewGeneratorContentsViewHolder(
     rowView: View,
     combineRowsEventHandler: (Int, Boolean) -> Unit,
+    expandCombinedRowsEventHandler: (Int) -> Unit,
     resources: Resources
 ) : RecyclerView.ViewHolder(rowView)
 {
@@ -163,7 +183,8 @@ private class NewGeneratorContentsViewHolder(
     private val mainUserInput = MainUserInput(rowView.generator_contents_main_body as ViewGroup)
     private val primaryFlow = PrimaryFlowInteractions(
         rowView.generator_contents_main_buttons as ViewGroup,
-        mergeRowsClickHandler = combineRowsEventHandler
+        mergeRowsClickHandler = combineRowsEventHandler,
+        splitMergedRowsClickHandler = expandCombinedRowsEventHandler
     )
     private val mergeRowsFlow = MergeRowsFlowInteractions(
         rowView.generator_contents_merge_rows_buttons as ViewGroup,
@@ -172,13 +193,14 @@ private class NewGeneratorContentsViewHolder(
 
     fun bind(
         rowIndex: Int,
+        rowData: TableEntries,
         combineRowsEventState: CombineRowsEventStateTracker,
-        tableEntry: TableEntries,
         tableData: ProbabilityTableKey
     ) {
-        mainUserInput.bind(tableEntry)
+        mainUserInput.bind(rowData)
         mainUserInput.updateResultChance(tableData)
-        updateRowIndex(rowIndex)
+        primaryFlow.bind(rowIndex, rowData)
+        mergeRowsFlow.bind(rowIndex)
 
         if (combineRowsEventState.currentlyProcessingCombineEvent) {
             transitionToMergeRowsFlow(rowIndex == combineRowsEventState.initialRowIndex)
@@ -187,11 +209,6 @@ private class NewGeneratorContentsViewHolder(
         }
 
         transitionToPrimaryFlow()
-    }
-
-    private fun updateRowIndex(rowIndex: Int) {
-        primaryFlow.rowIndex = rowIndex
-        mergeRowsFlow.rowIndex = rowIndex
     }
 
     private fun transitionToMergeRowsFlow(isInitialSelectedRowForMerge: Boolean) {
