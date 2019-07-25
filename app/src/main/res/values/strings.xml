@@ -15,6 +15,8 @@
     <string name="title_new_generator_name">New Generator</string>
     <string name="message_new_generator_name">Enter a name</string>
     <string name="generator_template_label_text">Templates</string>
+    <string name="result_item_details_title">Add details for "%s"</string>
+    <string name="result_item_details_add_row_button_text">Add Field</string>
     <string name="distribution_1d4">1d4</string>
     <string name="distribution_1d6">1d6</string>
     <string name="distribution_1d8">1d8</string>

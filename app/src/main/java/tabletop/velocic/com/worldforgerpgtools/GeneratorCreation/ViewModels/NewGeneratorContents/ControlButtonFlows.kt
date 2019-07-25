@@ -14,8 +14,8 @@ class PrimaryFlowInteractions(
     private val splitMergedRowsClickHandler: (Int) -> Unit = {}
 )
 {
-    var rowData: TableEntries? = null
-    var rowIndex = 0
+    private var rowData: TableEntries? = null
+    private var rowIndex = 0
 
     init {
         parent.generator_contents_main_buttons_edit_details.setOnClickListener { editDetailsClickHandler() }
@@ -51,7 +51,7 @@ class MergeRowsFlowInteractions(
     private val confirmMergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> }
 )
 {
-    var rowIndex = 0
+    private var rowIndex = 0
 
     init {
         parent.generator_contents_select_second_merge_target.setOnClickListener { confirmMergeRowsClickHandler(rowIndex, false) }

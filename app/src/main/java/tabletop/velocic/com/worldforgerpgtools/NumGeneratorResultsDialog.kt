@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.dialog_num_generator_results.view.*
 
-class NumGeneratorResultsFragment : androidx.fragment.app.DialogFragment()
+class NumGeneratorResultsDialog : androidx.fragment.app.DialogFragment()
 {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_num_generator_results, null)
@@ -17,7 +17,7 @@ class NumGeneratorResultsFragment : androidx.fragment.app.DialogFragment()
         dialogView.picker_num_generator_results.maxValue = 999
 
         val generatorPath = arguments?.getString(ARG_GENERATOR_PATH)
-            ?: throw IllegalStateException("NumGeneratorResultsFragment requires a target Generator" +
+            ?: throw IllegalStateException("NumGeneratorResultsDialog requires a target Generator" +
                 " path to invoke after a result has been selected, but none was provided.")
 
         val sendResult = { resultCode: Int, numResultsToGenerate: Int ->
@@ -27,7 +27,7 @@ class NumGeneratorResultsFragment : androidx.fragment.app.DialogFragment()
             }
 
             targetFragment?.onActivityResult(targetRequestCode, resultCode, intent)
-                ?: throw IllegalStateException("Attempted to send NumGeneratorResultsFragment dialog" +
+                ?: throw IllegalStateException("Attempted to send NumGeneratorResultsDialog dialog" +
                     " result to the calling Fragment, however that fragment was somehow null.")
         }
 
@@ -44,9 +44,9 @@ class NumGeneratorResultsFragment : androidx.fragment.app.DialogFragment()
         const val EXTRA_NUM_GENERATOR_RESULTS = "tabletop.velocic.com.worldforgerpgtools.num_generator_results"
         const val EXTRA_GENERATOR_PATH = "tabletop.velocic.com.worldforgerpgtools.generator_path"
 
-        fun newInstance(generatorPath: String) : NumGeneratorResultsFragment
+        fun newInstance(generatorPath: String) : NumGeneratorResultsDialog
         {
-            val fragment = NumGeneratorResultsFragment()
+            val fragment = NumGeneratorResultsDialog()
 
             fragment.arguments = Bundle().apply {
                 putString(ARG_GENERATOR_PATH, generatorPath)

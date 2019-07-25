@@ -55,8 +55,8 @@ class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
         }
 
         if (requestCode == REQUEST_NUM_GENERATOR_RESULTS) {
-            val numResultsToGenerate = data.getIntExtra(NumGeneratorResultsFragment.EXTRA_NUM_GENERATOR_RESULTS, 1)
-            val generatorPath = data.getStringExtra(NumGeneratorResultsFragment.EXTRA_GENERATOR_PATH)
+            val numResultsToGenerate = data.getIntExtra(NumGeneratorResultsDialog.EXTRA_NUM_GENERATOR_RESULTS, 1)
+            val generatorPath = data.getStringExtra(NumGeneratorResultsDialog.EXTRA_GENERATOR_PATH)
             val generatorFragment = GeneratorResultsFragment.newInstance(generatorPath, numResultsToGenerate)
             activity?.supportFragmentManager?.beginTransaction()?.run {
                 replace(R.id.fragment_container, generatorFragment)
@@ -138,7 +138,7 @@ private class GeneratorSelectionAdapter(
         val longClickHandler: (GeneratorOrCategoryViewHolder) -> Unit = { viewHolder ->
             if (viewHolder.category == null) {
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-                val dialog = NumGeneratorResultsFragment.newInstance(currentCategoryNode.getGeneratorFullPath(viewHolder.generator))
+                val dialog = NumGeneratorResultsDialog.newInstance(currentCategoryNode.getGeneratorFullPath(viewHolder.generator))
                 dialog.setTargetFragment(targetFragment, GeneratorSelectionFragment.REQUEST_NUM_GENERATOR_RESULTS)
                 dialog.show(fragmentManager, GeneratorSelectionFragment.DIALOG_NUM_GENERATOR_RESULTS)
             }
