@@ -9,18 +9,21 @@ import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntrie
 
 class PrimaryFlowInteractions(
     private val parent: ViewGroup,
-    private val editDetailsClickHandler: () -> Unit = {},
-    private val mergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> },
-    private val splitMergedRowsClickHandler: (Int) -> Unit = {}
+    editDetailsClickHandler: (Int, String) -> Unit = { _, _ -> },
+    mergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> },
+    splitMergedRowsClickHandler: (Int) -> Unit = {}
 )
 {
     private var rowData: TableEntries? = null
     private var rowIndex = 0
 
     init {
-        parent.generator_contents_main_buttons_edit_details.setOnClickListener { editDetailsClickHandler() }
         parent.generator_contents_main_buttons_merge_range.setOnClickListener { mergeRowsClickHandler(rowIndex, false) }
         parent.generator_contents_main_buttons_split_range.setOnClickListener { splitMergedRowsClickHandler(rowIndex) }
+        parent.generator_contents_main_buttons_edit_details.setOnClickListener {
+            val rowName = rowData?.name ?: ""
+            editDetailsClickHandler(rowIndex, rowName)
+        }
     }
 
     fun bind(rowIndex: Int, rowData: TableEntries) {
@@ -48,7 +51,7 @@ class PrimaryFlowInteractions(
 
 class MergeRowsFlowInteractions(
     private val parent: ViewGroup,
-    private val confirmMergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> }
+    confirmMergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> }
 )
 {
     private var rowIndex = 0

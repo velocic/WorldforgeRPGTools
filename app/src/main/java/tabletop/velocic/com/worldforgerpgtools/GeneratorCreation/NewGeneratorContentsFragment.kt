@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
@@ -48,8 +49,18 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
             " a LayoutInflater from a null Activity instance")
 
+        val fragmentManager = activity?.supportFragmentManager ?: throw IllegalStateException("Failed to retrieve" +
+            " a required FragmentManager instance.")
+
         new_generator_contents.layoutManager = LinearLayoutManager(activity)
-        new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, tableData, layoutInflater, resources)
+        new_generator_contents.adapter = NewGeneratorContentsAdapter(
+            newGenerator,
+            tableData,
+            layoutInflater,
+            resources,
+            fragmentManager,
+            this
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -92,7 +103,9 @@ private class NewGeneratorContentsAdapter(
     private val generator: Generator,
     private val tableData: ProbabilityTableKey,
     private val layoutInflater: LayoutInflater,
-    private val resources: Resources
+    private val resources: Resources,
+    private val fragmentManager: FragmentManager,
+    private val targetFragment: NewGeneratorContentsFragment
 ) : RecyclerView.Adapter<NewGeneratorContentsViewHolder>()
 {
     private val combineRowsEventState = CombineRowsEventStateTracker()
@@ -104,6 +117,7 @@ private class NewGeneratorContentsAdapter(
             view,
             this::combineRowsEventHandler,
             this::expandCombinedRowsEventHandler,
+            this::editDetailsEventHandler,
             resources
         )
     }
@@ -177,12 +191,23 @@ private class NewGeneratorContentsAdapter(
         generator.table = (rowsBeforeTargetRange + newRows + rowsAfterTargetRange).toTypedArray()
         notifyDataSetChanged()
     }
+
+    private fun editDetailsEventHandler(rowIndex: Int, resultItemName: String) {
+        val resultItemDetailsFragment = ResultItemDetailsFragment.newInstance(rowIndex, resultItemName)
+        resultItemDetailsFragment.setTargetFragment(targetFragment, NewGeneratorContentsFragment.REQUEST_RESULT_ITEM_DETAILS)
+
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, resultItemDetailsFragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }
 
 private class NewGeneratorContentsViewHolder(
     rowView: View,
     combineRowsEventHandler: (Int, Boolean) -> Unit,
     expandCombinedRowsEventHandler: (Int) -> Unit,
+    editDetailsEventHandler: (Int, String) -> Unit,
     resources: Resources
 ) : RecyclerView.ViewHolder(rowView)
 {
@@ -191,6 +216,7 @@ private class NewGeneratorContentsViewHolder(
     private val mainUserInput = MainUserInput(rowView.generator_contents_main_body as ViewGroup)
     private val primaryFlow = PrimaryFlowInteractions(
         rowView.generator_contents_main_buttons as ViewGroup,
+        editDetailsClickHandler = editDetailsEventHandler,
         mergeRowsClickHandler = combineRowsEventHandler,
         splitMergedRowsClickHandler = expandCombinedRowsEventHandler
     )
