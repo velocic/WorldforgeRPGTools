@@ -95,7 +95,6 @@ private class NewGeneratorContentsAdapter(
         return NewGeneratorContentsViewHolder(
             view,
             this::combineRowsEventHandler,
-            {},
             resources
         )
     }
@@ -108,9 +107,14 @@ private class NewGeneratorContentsAdapter(
     override fun getItemViewType(position: Int): Int = R.layout.list_item_generator_contents
 
     private fun combineRowsEventHandler(rowIndex: Int, isCancelRequest: Boolean) {
-        if (isCancelRequest) {
+        val clearEventState = {
             combineRowsEventState.initialRowIndex = 0
             combineRowsEventState.currentlyProcessingCombineEvent = false
+        }
+
+        if (isCancelRequest) {
+            clearEventState()
+            notifyDataSetChanged()
             return
         }
 
@@ -135,8 +139,9 @@ private class NewGeneratorContentsAdapter(
             )
 
             generator.table = (rowsBeforeTargetRange + collapsedRow + rowsAfterTargetRange).toTypedArray()
-            notifyDataSetChanged()
 
+            clearEventState()
+            notifyDataSetChanged()
             return
         }
 
@@ -150,7 +155,6 @@ private class NewGeneratorContentsAdapter(
 private class NewGeneratorContentsViewHolder(
     rowView: View,
     combineRowsEventHandler: (Int, Boolean) -> Unit,
-    cancelCombineRowsEventHandler: () -> Unit,
     resources: Resources
 ) : RecyclerView.ViewHolder(rowView)
 {
@@ -163,7 +167,7 @@ private class NewGeneratorContentsViewHolder(
     )
     private val mergeRowsFlow = MergeRowsFlowInteractions(
         rowView.generator_contents_merge_rows_buttons as ViewGroup,
-        cancelCombineRowsEventHandler
+        combineRowsEventHandler
     )
 
     fun bind(

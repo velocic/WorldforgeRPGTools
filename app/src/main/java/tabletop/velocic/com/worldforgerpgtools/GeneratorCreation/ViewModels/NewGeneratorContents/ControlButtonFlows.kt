@@ -26,37 +26,38 @@ class PrimaryFlowInteractions(
     }
 
     fun hide() {
-        parent.visibility = View.GONE
+        parent.visibility = View.INVISIBLE
     }
 }
 
 class MergeRowsFlowInteractions(
     private val parent: ViewGroup,
-    val cancelMergeRowsClickHandler: () -> Unit = {}
+    val confirmMergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> }
 )
 {
     var rowIndex = 0
 
     init {
-        parent.generator_contents_cancel_merge_rows.setOnClickListener { cancelMergeRowsClickHandler() }
+        parent.generator_contents_select_second_merge_target.setOnClickListener { confirmMergeRowsClickHandler(rowIndex, false) }
+        parent.generator_contents_cancel_merge_rows.setOnClickListener { confirmMergeRowsClickHandler(rowIndex, true) }
     }
 
     fun show(isInitialSelectedRowForMerge: Boolean) {
+        parent.visibility = View.VISIBLE
+
         if (isInitialSelectedRowForMerge) {
             parent.generator_contents_cancel_merge_rows.visibility = View.VISIBLE
-            parent.generator_contents_select_second_merge_target.visibility = View.GONE
+            parent.generator_contents_select_second_merge_target.visibility = View.INVISIBLE
             return
         }
 
-        parent.generator_contents_cancel_merge_rows.visibility = View.GONE
+        parent.generator_contents_cancel_merge_rows.visibility = View.INVISIBLE
         parent.generator_contents_select_second_merge_target.visibility = View.VISIBLE
-
-        parent.visibility = View.VISIBLE
     }
 
     fun hide() {
-        parent.visibility = View.GONE
+        parent.visibility = View.INVISIBLE
         parent.generator_contents_cancel_merge_rows.visibility = View.GONE
-        parent.generator_contents_select_second_merge_target.visibility = View.GONE
+        parent.generator_contents_select_second_merge_target.visibility = View.INVISIBLE
     }
 }
