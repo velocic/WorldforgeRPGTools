@@ -1,5 +1,6 @@
 package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
 
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,6 +52,12 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         new_generator_contents.adapter = NewGeneratorContentsAdapter(newGenerator, tableData, layoutInflater, resources)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //TODO: attach response detail data from ResultItemDetailsFragment to correct row entry
+    }
+
     private fun initializeGenerator(tableData: ProbabilityTableKey) {
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
@@ -61,6 +68,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         }
 
     companion object {
+        const val REQUEST_RESULT_ITEM_DETAILS = 0
         private const val ARG_GENERATOR_TABLE_TEMPLATE = "generator_table_template"
         private const val ARG_CUSTOM_TABLE_SIZE = "custom_table_size"
 

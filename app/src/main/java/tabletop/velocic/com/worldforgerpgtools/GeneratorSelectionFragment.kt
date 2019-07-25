@@ -148,7 +148,6 @@ private class GeneratorSelectionAdapter(
     }
 
     override fun getItemCount(): Int {
-        //TODO: this differs from original java impl, but I think it's correct; verify in testing
         val numCategories = currentCategoryNode.numChildCategories
         val numGenerators = currentCategoryNode.numGenerators
 
