@@ -1,5 +1,6 @@
 package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -64,9 +65,19 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        val missingArgumentMessage = "Missing required argument %s for REQUEST_%s"
+        val illegalStateMessage = "Received call to onActivityResult with a null intent (i.e. no result data)"
 
-        //TODO: attach response detail data from ResultItemDetailsFragment to correct row entry
+        when (requestCode) {
+            REQUEST_RESULT_ITEM_DETAILS -> if (resultCode == Activity.RESULT_OK) {
+                val targetRow = data?.getIntExtra(ResultItemDetailsFragment.EXTRA_ROW_INDEX, -1)
+                    ?: throw IllegalStateException(missingArgumentMessage.format("targetRow", "RESULT_ITEM_DETAILS"))
+                val resultItemDetails = data.getParcelableArrayListExtra<ResultItemDetail>(ResultItemDetailsFragment.EXTRA_RESULT_ITEM_DETAILS)
+                    ?: throw IllegalArgumentException(illegalStateMessage)
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun initializeGenerator(tableData: ProbabilityTableKey) {

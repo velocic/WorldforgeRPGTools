@@ -30,9 +30,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/result_item_details_add_row_button_text"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/result_item_details_submit"
         app:layout_constraintBottom_toBottomOf="parent"
+    />
+
+    <Button
+        android:id="@+id/result_item_details_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_button"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/result_item_details_add_row"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
     />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

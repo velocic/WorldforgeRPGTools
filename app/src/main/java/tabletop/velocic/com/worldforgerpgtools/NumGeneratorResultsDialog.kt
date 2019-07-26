@@ -40,7 +40,7 @@ class NumGeneratorResultsDialog : androidx.fragment.app.DialogFragment()
     }
 
     companion object {
-        const val ARG_GENERATOR_PATH = "generator_path"
+        private const val ARG_GENERATOR_PATH = "generator_path"
         const val EXTRA_NUM_GENERATOR_RESULTS = "tabletop.velocic.com.worldforgerpgtools.num_generator_results"
         const val EXTRA_GENERATOR_PATH = "tabletop.velocic.com.worldforgerpgtools.generator_path"
 
