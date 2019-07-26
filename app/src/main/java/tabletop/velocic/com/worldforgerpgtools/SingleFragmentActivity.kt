@@ -4,9 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 
-
 abstract class SingleFragmentActivity : AppCompatActivity() {
-    abstract fun createFragment() : androidx.fragment.app.Fragment
+    abstract fun createFragment() : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?)
     {

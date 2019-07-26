@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.dialog_new_generator_name.view.*
 
-class DialogNewGeneratorName : androidx.fragment.app.DialogFragment()
+class DialogNewGeneratorName : DialogFragment()
 {
     override fun onCreateDialog(savedInstanceState: Bundle?) : Dialog
     {

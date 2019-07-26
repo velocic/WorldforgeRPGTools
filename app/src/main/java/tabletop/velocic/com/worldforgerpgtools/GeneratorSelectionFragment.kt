@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_generators.view.*
 import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.GeneratorCreationFragment
@@ -43,7 +45,7 @@ class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
         //Setting the item width to some fixed value may also be a solution
         view.generator_selection.setHasFixedSize(true)
 
-        view.generator_selection.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, 2)
+        view.generator_selection.layoutManager = GridLayoutManager(context, 2)
         view.generator_selection.adapter = GeneratorSelectionAdapter(context, currentCategory, this)
 
         return view
@@ -107,7 +109,7 @@ private class GeneratorSelectionAdapter(
     private val context: Context?,
     private val currentCategoryNode: GeneratorCategory,
     private val targetFragment: GeneratorSelectionFragment
-) : androidx.recyclerview.widget.RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
+) : RecyclerView.Adapter<GeneratorOrCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneratorOrCategoryViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.grid_item_generators_and_categories, parent, false)
@@ -183,7 +185,7 @@ private class GeneratorOrCategoryViewHolder(
     view: View,
     private val onClick: (GeneratorOrCategoryViewHolder) -> Unit,
     private val onLongClick: (GeneratorOrCategoryViewHolder) -> Unit
-) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
     private var generatorOrCategoryIcon: ImageView = view.findViewById(R.id.generators_and_categories_grid_item_icon)
     private var generatorOrCategoryText: TextView = view.findViewById(R.id.generators_and_categories_grid_item_text)
     var generator: Generator? = null
