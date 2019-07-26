@@ -208,8 +208,8 @@ data class ResultItemDetail(var name: String, var content: String) : Parcelable
                 return ResultItemDetail(source)
             }
 
-            override fun newArray(size: Int): Array<ResultItemDetail> {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun newArray(size: Int): Array<ResultItemDetail?> {
+                return arrayOfNulls(size)
             }
         }
     }
