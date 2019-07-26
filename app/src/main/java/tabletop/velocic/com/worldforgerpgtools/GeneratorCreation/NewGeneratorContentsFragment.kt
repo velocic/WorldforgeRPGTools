@@ -86,14 +86,14 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         fun newInstance(generatorTableTemplate: GeneratorTableTemplate): NewGeneratorContentsFragment =
             NewGeneratorContentsFragment().apply {
                 arguments = bundleOf(
-                    Pair(ARG_GENERATOR_TABLE_TEMPLATE, generatorTableTemplate)
+                    ARG_GENERATOR_TABLE_TEMPLATE to generatorTableTemplate
                 )
             }
 
         fun newInstance(customTableSize: Int): NewGeneratorContentsFragment =
             NewGeneratorContentsFragment().apply {
                 arguments = bundleOf(
-                    Pair(ARG_CUSTOM_TABLE_SIZE, customTableSize)
+                    ARG_CUSTOM_TABLE_SIZE to customTableSize
                 )
             }
     }

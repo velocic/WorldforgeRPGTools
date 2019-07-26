@@ -51,7 +51,7 @@ class TableEntries(
 
         val (left, right) = if (separatorIndex == -1) {
             val singleItemRange = diceRangeString?.toInt() ?: 1
-            Pair(singleItemRange, singleItemRange)
+            singleItemRange to singleItemRange
         } else {
             Pair(
                 diceRangeString?.substring(0, separatorIndex)?.toInt() ?: 1,
@@ -60,9 +60,9 @@ class TableEntries(
         }
 
         val (min, max) = if (left < right) {
-            Pair(left, right)
+            left to right
         } else {
-            Pair(right, left)
+            right to left
         }
 
         return min..max

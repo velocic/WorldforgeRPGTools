@@ -40,7 +40,7 @@ class GeneratorResultDetailsFragment : androidx.fragment.app.Fragment()
         fun newInstance(resultItem: ResultItem) : GeneratorResultDetailsFragment =
             GeneratorResultDetailsFragment().apply {
                 arguments = bundleOf(
-                    Pair(ARG_RESULT_ITEM, resultItem)
+                    ARG_RESULT_ITEM to resultItem
                 )
             }
     }

@@ -78,7 +78,7 @@ class ProbabilityTable(
 ) {
     private val tableSize = getProbabilityTableSize(numDie, dieSize)
     private val tableRange = numDie..(dieSize * numDie)
-    private val lookupTable = Array(tableSize) { Pair(false, 0.0) }
+    private val lookupTable = Array(tableSize) { false to 0.0 }
 
     fun getProbability(targetValue: Int): Double {
         if (targetValue !in tableRange) {
@@ -91,10 +91,7 @@ class ProbabilityTable(
             return result
         }
 
-        lookupTable[targetValue] = Pair(
-            true,
-            findProbabilityForTargetInDicePool(targetValue, dieSize, numDie)
-        )
+        lookupTable[targetValue] = true to findProbabilityForTargetInDicePool(targetValue, numDie)
 
         return lookupTable[targetValue].second
     }

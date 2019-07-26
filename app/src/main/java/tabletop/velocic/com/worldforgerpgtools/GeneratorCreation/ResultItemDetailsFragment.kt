@@ -32,8 +32,9 @@ class ResultItemDetailsFragment : Fragment()
         val layoutInflater = LayoutInflater.from(activity) ?:
             throw IllegalStateException("Attempted to create a LayoutInflater from a null Activity instance")
 
-        detailsRecyclerView = result_item_details_content
+        result_item_details_title.text = resources.getString(R.string.result_item_details_title).format(resultItemName)
 
+        detailsRecyclerView = result_item_details_content
         detailsRecyclerView.layoutManager = LinearLayoutManager(activity)
         detailsRecyclerView.adapter = ResultItemDetailsAdapter(resultItemDetails, layoutInflater)
 
@@ -50,8 +51,8 @@ class ResultItemDetailsFragment : Fragment()
         fun newInstance(rowIndex: Int, resultItemName: String) : Fragment {
             return ResultItemDetailsFragment().apply {
                 arguments = bundleOf(
-                    Pair(ARG_ROW_INDEX, rowIndex),
-                    Pair(ARG_RESULT_ITEM_NAME, resultItemName)
+                    ARG_ROW_INDEX to rowIndex,
+                    ARG_RESULT_ITEM_NAME to resultItemName
                 )
             }
         }
