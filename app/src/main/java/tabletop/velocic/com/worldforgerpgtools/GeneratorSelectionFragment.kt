@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_generators.view.*
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTables
-import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.GeneratorCreationFragment
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCreationFragment
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorCategory
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
 
 class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

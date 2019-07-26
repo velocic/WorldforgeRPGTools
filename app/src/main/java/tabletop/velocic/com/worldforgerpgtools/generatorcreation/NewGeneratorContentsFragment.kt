@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
 import android.content.Intent
 import android.content.res.Resources
@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
 import kotlinx.android.synthetic.main.list_item_generator_contents.view.*
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTableKey
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.getProbabilityTableSizeFromKey
-import tabletop.velocic.com.worldforgerpgtools.Extensions.combineAscending
-import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents.MainUserInput
-import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents.MergeRowsFlowInteractions
-import tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents.PrimaryFlowInteractions
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.Generator
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
+import tabletop.velocic.com.worldforgerpgtools.appcommon.getProbabilityTableSizeFromKey
+import tabletop.velocic.com.worldforgerpgtools.extensions.combineAscending
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.MainUserInput
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.MergeRowsFlowInteractions
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.PrimaryFlowInteractions
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
 import tabletop.velocic.com.worldforgerpgtools.R
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()

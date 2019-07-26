@@ -1,11 +1,10 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_buttons.view.*
 import kotlinx.android.synthetic.main.partial_generator_contents_merge_rows_buttons.view.*
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
 
 class PrimaryFlowInteractions(
     private val parent: ViewGroup,

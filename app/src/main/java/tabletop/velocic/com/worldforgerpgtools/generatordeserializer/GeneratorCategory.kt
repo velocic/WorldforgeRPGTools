@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
+package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
 class GeneratorCategory(
     val name: String,

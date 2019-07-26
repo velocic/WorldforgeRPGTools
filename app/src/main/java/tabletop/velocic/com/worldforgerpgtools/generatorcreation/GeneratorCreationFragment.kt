@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
 import android.app.Activity
 import android.content.Intent

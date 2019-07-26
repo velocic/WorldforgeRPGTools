@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.ViewModels.NewGeneratorContents
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTableKey
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTables
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
 import java.lang.IllegalArgumentException
-import kotlin.math.absoluteValue
 
 class MainUserInput(
     parent: ViewGroup

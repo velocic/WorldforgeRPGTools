@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
 import android.os.Bundle
 import android.view.LayoutInflater

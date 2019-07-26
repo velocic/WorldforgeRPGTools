@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
+package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
 class ResultRoller(
     private val rootGeneratorCategory: GeneratorCategory

@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
 import android.app.Activity
 import android.content.Context
@@ -14,8 +14,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorCategory
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorCategory
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
 
 import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
 import tabletop.velocic.com.worldforgerpgtools.R

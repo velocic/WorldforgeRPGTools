@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer
+package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,6 +1,6 @@
-package tabletop.velocic.com.worldforgerpgtools.GeneratorCreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
-import tabletop.velocic.com.worldforgerpgtools.AppCommon.ProbabilityTableKey
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 
 enum class GeneratorTableTemplate(val tableData: ProbabilityTableKey)
 {

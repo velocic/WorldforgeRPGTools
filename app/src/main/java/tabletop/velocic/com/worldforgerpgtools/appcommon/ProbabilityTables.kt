@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.AppCommon
+package tabletop.velocic.com.worldforgerpgtools.appcommon
 
 import kotlin.math.pow
 

@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.Extensions
+package tabletop.velocic.com.worldforgerpgtools.extensions
 
 fun IntRange.Companion.combineAscending(first: IntRange, second: IntRange): IntRange {
     val newMin = minOf(minOf(first.first, first.last), second.first, second.last)

@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_generator_results.*
 import kotlinx.android.synthetic.main.list_item_generator_results.view.*
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.GeneratorImporter
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultItem
-import tabletop.velocic.com.worldforgerpgtools.GeneratorDeserializer.ResultRoller
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItem
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultRoller
 
 class GeneratorResultsFragment : androidx.fragment.app.Fragment()
 {
