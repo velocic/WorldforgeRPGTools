@@ -74,6 +74,10 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
                     ?: throw IllegalStateException(missingArgumentMessage.format("targetRow", "RESULT_ITEM_DETAILS"))
                 val resultItemDetails = data.getParcelableArrayListExtra<ResultItemDetail>(ResultItemDetailsFragment.EXTRA_RESULT_ITEM_DETAILS)
                     ?: throw IllegalArgumentException(illegalStateMessage)
+
+                newGenerator.table[targetRow].metadata = resultItemDetails.map {
+                    it.name to it.content
+                }.toMap()
             }
         }
 
