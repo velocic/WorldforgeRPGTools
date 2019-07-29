@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Base64
 import android.util.Log
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import java.io.*
 import java.security.MessageDigest
@@ -162,7 +162,10 @@ object GeneratorImporter {
     }
 
     private fun populateGenerators(rootNode: GeneratorCategory, assets: AssetManager) : GeneratorCategory {
-        val gson = Gson()
+        val gson = GsonBuilder().apply{
+            registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailSerializer())
+            registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailDeserializer())
+        }.create()
 
         for (child in rootNode.childCategories) {
             for (jsonDataPath in child.generatorJsonDataPaths) {
