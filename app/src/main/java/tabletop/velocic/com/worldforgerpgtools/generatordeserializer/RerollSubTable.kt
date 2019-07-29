@@ -29,7 +29,8 @@ data class RerollSubTable(
 
     override fun describeContents(): Int = 0
 
-    val targetTableRollCount = maxOf(1, _targetTableRollCount)
+    val targetTableRollCount
+        get() = maxOf(1, _targetTableRollCount)
 
     companion object {
         private const val missingArgumentMessage = "Failed to retrieve %s from parceled RerollSubTable."

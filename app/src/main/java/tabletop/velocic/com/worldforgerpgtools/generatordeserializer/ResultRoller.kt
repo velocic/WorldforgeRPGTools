@@ -25,13 +25,11 @@ class ResultRoller(
                 val entryIsMatch = roll in entry.diceRange
 
                 if (entryIsMatch) {
-                    val rerollSubTable = entry.rerollSubTable ?: mapOf()
-
                     //Some entries on random tables call for a roll on a completely different table
                     //So handle that here with a recursive call + merging the resulting sets of ResultItems
                     //together
-                    if (rerollSubTable.isNotEmpty()) {
-                        val subTableName = rerollSubTable["SubTableName"] ?: ""
+                    if (entry.rerollSubTable != null) {
+                        val subTableName = entry.rerollSubTable?.targetTableName ?: ""
                         val subTableRollRange = entry.getSubTableRollRange()
                         val numSubTableRolls = entry.getNumSubTableRolls()
                         val subTableResults = mutableListOf(mutableListOf<ResultItem>())

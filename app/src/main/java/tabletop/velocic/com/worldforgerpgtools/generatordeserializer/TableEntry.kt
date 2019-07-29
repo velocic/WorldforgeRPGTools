@@ -13,7 +13,7 @@ class TableEntry(
     var diceRangeString: String,
 
     @SerializedName("RerollSubTable")
-    var rerollSubTable: Map<String, String>?
+    var rerollSubTable: RerollSubTable?
 ) {
     val diceRange
         get() = parseDiceRangeString(diceRangeString)
@@ -30,11 +30,7 @@ class TableEntry(
             it
         } ?: return 1 until Int.MAX_VALUE
 
-        if (nullCheckedSubTable.containsKey("ValidSubTableEntryRange")) {
-            return parseDiceRangeString(nullCheckedSubTable["ValidSubTableEntryRange"])
-        }
-
-        return 1 until Int.MAX_VALUE
+        return parseDiceRangeString(nullCheckedSubTable.targetTableRange)
     }
 
     fun getNumSubTableRolls() : Int
@@ -43,7 +39,7 @@ class TableEntry(
             it
         } ?: return 0
 
-        return nullCheckedSubTable["NumSubTableRolls"]?.toInt() ?: 1
+        return nullCheckedSubTable.targetTableRollCount
     }
 
     private fun parseDiceRangeString(diceRangeString: String?) : IntRange {
