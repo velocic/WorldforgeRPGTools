@@ -1,6 +1,9 @@
 package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 
 class TableEntry(
     @SerializedName("Name")
@@ -14,9 +17,33 @@ class TableEntry(
 
     @SerializedName("RerollSubTable")
     var rerollSubTable: RerollSubTable?
-) {
+) : Parcelable
+{
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("name")),
+        listOf(),
+        "",
+        null
+    ) {
+        val resultItemDetailListLoader = object : TypeToken<List<ResultItemDetail>>(){}::class.java.classLoader
+        parcel.readList(metadata, resultItemDetailListLoader)
+        diceRangeString = parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("diceRangeString"))
+        rerollSubTable = parcel.readParcelable(RerollSubTable::class.java.classLoader)
+    }
+
     val diceRange
         get() = parseDiceRangeString(diceRangeString)
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.run {
+            writeString(name)
+            writeList(metadata)
+            writeString(diceRangeString)
+            writeParcelable(rerollSubTable, flags)
+        }
+    }
+
+    override fun describeContents(): Int = 0
 
     fun copy(other: TableEntry) {
         name = other.name
@@ -62,5 +89,19 @@ class TableEntry(
         }
 
         return min..max
+    }
+
+    companion object {
+        private const val missingArgumentMessage = "Failed to retrieve %s from parceled TableEntry."
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<TableEntry> = object : Parcelable.Creator<TableEntry>
+        {
+            override fun createFromParcel(source: Parcel): TableEntry =
+                TableEntry(source)
+
+            override fun newArray(size: Int): Array<TableEntry?> =
+                arrayOfNulls(size)
+        }
     }
 }

@@ -26,13 +26,11 @@ data class ResultItemDetail(var name: String, var content: String) : Parcelable
 
         @JvmField
         val CREATOR: Parcelable.Creator<ResultItemDetail> = object : Parcelable.Creator<ResultItemDetail> {
-            override fun createFromParcel(source: Parcel): ResultItemDetail {
-                return ResultItemDetail(source)
-            }
+            override fun createFromParcel(source: Parcel): ResultItemDetail =
+                ResultItemDetail(source)
 
-            override fun newArray(size: Int): Array<ResultItemDetail?> {
-                return arrayOfNulls(size)
-            }
+            override fun newArray(size: Int): Array<ResultItemDetail?> =
+                arrayOfNulls(size)
         }
     }
 }
