@@ -63,7 +63,7 @@ private class ResultDetailsAdapter(
         holder.bind(entry.name, entry.content)
     }
 
-    override fun getItemCount(): Int = detailItem.numDetailDataFields
+    override fun getItemCount(): Int = detailItem.detailData.size
 
     override fun getItemViewType(position: Int): Int = R.layout.list_item_generated_item_details
 }

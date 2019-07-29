@@ -10,8 +10,6 @@ class ResultItem(
     val detailData: MutableList<ResultItemDetail>
 ) : Parcelable {
     var quantity = 1
-    val numDetailDataFields
-        get() = detailData.size
 
     constructor(retrieved: Parcel,
                 quantity: Int = retrieved.readInt(),
