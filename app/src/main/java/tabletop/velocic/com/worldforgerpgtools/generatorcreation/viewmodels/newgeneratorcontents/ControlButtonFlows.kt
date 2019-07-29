@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.partial_generator_contents_main_buttons.view.*
 import kotlinx.android.synthetic.main.partial_generator_contents_merge_rows_buttons.view.*
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 
 class PrimaryFlowInteractions(
     private val parent: ViewGroup,
@@ -13,7 +13,7 @@ class PrimaryFlowInteractions(
     splitMergedRowsClickHandler: (Int) -> Unit = {}
 )
 {
-    private var rowData: TableEntries? = null
+    private var rowData: TableEntry? = null
     private var rowIndex = 0
 
     init {
@@ -25,7 +25,7 @@ class PrimaryFlowInteractions(
         }
     }
 
-    fun bind(rowIndex: Int, rowData: TableEntries) {
+    fun bind(rowIndex: Int, rowData: TableEntry) {
         this.rowIndex = rowIndex
         this.rowData = rowData
     }

@@ -22,7 +22,7 @@ import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newg
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.PrimaryFlowInteractions
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
 
@@ -87,9 +87,9 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
 
-    private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : Array<TableEntries> =
+    private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : Array<TableEntry> =
         Array(numEntries) { currentIndex ->
-            TableEntries("", listOf(), "${currentIndex + startIndex}", null)
+            TableEntry("", listOf(), "${currentIndex + startIndex}", null)
         }
 
     companion object {
@@ -168,7 +168,7 @@ private class NewGeneratorContentsAdapter(
                 it.diceRange.first > collapsedRowRange.last
             }
 
-            val collapsedRow = TableEntries(
+            val collapsedRow = TableEntry(
                 initialRow.name,
                 initialRow.metadata,
                 "${collapsedRowRange.first}-${collapsedRowRange.last}",
@@ -198,7 +198,7 @@ private class NewGeneratorContentsAdapter(
 
         val rowsBeforeTargetRange = generator.table.filter { it.diceRange.first < rangeToSplit.first }
         val rowsAfterTargetRange = generator.table.filter { it.diceRange.last > rangeToSplit.last }
-        val newRows = rangeToSplit.map { TableEntries("", listOf(), "$it", null) }
+        val newRows = rangeToSplit.map { TableEntry("", listOf(), "$it", null) }
         newRows[0].copy(targetRow)
         newRows[0].diceRangeString = "${rangeToSplit.first}"
 
@@ -240,10 +240,10 @@ private class NewGeneratorContentsViewHolder(
     )
 
     fun bind(
-        rowIndex: Int,
-        rowData: TableEntries,
-        combineRowsEventState: CombineRowsEventStateTracker,
-        tableData: ProbabilityTableKey
+            rowIndex: Int,
+            rowData: TableEntry,
+            combineRowsEventState: CombineRowsEventStateTracker,
+            tableData: ProbabilityTableKey
     ) {
         mainUserInput.bind(rowData)
         mainUserInput.updateResultChance(tableData)

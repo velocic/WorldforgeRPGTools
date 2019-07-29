@@ -10,9 +10,9 @@ class Generator(
     var defaultNumResultRolls: Int = 1,
 
     @SerializedName("TableEntries")
-    var table: Array<TableEntries>,
+    var table: Array<TableEntry>,
 
-    assetPath: String
+        assetPath: String
 ) {
     @SerializedName("AssetPath")
     var assetPath = assetPath

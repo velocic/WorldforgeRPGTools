@@ -3,7 +3,6 @@ package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.*
-import com.google.gson.annotations.Expose
 import java.lang.reflect.Type
 
 data class ResultItemDetail(var name: String, var content: String) : Parcelable

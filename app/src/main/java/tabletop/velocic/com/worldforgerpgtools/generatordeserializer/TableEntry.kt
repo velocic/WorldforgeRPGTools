@@ -2,7 +2,7 @@ package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
 import com.google.gson.annotations.SerializedName
 
-class TableEntries(
+class TableEntry(
     @SerializedName("Name")
     var name: String,
 
@@ -18,7 +18,7 @@ class TableEntries(
     val diceRange
         get() = parseDiceRangeString(diceRangeString)
 
-    fun copy(other: TableEntries) {
+    fun copy(other: TableEntry) {
         name = other.name
         metadata = other.metadata
         diceRangeString = other.diceRangeString

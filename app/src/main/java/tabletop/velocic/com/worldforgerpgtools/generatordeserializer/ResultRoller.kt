@@ -92,7 +92,7 @@ class ResultRoller(
         return sourceList
     }
 
-    private fun determineTableDiceRange(tableEntries: Array<TableEntries>): IntRange {
+    private fun determineTableDiceRange(tableEntries: Array<TableEntry>): IntRange {
         var tableMinRoll = 1
         var tableMaxRoll = 1
 

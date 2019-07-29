@@ -8,20 +8,20 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 import java.lang.IllegalArgumentException
 
 class MainUserInput(
     parent: ViewGroup
 )
 {
-    private var boundTableEntry: TableEntries? = null
+    private var boundTableEntry: TableEntry? = null
     private val percentChance = parent.generator_contents_percent_chance as TextView
     private val result = parent.generator_contents_result as EditText
     private val rollRange = parent.generator_contents_roll_range as TextView
     private var isInitialized = false
 
-    fun bind(tableEntry: TableEntries) {
+    fun bind(tableEntry: TableEntry) {
         if (!isInitialized ) {
             lateInitializeAtFirstBinding()
         }
