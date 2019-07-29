@@ -3,8 +3,6 @@ package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_result_item_details.*
 import kotlinx.android.synthetic.main.list_item_result_item_details_entry.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
 
 class ResultItemDetailsFragment : Fragment()
 {
@@ -180,37 +179,5 @@ private class ResultItemDetailsViewHolder(
         name.setText(dataModel.name, TextView.BufferType.EDITABLE)
         content.setText(dataModel.content, TextView.BufferType.EDITABLE)
         view.entry_delete.setOnClickListener { deleteDetailItemEventHandler(rowIndex) }
-    }
-}
-
-data class ResultItemDetail(var name: String, var content: String) : Parcelable
-{
-    constructor(parcel: Parcel) : this(
-        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("name")),
-        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("content"))
-    )
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.run {
-            writeString(name)
-            writeString(content)
-        }
-    }
-
-    override fun describeContents(): Int = 0
-
-    companion object {
-        private const val missingArgumentMessage = "Failed to retrieve %s from parceled ResultItemDetail"
-
-        @JvmField
-        val CREATOR: Parcelable.Creator<ResultItemDetail> = object : Parcelable.Creator<ResultItemDetail> {
-            override fun createFromParcel(source: Parcel): ResultItemDetail {
-                return ResultItemDetail(source)
-            }
-
-            override fun newArray(size: Int): Array<ResultItemDetail?> {
-                return arrayOfNulls(size)
-            }
-        }
     }
 }

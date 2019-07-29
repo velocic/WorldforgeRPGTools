@@ -24,6 +24,7 @@ import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntries
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
