@@ -4,72 +4,72 @@
     "TableEntries": [
         {
             "Name": "Spell, level 3, holds 10 charges",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Spell, level 4, holds 10 charges",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Wand of Cold",
-            "Metadata": {
-                "Description": "The wand casts a Cone of Cold 60 feet long, to a base 30 feet across at the far end. Creatures caught in the cone take 6d6 damage (saving throw applies for half damage). The wand holds 25 charges and cannot be recharged."
-            },
+            "Metadata": [
+                {"Description": "The wand casts a Cone of Cold 60 feet long, to a base 30 feet across at the far end. Creatures caught in the cone take 6d6 damage (saving throw applies for half damage). The wand holds 25 charges and cannot be recharged."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Wand of Detection, enemies",
-            "Metadata": {
-                "Description": "These wands detect enemies in a radius of 60 feet, if the enemies are thinking hostile thoughts. The wand is always active when held, and does not use charges."
-            },
+            "Metadata": [
+                {"Description": "These wands detect enemies in a radius of 60 feet, if the enemies are thinking hostile thoughts. The wand is always active when held, and does not use charges."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Wand of Detection, magic",
-            "Metadata": {
-                "Description": "Wands of magic detection function as a Detect Magic spell with a range of 20 feet. The user gets a vague sense of what sort of magic is being detected. THe wand is always active when held, and does not use charges."
-            },
+            "Metadata": [
+                {"Description": "Wands of magic detection function as a Detect Magic spell with a range of 20 feet. The user gets a vague sense of what sort of magic is being detected. THe wand is always active when held, and does not use charges."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Wand of Detection, metal",
-            "Metadata": {
-                "Description": "Such wands detect large caches of metal, within a range of 20 feet. The wand's user also gets a vague sense of the metal's type. The wand is always active when held, and does not use charges."
-            },
+            "Metadata": [
+                {"Description": "Such wands detect large caches of metal, within a range of 20 feet. The wand's user also gets a vague sense of the metal's type. The wand is always active when held, and does not use charges."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Wand of Detection, traps & secret doors",
-            "Metadata": {
-                "Description": "These wands detect traps and secret doors, with a range of 20 feet. The wand is always active when held, and does not use charges."
-            },
+            "Metadata": [
+                {"Description": "These wands detect traps and secret doors, with a range of 20 feet. The wand is always active when held, and does not use charges."}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Wand of Fear",
-            "Metadata": {
-                "Description": "A wand of fear causes creatures creatures in a cone-shaped path to flee (saving throw negates). There is a 60% chance that they will drop whatever they are holding. THe cone extends 60 feet to a base 30 feet across. The wand holds 25 charges, and cannot be recharged."
-            },
+            "Metadata": [
+                {"Description": "A wand of fear causes creatures creatures in a cone-shaped path to flee (saving throw negates). There is a 60% chance that they will drop whatever they are holding. THe cone extends 60 feet to a base 30 feet across. The wand holds 25 charges, and cannot be recharged."}
+            ],
             "DiceRange": "8"
         },
         {
             "Name": "Wand of Paralyzing",
-            "Metadata": {
-                "Description": "This sort of wand casts a cone of paralysis 60 feet long to a base 30 feet across at the end. Creatures in the cone are paralyzed for 3d6 turns (saving throw negates). The wand holds 25 charges, and cannot be recharged."
-            },
+            "Metadata": [
+                {"Description": "This sort of wand casts a cone of paralysis 60 feet long to a base 30 feet across at the end. Creatures in the cone are paralyzed for 3d6 turns (saving throw negates). The wand holds 25 charges, and cannot be recharged."}
+            ],
             "DiceRange": "9"
         },
         {
             "Name": "Wand of Polymorph",
-            "Metadata": {
-                "Description": "Such wands are of two types. One type casts Polymorph Self, and the other casts Polymorph Other. The wand carries 10 charges, and cannot be recharged."
-            },
+            "Metadata": [
+                {"Description": "Such wands are of two types. One type casts Polymorph Self, and the other casts Polymorph Other. The wand carries 10 charges, and cannot be recharged."}
+            ],
             "DiceRange": "10"
         }
     ]

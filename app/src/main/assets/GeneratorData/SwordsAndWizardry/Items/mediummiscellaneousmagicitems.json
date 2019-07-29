@@ -4,142 +4,142 @@
     "TableEntries": [
         {
             "Name": "Amulet against Scrying (A)",
-            "Metadata": {
-                "Description": "This amulet protects the wearer from all scrying, such as ESP or being viewed through a crystal ball. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This amulet protects the wearer from all scrying, such as ESP or being viewed through a crystal ball. Usable by: All Classes."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Boots of Flying (A)",
-            "Metadata": {
-                "Description": "These boots allow the wearer to Levitate (as per the spell), with unlimited duration. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "These boots allow the wearer to Levitate (as per the spell), with unlimited duration. Usable by: All Classes."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Bracers of Defense, AC 4[15] or AC 2[17] (50%/50%) (A)",
-            "Metadata": {
-                "Description": "These bracers improve the wearer's armor class to the stated level; there is no effect if the wearer is already armored tot he same or higher degree. The armor class granted by the bracers can be increased by magical rings or other protective magics. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "These bracers improve the wearer's armor class to the stated level; there is no effect if the wearer is already armored tot he same or higher degree. The armor class granted by the bracers can be increased by magical rings or other protective magics. Usable by: All Classes."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Carpet of Flying (A)",
-            "Metadata": {
-                "Description": "Flying carpets can carry as many as three people, and travel at a Movement Rate of 18 if they carry more than one passenger. With only one rider, the carpet moves at a Movement Rate of 30. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "Flying carpets can carry as many as three people, and travel at a Movement Rate of 18 if they carry more than one passenger. With only one rider, the carpet moves at a Movement Rate of 30. Usable by: All Classes."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Cloak of Displacement (A)",
-            "Metadata": {
-                "Description": "The wearer appears to be in a slightly different location, off from reality by a foot or so. The wearer's armor class improves by 2, and the cloak also grants a +2 saving throw against any targeted attack upon the one wearing it. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "The wearer appears to be in a slightly different location, off from reality by a foot or so. The wearer's armor class improves by 2, and the cloak also grants a +2 saving throw against any targeted attack upon the one wearing it. Usable by: All Classes."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Cloak of Protection, +2 or +3 (50%/50%) (C, M, T)",
-            "Metadata": {
-                "Description": "This cloak improves the wearer's armor class by 2 (or 3), and grants a bonus of +1 on saving throws. Usable by: All but Fighter classes."
-            },
+            "Metadata": [
+                {"Description": "This cloak improves the wearer's armor class by 2 (or 3), and grants a bonus of +1 on saving throws. Usable by: All but Fighter classes."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Deck of Many Things (A)",
-            "Metadata": {
-                "Description": "An ordinary-seeming deck of hand-painted cards, this item bears tremendous and varied enchantments, one per placard in the deck. The deck contains all the aces and face cards, plus one Joker (the Fool). A character may draw as many cards as desired (with the deck re-shuffled each time), but once the player stops drawing cards, the deck disappears with a sound of faint, malevolent laughter. For deck results, see Swords & Wizardry Complete page 128."
-            },
+            "Metadata": [
+                {"Description": "An ordinary-seeming deck of hand-painted cards, this item bears tremendous and varied enchantments, one per placard in the deck. The deck contains all the aces and face cards, plus one Joker (the Fool). A character may draw as many cards as desired (with the deck re-shuffled each time), but once the player stops drawing cards, the deck disappears with a sound of faint, malevolent laughter. For deck results, see Swords & Wizardry Complete page 128."}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Figurine of the Onyx Dog (A)",
-            "Metadata": {
-                "Description": "This stone figure transforms into a living hound of stone when its command word is spoken. It will seek whatever the owner tells it to find, without stopping, until it succeeds or is killed. It has a 75% chance to detect objects that are invisible or hidden, and of course its sense of smell detects invisible and hidden creatures with almost perfect success. For purposes of defense and attack, the stone dog is treated as a wolf. It may be used twelve times before the statuette becomes non-magical. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This stone figure transforms into a living hound of stone when its command word is spoken. It will seek whatever the owner tells it to find, without stopping, until it succeeds or is killed. It has a 75% chance to detect objects that are invisible or hidden, and of course its sense of smell detects invisible and hidden creatures with almost perfect success. For purposes of defense and attack, the stone dog is treated as a wolf. It may be used twelve times before the statuette becomes non-magical. Usable by: All Classes."}
+            ],
             "DiceRange": "8"
         },
         {
             "Name": "Gauntlets of Ogre Power (C, F, T)",
-            "Metadata": {
-                "Description": "These gauntlets raise the wearer's Strength to that of an ogre. Hit probability is not increased above normal, but damage bonuses from Strength are increased to +6 (not cumulative with the wearer's existing Strength bonus, if any). Usable by: all but Magic-Users."
-            },
+            "Metadata": [
+                {"Description": "These gauntlets raise the wearer's Strength to that of an ogre. Hit probability is not increased above normal, but damage bonuses from Strength are increased to +6 (not cumulative with the wearer's existing Strength bonus, if any). Usable by: all but Magic-Users."}
+            ],
             "DiceRange": "9"
         },
         {
             "Name": "Helm of Reading Magic and Languages (A)",
-            "Metadata": {
-                "Description": "The wearer of the helm can read all languages, including magic script. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "The wearer of the helm can read all languages, including magic script. Usable by: All Classes."}
+            ],
             "DiceRange": "10"
         },
         {
             "Name": "Hole, Portable (A)",
-            "Metadata": {
-                "Description": "A portable hole is physically a piece of dark cloth, about 5 feet in diameter. However, it is also the mouth of an inter-dimensional hole 10 feet deep--items and people can fall or climb down into it once it is placed on the ground. The piece of cloth can actually be pulled in from the inside to close the hole off entirely, although there is no source of fresh air within, and staying inside will asphyxiate the inhabitant in a short time. The piece of cloth can be picked up and carried off whenever desired--hence the name 'portable.' Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "A portable hole is physically a piece of dark cloth, about 5 feet in diameter. However, it is also the mouth of an inter-dimensional hole 10 feet deep--items and people can fall or climb down into it once it is placed on the ground. The piece of cloth can actually be pulled in from the inside to close the hole off entirely, although there is no source of fresh air within, and staying inside will asphyxiate the inhabitant in a short time. The piece of cloth can be picked up and carried off whenever desired--hence the name 'portable.' Usable by: All Classes."}
+            ],
             "DiceRange": "11"
         },
         {
             "Name": "Horn of Valhalla, Bronze (C, F)",
-            "Metadata": {
-                "Description": "The horn summons 2d4 berserk warriors (3 HD) to assist the one who winded the horn. Usable by: Fighters and Clerics."
-            },
+            "Metadata": [
+                {"Description": "The horn summons 2d4 berserk warriors (3 HD) to assist the one who winded the horn. Usable by: Fighters and Clerics."}
+            ],
             "DiceRange": "12"
         },
         {
             "Name": "Horn of Valhalla, Silver (A)",
-            "Metadata": {
-                "Description": "The horn summons 2d4 berserk warriors (2 HD) to assist the one who winded the horn. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "The horn summons 2d4 berserk warriors (2 HD) to assist the one who winded the horn. Usable by: All Classes."}
+            ],
             "DiceRange": "13"
         },
         {
             "Name": "Jug of Alchemy (A)",
-            "Metadata": {
-                "Description": "This jug produces whatever liquid is desired, in a commonly used large quantity (e.g., 10 gallons of water, but only 5 gallons of wine). It may be used no more than seven times per day, and will produce only one type of liquid per day. It does not produce magical liquids. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This jug produces whatever liquid is desired, in a commonly used large quantity (e.g., 10 gallons of water, but only 5 gallons of wine). It may be used no more than seven times per day, and will produce only one type of liquid per day. It does not produce magical liquids. Usable by: All Classes."}
+            ],
             "DiceRange": "14"
         },
         {
             "Name": "Manual of Quickness (A)",
-            "Metadata": {
-                "Description": "Reading this tome increases the reader's Desterity by 1 point (to a maximum of 18). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "Reading this tome increases the reader's Desterity by 1 point (to a maximum of 18). Usable by: All Classes."}
+            ],
             "DiceRange": "15"
         },
         {
             "Name": "Medallion of ESP (A)",
-            "Metadata": {
-                "Description": "Functions as an ESP spell within 30 feet (75%) or 90 feet (25%). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "Functions as an ESP spell within 30 feet (75%) or 90 feet (25%). Usable by: All Classes."}
+            ],
             "DiceRange": "16"
         },
         {
             "Name": "Mirror of Mental Scrying (A)",
-            "Metadata": {
-                "Description": "This hand-mirror (it might also be found as a smaller mirror on a necklace) allows the user to cast Clairaudience, Clairvoyance, and ESP, with the normal range, but for an unlimited time. The mirror will also answer a question about what it portrays (the answer is likely to be quite cryptic), but only one question per week is possible. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This hand-mirror (it might also be found as a smaller mirror on a necklace) allows the user to cast Clairaudience, Clairvoyance, and ESP, with the normal range, but for an unlimited time. The mirror will also answer a question about what it portrays (the answer is likely to be quite cryptic), but only one question per week is possible. Usable by: All Classes."}
+            ],
             "DiceRange": "17"
         },
         {
             "Name": "Robe of Blending (A)",
-            "Metadata": {
-                "Description": "These robes make the wearer appear to be a part of the surroundings, including the ability to appear as another one of a group of nearby creatures. The robe will make the wearer appear as a small tree when in forest surroundings, a sand formation in the desert, etc. Creatures with 10+ hit dice (or levels of experience) have a 10% chance per level (or HD) above 9th to perceive the wearer as a robed figure rather than a part of the surroundings. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "These robes make the wearer appear to be a part of the surroundings, including the ability to appear as another one of a group of nearby creatures. The robe will make the wearer appear as a small tree when in forest surroundings, a sand formation in the desert, etc. Creatures with 10+ hit dice (or levels of experience) have a 10% chance per level (or HD) above 9th to perceive the wearer as a robed figure rather than a part of the surroundings. Usable by: All Classes."}
+            ],
             "DiceRange": "18"
         },
         {
             "Name": "Robe of Eyes (M)",
-            "Metadata": {
-                "Description": "Hundreds of eyes are woven and embroidered into the fabric of these magical robes, granting the wearer tremendous powers of supernatural perception. In a radius of 240 feet, anything the wearer looks upon is seen for what it is: invisible creatures become apparent, illusions are seen as such, and this sight even extends into the astral plane. The wearer cannot be ambushed or otherwise taken by surprise, and can follow the trail of anything that has passed by within the last day. Usable by: Magic-Users only."
-            },
+            "Metadata": [
+                {"Description": "Hundreds of eyes are woven and embroidered into the fabric of these magical robes, granting the wearer tremendous powers of supernatural perception. In a radius of 240 feet, anything the wearer looks upon is seen for what it is: invisible creatures become apparent, illusions are seen as such, and this sight even extends into the astral plane. The wearer cannot be ambushed or otherwise taken by surprise, and can follow the trail of anything that has passed by within the last day. Usable by: Magic-Users only."}
+            ],
             "DiceRange": "19"
         },
         {
             "Name": "Robe of Wizardry (M)",
-            "Metadata": {
-                "Description": "This robe grants the wearer the ability to cast charm, polymorph, and hold spells with a 95% chance of success. The robes may be tied to specific alignments. Usable by: Magic-Users only."
-            },
+            "Metadata": [
+                {"Description": "This robe grants the wearer the ability to cast charm, polymorph, and hold spells with a 95% chance of success. The robes may be tied to specific alignments. Usable by: Magic-Users only."}
+            ],
             "DiceRange": "20"
         }
     ]

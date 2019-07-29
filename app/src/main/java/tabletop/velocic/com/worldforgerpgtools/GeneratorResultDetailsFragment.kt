@@ -58,11 +58,9 @@ private class ResultDetailsAdapter(
     }
 
     override fun onBindViewHolder(holder: ResultDetailsViewHolder, position: Int) {
-        val entry = detailItem.getDetailDataFieldByIndex(position)
-            ?: throw IllegalStateException("Indexed into what should be a valid detail data field" +
-                " entry, but retrieved no data.")
+        val entry = detailItem.detailData[position]
 
-        holder.bind(entry.key, entry.value)
+        holder.bind(entry.name, entry.content)
     }
 
     override fun getItemCount(): Int = detailItem.numDetailDataFields

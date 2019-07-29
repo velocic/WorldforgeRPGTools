@@ -76,9 +76,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
                 val resultItemDetails = data.getParcelableArrayListExtra<ResultItemDetail>(ResultItemDetailsFragment.EXTRA_RESULT_ITEM_DETAILS)
                     ?: throw IllegalArgumentException(illegalStateMessage)
 
-                newGenerator.table[targetRow].metadata = resultItemDetails.map {
-                    it.name to it.content
-                }.toMap()
+                newGenerator.table[targetRow].metadata = resultItemDetails
             }
         }
 
@@ -91,7 +89,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 
     private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : Array<TableEntries> =
         Array(numEntries) { currentIndex ->
-            TableEntries("", mapOf(), "${currentIndex + startIndex}", null)
+            TableEntries("", listOf(), "${currentIndex + startIndex}", null)
         }
 
     companion object {
@@ -200,7 +198,7 @@ private class NewGeneratorContentsAdapter(
 
         val rowsBeforeTargetRange = generator.table.filter { it.diceRange.first < rangeToSplit.first }
         val rowsAfterTargetRange = generator.table.filter { it.diceRange.last > rangeToSplit.last }
-        val newRows = rangeToSplit.map { TableEntries("", mapOf(), "$it", null) }
+        val newRows = rangeToSplit.map { TableEntries("", listOf(), "$it", null) }
         newRows[0].copy(targetRow)
         newRows[0].diceRangeString = "${rangeToSplit.first}"
 

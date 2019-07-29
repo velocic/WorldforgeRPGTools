@@ -4,58 +4,58 @@
     "TableEntries": [
         {
             "Name": "Demons",
-            "Metadata": {
-                "Description": "All within a 10-foot radius around the reader are protected from the attacks of 1 demon per round. Duration: 40 minutes."
-            },
+            "Metadata": [
+                {"Description": "All within a 10-foot radius around the reader are protected from the attacks of 1 demon per round. Duration: 40 minutes."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Drowning",
-            "Metadata": {
-                "Description": "All within a 10-foot radius around the reader gain the ability to breathe underwater. Duration: 1 full day."
-            },
+            "Metadata": [
+                {"Description": "All within a 10-foot radius around the reader gain the ability to breathe underwater. Duration: 1 full day."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Elementals",
-            "Metadata": {
-                "Description": "This scroll protects against a single elemental. Duration: 40 minutes."
-            },
+            "Metadata": [
+                {"Description": "This scroll protects against a single elemental. Duration: 40 minutes."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Magic",
-            "Metadata": {
-                "Description": "An anti-magic shell with a radius of 10 feet surrounds and moves with the reader, spells cannot pass in or out of the shell. Duration: 1 hour."
-            },
+            "Metadata": [
+                {"Description": "An anti-magic shell with a radius of 10 feet surrounds and moves with the reader, spells cannot pass in or out of the shell. Duration: 1 hour."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Metal",
-            "Metadata": {
-                "Description": "Metal cannot harm the reader. Duration: 1 hour."
-            },
+            "Metadata": [
+                {"Description": "Metal cannot harm the reader. Duration: 1 hour."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Poison",
-            "Metadata": {
-                "Description": "Poisons have no effect upon one who reads such a scroll aloud; moreover, any poisons, active or quiescent, in the scroll reader's body are instantly removed. Duration: 6 hours."
-            },
+            "Metadata": [
+                {"Description": "Poisons have no effect upon one who reads such a scroll aloud; moreover, any poisons, active or quiescent, in the scroll reader's body are instantly removed. Duration: 6 hours."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Undead",
-            "Metadata": {
-                "Description": "All within a 10-foot radius of the reader are protected against undead, but only to a limited degree. In any given round, 2d12 undead with fewer than 4 HD, and 2d6 undead with 4-5 HD, and 1d6 undead with 6+ HD are foiled by the protection of the scroll. Thus, the scroll is effective aainst all but a vast horde of undead. Duration: 1 hour."
-            },
+            "Metadata": [
+                {"Description": "All within a 10-foot radius of the reader are protected against undead, but only to a limited degree. In any given round, 2d12 undead with fewer than 4 HD, and 2d6 undead with 4-5 HD, and 1d6 undead with 6+ HD are foiled by the protection of the scroll. Thus, the scroll is effective aainst all but a vast horde of undead. Duration: 1 hour."}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Were-creatures",
-            "Metadata": {
-                "Description": "All within a ten-foot radius around the reader are protected from lycanthropes. Duration: 1 hour."
-            },
+            "Metadata": [
+                {"Description": "All within a ten-foot radius around the reader are protected from lycanthropes. Duration: 1 hour."}
+            ],
             "DiceRange": "8"
         }
     ]

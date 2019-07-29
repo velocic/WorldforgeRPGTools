@@ -7,7 +7,7 @@ class TableEntries(
     var name: String,
 
     @SerializedName("Metadata")
-    var metadata: Map<String, String>,
+    var metadata: List<ResultItemDetail>,
 
     @SerializedName("DiceRange")
     var diceRangeString: String,

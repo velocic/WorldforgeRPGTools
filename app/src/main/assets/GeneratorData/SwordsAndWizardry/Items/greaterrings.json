@@ -4,72 +4,72 @@
     "TableEntries": [
         {
             "Name": "Djinni Summoning (A)",
-            "Metadata": {
-                "Description": "The wearer of this ring can summon a djinni, who will do the wearer's bidding, following instructions precisely and to the letter, no further. Such rings can be treacherous, but only for those who use them foolishly."
-            },
+            "Metadata": [
+                {"Description": "The wearer of this ring can summon a djinni, who will do the wearer's bidding, following instructions precisely and to the letter, no further. Such rings can be treacherous, but only for those who use them foolishly."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Human Control (A)",
-            "Metadata": {
-                "Description": "Such rings allow the wearer to cast Charm Person once per day, and to maintain the charm on up to 3 individuals at a time."
-            },
+            "Metadata": [
+                {"Description": "Such rings allow the wearer to cast Charm Person once per day, and to maintain the charm on up to 3 individuals at a time."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Regeneration (A)",
-            "Metadata": {
-                "Description": "The wearer regenerates one hit point per combat round, and thus cannot die unless the ring is removed or the wearer's body is burned."
-            },
+            "Metadata": [
+                {"Description": "The wearer regenerates one hit point per combat round, and thus cannot die unless the ring is removed or the wearer's body is burned."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Shooting Stars (A)",
-            "Metadata": {
-                "Description": "Once per day, the ring can unleash 1d6 lightning bolts that inflict 3d6 hit points each (saving throw indicating half damage)."
-            },
+            "Metadata": [
+                {"Description": "Once per day, the ring can unleash 1d6 lightning bolts that inflict 3d6 hit points each (saving throw indicating half damage)."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Spell Storing, Magic-User (M)",
-            "Metadata": {
-                "Description": "The ring contains 1d6 Magic-User spells. Roll 1d6 for each spell to determine the spell level, and then determine the spell by rolling on the spell list for that level. The wearer (if a Magic-User) can cast these spells as if they were normally memorized and prepared spells. Once a spell is cast, it cannot be cast a second time until the wearer has rested for 8 hours."
-            },
+            "Metadata": [
+                {"Description": "The ring contains 1d6 Magic-User spells. Roll 1d6 for each spell to determine the spell level, and then determine the spell by rolling on the spell list for that level. The wearer (if a Magic-User) can cast these spells as if they were normally memorized and prepared spells. Once a spell is cast, it cannot be cast a second time until the wearer has rested for 8 hours."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Spell Storing, Cleric (C)",
-            "Metadata": {
-                "Description": "The ring contains 1d6 Cleric spells. Roll 1d4 for each spell to determine the spell level, and then determine the spell by rolling on the spell list for that level. The wearer (if a Cleric) can cast these spells as if they were normally prepared spells. Once a spell is cast, it cannot be cast a second time until the wearer has rested for 8 hours."
-            },
+            "Metadata": [
+                {"Description": "The ring contains 1d6 Cleric spells. Roll 1d4 for each spell to determine the spell level, and then determine the spell by rolling on the spell list for that level. The wearer (if a Cleric) can cast these spells as if they were normally prepared spells. Once a spell is cast, it cannot be cast a second time until the wearer has rested for 8 hours."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Spell Turning (A)",
-            "Metadata": {
-                "Description": "Any spell (other than from a wand or other item) directly aimed at the wearer of the ring is partially reflected back at the caster. Roll a percentile die to see how much of the spell's power bounces back; the exact determination of what happens is up to the Referee."
-            },
+            "Metadata": [
+                {"Description": "Any spell (other than from a wand or other item) directly aimed at the wearer of the ring is partially reflected back at the caster. Roll a percentile die to see how much of the spell's power bounces back; the exact determination of what happens is up to the Referee."}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Telekinesis (A)",
-            "Metadata": {
-                "Description": "The wearer can mentally lift and move 200 pounds of weight at a range of 120 feet."
-            },
+            "Metadata": [
+                {"Description": "The wearer can mentally lift and move 200 pounds of weight at a range of 120 feet."}
+            ],
             "DiceRange": "8"
         },
         {
             "Name": "Three Wishes (A)",
-            "Metadata": {
-                "Description": "These rings grant the wearer three wishes. Beware of outrageous wishes; they backfire."
-            },
+            "Metadata": [
+                {"Description": "These rings grant the wearer three wishes. Beware of outrageous wishes; they backfire."}
+            ],
             "DiceRange": "9"
         },
         {
             "Name": "X-ray Vision (A)",
-            "Metadata": {
-                "Description": "The wearer has x-ray vision at a range of 40 feet. The maximum distance through which the wearer can see through solid rock is just over 10 feet, through solid metals (other than lead) is 1 foot, and through lead is 1 inch."
-            },
+            "Metadata": [
+                {"Description": "The wearer has x-ray vision at a range of 40 feet. The maximum distance through which the wearer can see through solid rock is just over 10 feet, through solid metals (other than lead) is 1 foot, and through lead is 1 inch."}
+            ],
             "DiceRange": "10"
         }
     ]

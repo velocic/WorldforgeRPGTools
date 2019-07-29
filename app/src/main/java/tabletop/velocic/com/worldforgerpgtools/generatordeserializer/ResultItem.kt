@@ -2,69 +2,26 @@ package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.reflect.TypeToken
 
 class ResultItem(
     val tableGeneratedFrom: String,
     val name: String,
-    val detailData: MutableMap<String, String>
+    val detailData: MutableList<ResultItemDetail>
 ) : Parcelable {
     var quantity = 1
     val numDetailDataFields
         get() = detailData.size
 
     constructor(retrieved: Parcel,
-        quantity: Int = retrieved.readInt(),
-        tableGeneratedFrom: String = retrieved.readString(),
-        name: String = retrieved.readString()
-    ) : this(tableGeneratedFrom, name, mutableMapOf()) {
+                quantity: Int = retrieved.readInt(),
+                tableGeneratedFrom: String = retrieved.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("tableGeneratedFrom")),
+                name: String = retrieved.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("name"))
+    ) : this(tableGeneratedFrom, name, mutableListOf()) {
         this.quantity = quantity
 
-        val numMapEntries = retrieved.readInt()
-
-        for (i in 0 until numMapEntries) {
-            val key = retrieved.readString()
-            val value = retrieved.readString()
-
-            detailData[key] = value
-        }
-    }
-
-    fun addDetailDataField(fieldName: String, fieldCount: String) {
-        detailData[fieldName] = fieldCount
-    }
-
-    fun getDetailDataFieldByIndex(index: Int) : Map.Entry<String, String>? {
-        if (index >= detailData.size) {
-            return null
-        }
-
-        var count = 0
-        var result: Map.Entry<String, String>? = null
-
-        for (entry in detailData.entries) {
-            if (count < index) {
-                ++count
-                continue
-            }
-
-            result = entry
-            break
-        }
-
-        return result
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<ResultItem> = object : Parcelable.Creator<ResultItem> {
-            override fun createFromParcel(source: Parcel): ResultItem {
-                return ResultItem(source)
-            }
-
-            override fun newArray(size: Int): Array<ResultItem?> {
-                return arrayOfNulls(size)
-            }
-        }
+        val resultItemDetailListLoader = object : TypeToken<List<ResultItemDetail>>(){}::class.java.classLoader
+        retrieved.readList(detailData, resultItemDetailListLoader)
     }
 
     override fun describeContents() = 0
@@ -74,11 +31,21 @@ class ResultItem(
             writeInt(quantity)
             writeString(tableGeneratedFrom)
             writeString(name)
-            writeInt(detailData.size)
+            writeList(detailData)
+        }
+    }
 
-            for (entry in detailData.entries) {
-                writeString(entry.key)
-                writeString(entry.value)
+    companion object {
+        private const val missingArgumentMessage = "Failed to retrieve %s from parceled ResultItem."
+
+        @JvmField
+        val CREATOR: Parcelable.Creator<ResultItem> = object : Parcelable.Creator<ResultItem> {
+            override fun createFromParcel(source: Parcel): ResultItem {
+                return ResultItem(source)
+            }
+
+            override fun newArray(size: Int): Array<ResultItem?> {
+                return arrayOfNulls(size)
             }
         }
     }

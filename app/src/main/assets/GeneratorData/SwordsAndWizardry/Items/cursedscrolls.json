@@ -4,142 +4,142 @@
     "TableEntries": [
         {
             "Name": "Blindness",
-            "Metadata": {
-                "Description": "Lasts 3d6 turns."
-            },
+            "Metadata": [
+                {"Description": "Lasts 3d6 turns."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Aversion",
-            "Metadata": {
-                "Description": "Roll 1d6. The character gains a strong aversion to: (1)Swords, (2)Spiders, (3)Armor, (4)Spell casting, (5)Bathing, (6)Being underground."
-            },
+            "Metadata": [
+                {"Description": "Roll 1d6. The character gains a strong aversion to: (1)Swords, (2)Spiders, (3)Armor, (4)Spell casting, (5)Bathing, (6)Being underground."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Confusion",
-            "Metadata": {
-                "Description": "Character acts randomly."
-            },
+            "Metadata": [
+                {"Description": "Character acts randomly."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Despondency",
-            "Metadata": {
-                "Description": "1d6 days' duration. The character will refuse to go anywhere, as there is simply no point to it."
-            },
+            "Metadata": [
+                {"Description": "1d6 days' duration. The character will refuse to go anywhere, as there is simply no point to it."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Dimensional Vortex",
-            "Metadata": {
-                "Description": "The character is physically sucked up into the scroll, appearing as a new word on the page until rescued by a remove curse spell."
-            },
+            "Metadata": [
+                {"Description": "The character is physically sucked up into the scroll, appearing as a new word on the page until rescued by a remove curse spell."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Hallucinations",
-            "Metadata": {
-                "Description": "3d6 turns. The exact nature of the hallucinations varies, but in general the character will either begin casting spells and/or attacking nearby people, or will remain fascinated by the colors, unwilling to move."
-            },
+            "Metadata": [
+                {"Description": "3d6 turns. The exact nature of the hallucinations varies, but in general the character will either begin casting spells and/or attacking nearby people, or will remain fascinated by the colors, unwilling to move."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Instant Death",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Levitation",
-            "Metadata": {
-                "Description": "The character levitates one inch off the ground, and cannot get back down."
-            },
+            "Metadata": [
+                {"Description": "The character levitates one inch off the ground, and cannot get back down."}
+            ],
             "DiceRange": "8"
         },
         {
             "Name": "Lost Experience",
-            "Metadata": {
-                "Description": "Lose 1d10x100 experience points."
-            },
+            "Metadata": [
+                {"Description": "Lose 1d10x100 experience points."}
+            ],
             "DiceRange": "9"
         },
         {
             "Name": "Lost Attribute",
-            "Metadata": {
-                "Description": "Lose one point of a randomly-determined attribute score."
-            },
+            "Metadata": [
+                {"Description": "Lose one point of a randomly-determined attribute score."}
+            ],
             "DiceRange": "10"
         },
         {
             "Name": "Magically Adhesive Scroll",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "11"
         },
         {
             "Name": "Obedience",
-            "Metadata": {
-                "Description": "3d6 turns. The character does what anyone suggests."
-            },
+            "Metadata": [
+                {"Description": "3d6 turns. The character does what anyone suggests."}
+            ],
             "DiceRange": "12"
         },
         {
             "Name": "Paralysis",
-            "Metadata": {
-                "Description": "3d6 turns."
-            },
+            "Metadata": [
+                {"Description": "3d6 turns."}
+            ],
             "DiceRange": "13"
         },
         {
             "Name": "Paralysis",
-            "Metadata": {
-                "Description": "Everyone in a radius of 20 feet must make a saving throw or be paralyzed for 3d6 turns, with the exception of the reader of the scroll, who is unaffected."
-            },
+            "Metadata": [
+                {"Description": "Everyone in a radius of 20 feet must make a saving throw or be paralyzed for 3d6 turns, with the exception of the reader of the scroll, who is unaffected."}
+            ],
             "DiceRange": "14"
         },
         {
             "Name": "Permanent Dimunition",
-            "Metadata": {
-                "Description": "Some of these reduce the reader to half size (50%) and the rest reduce the reader to 6 inches tall."
-            },
+            "Metadata": [
+                {"Description": "Some of these reduce the reader to half size (50%) and the rest reduce the reader to 6 inches tall."}
+            ],
             "DiceRange": "15"
         },
         {
             "Name": "Polymorph",
-            "Metadata": {
-                "Description": "roll 1d6. The character turns into (1)a pig, (2)a mouse, (3)a flamingo, (4)a talking parrot, (5)a dog, (6)a water buffalo."
-            },
+            "Metadata": [
+                {"Description": "roll 1d6. The character turns into (1)a pig, (2)a mouse, (3)a flamingo, (4)a talking parrot, (5)a dog, (6)a water buffalo."}
+            ],
             "DiceRange": "16"
         },
         {
             "Name": "Sleep",
-            "Metadata": {
-                "Description": "Lasts until curse is removed. In some cases, magical sleep can be broken by a kiss. Otherwise, the curse can only be removed by magic."
-            },
+            "Metadata": [
+                {"Description": "Lasts until curse is removed. In some cases, magical sleep can be broken by a kiss. Otherwise, the curse can only be removed by magic."}
+            ],
             "DiceRange": "17"
         },
         {
             "Name": "Smell",
-            "Metadata": {
-                "Description": "The character becomes foul-smelling for 1d8 days."
-            },
+            "Metadata": [
+                {"Description": "The character becomes foul-smelling for 1d8 days."}
+            ],
             "DiceRange": "18"
         },
         {
             "Name": "Turned to Stone",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "19"
         },
         {
             "Name": "Uncontrollable Sneezing",
-            "Metadata": {
-                "Description": "3d6 turns. The reader is likely to attract wandering monsters, especially those that prey upon the weak."
-            },
+            "Metadata": [
+                {"Description": "3d6 turns. The reader is likely to attract wandering monsters, especially those that prey upon the weak."}
+            ],
             "DiceRange": "20"
         }
     ]

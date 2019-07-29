@@ -4,142 +4,142 @@
     "TableEntries": [
         {
             "Name": "Amulet of Demon Control (C, M)",
-            "Metadata": {
-                "Description": "This amulet functions as a Protection from Evil spell, and allows the wearer to attempt to 'Charm Monster' upon a demon. Success means that the demon is enslaved for 1d6 weeks, whereupon it becomes free. Usable by: Magic-Users and Clerics."
-            },
+            "Metadata": [
+                {"Description": "This amulet functions as a Protection from Evil spell, and allows the wearer to attempt to 'Charm Monster' upon a demon. Success means that the demon is enslaved for 1d6 weeks, whereupon it becomes free. Usable by: Magic-Users and Clerics."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Beaker of Potions (A)",
-            "Metadata": {
-                "Description": "This small jug fills itself with the requested potion, out of the 1d4+1 potions it is able to produce. The jug can be used as many times per week as the number of different potions it can produce. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This small jug fills itself with the requested potion, out of the 1d4+1 potions it is able to produce. The jug can be used as many times per week as the number of different potions it can produce. Usable by: All Classes."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Censer, Bowl, Brazier, or Stone of Controlling Elementals (M)",
-            "Metadata": {
-                "Description": "Censers control air elementals, bowls (when filled) control water elementals, braziers control fire elementals, and stones control earth elementals. These items can be used to summon a 12 HD elemental of the appropriate type. Generally, it takes 10 minutes to prepare the object for use. Usable by: Magic-Users."
-            },
+            "Metadata": [
+                {"Description": "Censers control air elementals, bowls (when filled) control water elementals, braziers control fire elementals, and stones control earth elementals. These items can be used to summon a 12 HD elemental of the appropriate type. Generally, it takes 10 minutes to prepare the object for use. Usable by: Magic-Users."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Crystal Ball (M)",
-            "Metadata": {
-                "Description": "A crystal ball allows the user to see what is transpiring in whatever location he or she desires to see, over a considerable distance. Such a magic item may not be used more than thrice per day, or the user will be driven mad. Certain spells and other precautions may be used to prevent being seen through a crystal ball. Some of these items may communicate sound, or even thoughts, from the area being scryed, although these are rare. Usable by: Magic-Users."
-            },
+            "Metadata": [
+                {"Description": "A crystal ball allows the user to see what is transpiring in whatever location he or she desires to see, over a considerable distance. Such a magic item may not be used more than thrice per day, or the user will be driven mad. Certain spells and other precautions may be used to prevent being seen through a crystal ball. Some of these items may communicate sound, or even thoughts, from the area being scryed, although these are rare. Usable by: Magic-Users."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Efreeti Bottle (A)",
-            "Metadata": {
-                "Description": "The efreeti that inhabits such a bottle will serve the bottle's owner for a year and a day unless it is accidentally released from servitude. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "The efreeti that inhabits such a bottle will serve the bottle's owner for a year and a day unless it is accidentally released from servitude. Usable by: All Classes."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Figurine of the Golden Lion (A)",
-            "Metadata": {
-                "Description": "This is a small stone figurine that transforms into a lion when the command word is spoken, fighting at its owner's orders. If it is slain, it turns back into a figurine, but may be used again. The figurine may be used once per week, and no more. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This is a small stone figurine that transforms into a lion when the command word is spoken, fighting at its owner's orders. If it is slain, it turns back into a figurine, but may be used again. The figurine may be used once per week, and no more. Usable by: All Classes."}
+            ],
             "DiceRange": "6"
         },
         {
             "Name": "Gauntlets of Dexterity (A)",
-            "Metadata": {
-                "Description": "When worn, these gloves grant a bonus of +2 to the wearer's Dexterity (to a maximum of 18). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "When worn, these gloves grant a bonus of +2 to the wearer's Dexterity (to a maximum of 18). Usable by: All Classes."}
+            ],
             "DiceRange": "7"
         },
         {
             "Name": "Gem of Seeing (A)",
-            "Metadata": {
-                "Description": "A Gem of Seeing is used as a lens. It shows the truth of what it sees, cutting through illusions of all kinds, even very powerful ones. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "A Gem of Seeing is used as a lens. It shows the truth of what it sees, cutting through illusions of all kinds, even very powerful ones. Usable by: All Classes."}
+            ],
             "DiceRange": "8"
         },
         {
             "Name": "Girdle of Giant Strength (A)",
-            "Metadata": {
-                "Description": "This wide belt grants the wearer the strength of a hill giant (+8 strength damage, not cumulative with any existing strength bonuses). The girdle does not increase to-hit probability. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This wide belt grants the wearer the strength of a hill giant (+8 strength damage, not cumulative with any existing strength bonuses). The girdle does not increase to-hit probability. Usable by: All Classes."}
+            ],
             "DiceRange": "9"
         },
         {
             "Name": "Helm of Fiery Brilliance (A)",
-            "Metadata": {
-                "Description": "This prodigiously powerful helm grants many benefits to the wearer. Anyone donning the helm gains a +10 on saving throws against fire damage, and can create a Wall of Fire. Fighters wearing the helm may command a weapon in hand to flame (+1d6 damage). Magic-Users wearing the helm can add +1 to each die of damage inflicted by a Fireball or Delayed Blast Fireball spell. Clerics wearing the helm can ignite objects within 30 feet at will, and may cast two Light or Continual Light spells for each one the Cleric has actually prepared. The wearer of the helmet is likely to be attacked by any air elemental creatures, but fire elemental types (such as efreet or salamanders) will be favorably disposed. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This prodigiously powerful helm grants many benefits to the wearer. Anyone donning the helm gains a +10 on saving throws against fire damage, and can create a Wall of Fire. Fighters wearing the helm may command a weapon in hand to flame (+1d6 damage). Magic-Users wearing the helm can add +1 to each die of damage inflicted by a Fireball or Delayed Blast Fireball spell. Clerics wearing the helm can ignite objects within 30 feet at will, and may cast two Light or Continual Light spells for each one the Cleric has actually prepared. The wearer of the helmet is likely to be attacked by any air elemental creatures, but fire elemental types (such as efreet or salamanders) will be favorably disposed. Usable by: All Classes."}
+            ],
             "DiceRange": "10"
         },
         {
             "Name": "Helm of Teleportation (M)",
-            "Metadata": {
-                "Description": "When the wearer casts a Teleportation spell on himself or herself, while wearing the helm, the teleportation spell is made without risk of error, anywhere the caster desires. This may be done repeatedly (without further casting of the spell) for a period of one hour before the concatenation of spell and helm ends, and it may be done only once per day. The helm does not assist with Teleportation spells cast on anyone other than the wearer. Usable by: Magic-Users."
-            },
+            "Metadata": [
+                {"Description": "When the wearer casts a Teleportation spell on himself or herself, while wearing the helm, the teleportation spell is made without risk of error, anywhere the caster desires. This may be done repeatedly (without further casting of the spell) for a period of one hour before the concatenation of spell and helm ends, and it may be done only once per day. The helm does not assist with Teleportation spells cast on anyone other than the wearer. Usable by: Magic-Users."}
+            ],
             "DiceRange": "11"
         },
         {
             "Name": "Horn of Blasting (A)",
-            "Metadata": {
-                "Description": "This horn, when blown, has the same effect on structures as a catapult, and causes 2d6 points of damage to creatures, deafening them for 10 minutes as well. The cone of sound is 100 feet long, and widens to a base of 20 feet. The 'point' of the cone, at the horn's mouth, is 10 feet wide. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This horn, when blown, has the same effect on structures as a catapult, and causes 2d6 points of damage to creatures, deafening them for 10 minutes as well. The cone of sound is 100 feet long, and widens to a base of 20 feet. The 'point' of the cone, at the horn's mouth, is 10 feet wide. Usable by: All Classes."}
+            ],
             "DiceRange": "12"
         },
         {
             "Name": "Horn of Valhalla, Iron (F)",
-            "Metadata": {
-                "Description": "The horn summons 2d4 berserk warriors (4 HD) to assist the one who winded the horn. Usable by: Fighters."
-            },
+            "Metadata": [
+                {"Description": "The horn summons 2d4 berserk warriors (4 HD) to assist the one who winded the horn. Usable by: Fighters."}
+            ],
             "DiceRange": "13"
         },
         {
             "Name": "Lenses of Charming (A)",
-            "Metadata": {
-                "Description": "These lenses, when placed over the eyes, give the wearer the ability to charm those who meet his or her gaze (acting as the Charm Person spell). The saving throw against the power of the lenses is made at -2. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "These lenses, when placed over the eyes, give the wearer the ability to charm those who meet his or her gaze (acting as the Charm Person spell). The saving throw against the power of the lenses is made at -2. Usable by: All Classes."}
+            ],
             "DiceRange": "14"
         },
         {
             "Name": "Libram, Magical (level gain) (specific to one class)",
-            "Metadata": {
-                "Description": "Magical librams grant a level of experience to the reader, if the reader is of the appropriate character class. Randomly determine the class for which the libram is written, from all character classes."
-            },
+            "Metadata": [
+                {"Description": "Magical librams grant a level of experience to the reader, if the reader is of the appropriate character class. Randomly determine the class for which the libram is written, from all character classes."}
+            ],
             "DiceRange": "15"
         },
         {
             "Name": "Manual of Golems (M)",
-            "Metadata": {
-                "Description": "This book contains the basic instructions and formulae for creating a single type of golem. The process is expensive, and the creator must have achieved a certain level of magical expertise in order to use the book, but these are priceless repositories of forgotten lore. Such books are often warded by the original owner, against the touch of anyone not the Magic-User class, being enchanted to inflict damage or even the loss of a level. Usable by: Magic-Users only."
-            },
+            "Metadata": [
+                {"Description": "This book contains the basic instructions and formulae for creating a single type of golem. The process is expensive, and the creator must have achieved a certain level of magical expertise in order to use the book, but these are priceless repositories of forgotten lore. Such books are often warded by the original owner, against the touch of anyone not the Magic-User class, being enchanted to inflict damage or even the loss of a level. Usable by: Magic-Users only."}
+            ],
             "DiceRange": "16"
         },
         {
             "Name": "Manual of Intelligence (A)",
-            "Metadata": {
-                "Description": "Reading this tome increases the reader's intelligence by 1 point (to a maximum of 18). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "Reading this tome increases the reader's intelligence by 1 point (to a maximum of 18). Usable by: All Classes."}
+            ],
             "DiceRange": "17"
         },
         {
             "Name": "Manual of Wisdom (A)",
-            "Metadata": {
-                "Description": "Reading this tome increases the reader's Wisdom by 1 point (to a maximum of 18). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "Reading this tome increases the reader's Wisdom by 1 point (to a maximum of 18). Usable by: All Classes."}
+            ],
             "DiceRange": "18"
         },
         {
             "Name": "Necklace of Firebaubles (A)",
-            "Metadata": {
-                "Description": "This necklace is hung with 3d4 little baubles. When thrown, the baubles explode into 6d6 fireballs (per the spell). Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This necklace is hung with 3d4 little baubles. When thrown, the baubles explode into 6d6 fireballs (per the spell). Usable by: All Classes."}
+            ],
             "DiceRange": "19"
         },
         {
             "Name": "Scarab of Insanity (A)",
-            "Metadata": {
-                "Description": "This is a carving of a scarab-beetle, or perhaps the petrified remains of a real one. When the scarab is displayed, all creatures with 9 or fewer hit dice, within a radius of 30 feet, fall into temporary insanity lasting for 2 hours. Creatures with 10+ hit dice still do not receive a saving throw, but have a 1 in 4 chance to overcome the scarab's insidious influence. The scarab may be used 12 times, after which it crumbles to dust. At the option of the Referee, it might be recharged using a Symbol of Insanity spell, but with a 5% chance per charge that the item will be destroyed. Usable by: All Classes."
-            },
+            "Metadata": [
+                {"Description": "This is a carving of a scarab-beetle, or perhaps the petrified remains of a real one. When the scarab is displayed, all creatures with 9 or fewer hit dice, within a radius of 30 feet, fall into temporary insanity lasting for 2 hours. Creatures with 10+ hit dice still do not receive a saving throw, but have a 1 in 4 chance to overcome the scarab's insidious influence. The scarab may be used 12 times, after which it crumbles to dust. At the option of the Referee, it might be recharged using a Symbol of Insanity spell, but with a 5% chance per charge that the item will be destroyed. Usable by: All Classes."}
+            ],
             "DiceRange": "20"
         }
     ]

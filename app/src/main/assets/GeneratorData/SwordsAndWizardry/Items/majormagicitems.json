@@ -4,9 +4,9 @@
     "TableEntries": [
         {
             "Name": "Potion Trade-Out x6",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "1",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Potions",
@@ -15,9 +15,9 @@
         },
         {
             "Name": "Major Scroll Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "2",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Scrolls",
@@ -26,9 +26,9 @@
         },
         {
             "Name": "Major Magic Armor/Weapon Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "3",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Magic Armor and Weapons",
@@ -37,9 +37,9 @@
         },
         {
             "Name": "Major Remarkable Magic Items Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "4",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Remarkable Magic Items",

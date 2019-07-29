@@ -4,23 +4,23 @@
     "TableEntries": [
         {
             "Name": "Spell, level 1, holds 10 charges",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "1-2"
         },
         {
             "Name": "Spell, level 2, holds 5 charges",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "3-4"
         },
         {
             "Name": "Spell, level 3, holds 2 charges",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "5-6"
         }
     ]

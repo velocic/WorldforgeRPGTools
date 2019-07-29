@@ -4,44 +4,44 @@
     "TableEntries": [
         {
             "Name": "Fire Resistance (A)",
-            "Metadata": {
-                "Description": "The wearer receives a +5 to saving throws vs. magical fire, and is immune to normal fire."
-            },
+            "Metadata": [
+                {"Description": "The wearer receives a +5 to saving throws vs. magical fire, and is immune to normal fire."}
+            ],
             "DiceRange": "1"
         },
         {
             "Name": "Invisibility (A)",
-            "Metadata": {
-                "Description": "While wearing the ring, the wearer becomes invisible."
-            },
+            "Metadata": [
+                {"Description": "While wearing the ring, the wearer becomes invisible."}
+            ],
             "DiceRange": "2"
         },
         {
             "Name": "Mammal Control (A)",
-            "Metadata": {
-                "Description": "The wearer controls 1d8 mammals at a range of up to 60 feet. Control does not extend to people or to giant animals."
-            },
+            "Metadata": [
+                {"Description": "The wearer controls 1d8 mammals at a range of up to 60 feet. Control does not extend to people or to giant animals."}
+            ],
             "DiceRange": "3"
         },
         {
             "Name": "Poison Resistance (A)",
-            "Metadata": {
-                "Description": "The wearer receives a +5 to saving throws vs. poison."
-            },
+            "Metadata": [
+                {"Description": "The wearer receives a +5 to saving throws vs. poison."}
+            ],
             "DiceRange": "4"
         },
         {
             "Name": "Protection, +1 (A)",
-            "Metadata": {
-                "Description": "The wearer gains a bonus of -1[+1] to armor class, and +1 on all saving throws."
-            },
+            "Metadata": [
+                {"Description": "The wearer gains a bonus of -1[+1] to armor class, and +1 on all saving throws."}
+            ],
             "DiceRange": "5"
         },
         {
             "Name": "Protection, +2 (A)",
-            "Metadata": {
-                "Description": "The wearer gains armor class bonus of -2[+2], and +2 on all saving throws."
-            },
+            "Metadata": [
+                {"Description": "The wearer gains armor class bonus of -2[+2], and +2 on all saving throws."}
+            ],
             "DiceRange": "6"
         }
     ]

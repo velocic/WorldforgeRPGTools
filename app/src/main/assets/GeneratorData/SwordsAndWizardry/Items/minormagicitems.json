@@ -4,9 +4,9 @@
     "TableEntries": [
         {
             "Name": "Potion Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "1",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Potions"
@@ -14,9 +14,9 @@
         },
         {
             "Name": "Minor Scroll Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "2",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Scrolls",
@@ -25,9 +25,9 @@
         },
         {
             "Name": "Minor Magic Armor/Weapon Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "3",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Magic Armor and Weapons",
@@ -36,9 +36,9 @@
         },
         {
             "Name": "Minor Remarkable Magic Items Trade-Out",
-            "Metadata": {
-                "Description": ""
-            },
+            "Metadata": [
+                {"Description": ""}
+            ],
             "DiceRange": "4",
             "RerollSubTable": {
                 "SubTableName": "SwordsAndWizardry/Items/Remarkable Magic Items",

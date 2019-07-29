@@ -23,7 +23,7 @@ data class ResultItemDetail(var name: String, var content: String) : Parcelable
     override fun describeContents(): Int = 0
 
     companion object {
-        private const val missingArgumentMessage = "Failed to retrieve %s from parceled ResultItemDetail"
+        private const val missingArgumentMessage = "Failed to retrieve %s from parceled ResultItemDetail."
 
         @JvmField
         val CREATOR: Parcelable.Creator<ResultItemDetail> = object : Parcelable.Creator<ResultItemDetail> {
