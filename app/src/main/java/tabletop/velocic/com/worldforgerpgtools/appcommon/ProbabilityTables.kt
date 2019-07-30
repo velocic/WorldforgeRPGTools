@@ -1,11 +1,35 @@
 package tabletop.velocic.com.worldforgerpgtools.appcommon
 
+import android.os.Parcel
+import android.os.Parcelable
 import kotlin.math.pow
 
-data class ProbabilityTableKey(val numDie: Int = 1, val dieSize:Int)
+data class ProbabilityTableKey(val numDie: Int = 1, val dieSize:Int) : Parcelable
+{
+    constructor(parcel: Parcel) : this(parcel.readInt(), parcel.readInt())
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.apply {
+            writeInt(numDie)
+            writeInt(dieSize)
+        }
+    }
+
+    override fun describeContents(): Int = 0
+
+    companion object {
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<ProbabilityTableKey> {
+            override fun createFromParcel(source: Parcel): ProbabilityTableKey =
+                ProbabilityTableKey(source)
+
+            override fun newArray(size: Int): Array<ProbabilityTableKey?> =
+                arrayOfNulls(size)
+        }
+    }
+}
 
 object ProbabilityTables {
-
     val oneDFour = ProbabilityTable(dieSize = 4)
     val oneDSix = ProbabilityTable(dieSize = 6)
     val oneDEight = ProbabilityTable(dieSize = 8)

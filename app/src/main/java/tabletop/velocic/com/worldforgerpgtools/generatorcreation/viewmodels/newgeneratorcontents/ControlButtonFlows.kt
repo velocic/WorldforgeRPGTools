@@ -4,11 +4,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.partial_generator_contents_main_buttons.view.*
 import kotlinx.android.synthetic.main.partial_generator_contents_merge_rows_buttons.view.*
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 
 class PrimaryFlowInteractions(
     private val parent: ViewGroup,
-    editDetailsClickHandler: (Int, String) -> Unit = { _, _ -> },
+    editDetailsClickHandler: (Int, String, ArrayList<ResultItemDetail>?) -> Unit = { _, _, _ -> },
     mergeRowsClickHandler: (Int, Boolean) -> Unit = { _, _ -> },
     splitMergedRowsClickHandler: (Int) -> Unit = {}
 )
@@ -21,7 +22,7 @@ class PrimaryFlowInteractions(
         parent.generator_contents_main_buttons_split_range.setOnClickListener { splitMergedRowsClickHandler(rowIndex) }
         parent.generator_contents_main_buttons_edit_details.setOnClickListener {
             val rowName = rowData?.name ?: ""
-            editDetailsClickHandler(rowIndex, rowName)
+            editDetailsClickHandler(rowIndex, rowName, ArrayList(rowData?.metadata))
         }
     }
 

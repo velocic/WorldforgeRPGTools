@@ -24,12 +24,13 @@ import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.appcommon.savedStateMissingArgumentMessage
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
-    private val newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
-    lateinit var tableData: ProbabilityTableKey
+    private lateinit var newGenerator: Generator
+    private lateinit var tableData: ProbabilityTableKey
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_new_generator_contents, container, false)
@@ -37,16 +38,12 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tableTemplate = arguments?.getSerializable(ARG_GENERATOR_TABLE_TEMPLATE) as GeneratorTableTemplate?
-        val customTableSize = arguments?.getInt(ARG_CUSTOM_TABLE_SIZE)
-
-        tableTemplate?.let {
-            tableData = it.tableData
-        } ?: customTableSize?.let {
-            tableData = ProbabilityTableKey(dieSize = it)
-        } ?: throw IllegalStateException("Missing necessary arguments to initialize a new generator.")
-
-        initializeGenerator(tableData)
+        arguments?.let { args ->
+            initializeFromExternalArgs(args)
+            arguments = null
+        } ?: savedInstanceState?.let { savedState ->
+            initializeFromSavedState(savedState)
+        }
 
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
             " a LayoutInflater from a null Activity instance")
@@ -83,8 +80,32 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun initializeGenerator(tableData: ProbabilityTableKey) {
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable(EXTRA_GENERATOR, newGenerator)
+        outState.putParcelable(EXTRA_TABLE_DATA, tableData)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun initializeFromExternalArgs(args: Bundle) {
+        val tableTemplate = args.getSerializable(ARG_GENERATOR_TABLE_TEMPLATE) as GeneratorTableTemplate?
+        val customTableSize = args.getInt(ARG_CUSTOM_TABLE_SIZE)
+
+        tableTemplate?.let {
+            tableData = it.tableData
+        } ?: customTableSize.let {
+            tableData = ProbabilityTableKey(dieSize = it)
+        }
+
+        newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
+    }
+
+    private fun initializeFromSavedState(savedInstanceState: Bundle) {
+        newGenerator = savedInstanceState.getParcelable(EXTRA_GENERATOR)
+            ?: throw IllegalArgumentException(savedStateMissingArgumentMessage.format("newGenerator", "NewGeneratorContentsFragment"))
+        tableData = savedInstanceState.getParcelable(EXTRA_TABLE_DATA)
+            ?: throw IllegalArgumentException(savedStateMissingArgumentMessage.format("tableData", "NewGeneratorContentsFragment"))
     }
 
     private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : List<TableEntry> =
@@ -93,9 +114,11 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         }
 
     companion object {
-        const val REQUEST_RESULT_ITEM_DETAILS = 0
         private const val ARG_GENERATOR_TABLE_TEMPLATE = "generator_table_template"
         private const val ARG_CUSTOM_TABLE_SIZE = "custom_table_size"
+        const val EXTRA_TABLE_DATA = "tabletop.velocic.com.worldforgerpgtools.table_data"
+        const val EXTRA_GENERATOR = "tabletop.velocic.com.worldforgerpgtools.generator"
+        const val REQUEST_RESULT_ITEM_DETAILS = 0
 
         fun newInstance(generatorTableTemplate: GeneratorTableTemplate): NewGeneratorContentsFragment =
             NewGeneratorContentsFragment().apply {
@@ -206,8 +229,8 @@ private class NewGeneratorContentsAdapter(
         notifyDataSetChanged()
     }
 
-    private fun editDetailsEventHandler(rowIndex: Int, resultItemName: String) {
-        val resultItemDetailsFragment = ResultItemDetailsFragment.newInstance(rowIndex, resultItemName)
+    private fun editDetailsEventHandler(rowIndex: Int, resultItemName: String, previouslySavedDetails: ArrayList<ResultItemDetail>?) {
+        val resultItemDetailsFragment = ResultItemDetailsFragment.newInstance(rowIndex, resultItemName, previouslySavedDetails)
         resultItemDetailsFragment.setTargetFragment(targetFragment, NewGeneratorContentsFragment.REQUEST_RESULT_ITEM_DETAILS)
 
         fragmentManager.beginTransaction()
@@ -221,7 +244,7 @@ private class NewGeneratorContentsViewHolder(
     rowView: View,
     combineRowsEventHandler: (Int, Boolean) -> Unit,
     expandCombinedRowsEventHandler: (Int) -> Unit,
-    editDetailsEventHandler: (Int, String) -> Unit,
+    editDetailsEventHandler: (Int, String, ArrayList<ResultItemDetail>?) -> Unit,
     resources: Resources
 ) : RecyclerView.ViewHolder(rowView)
 {
@@ -240,10 +263,10 @@ private class NewGeneratorContentsViewHolder(
     )
 
     fun bind(
-            rowIndex: Int,
-            rowData: TableEntry,
-            combineRowsEventState: CombineRowsEventStateTracker,
-            tableData: ProbabilityTableKey
+        rowIndex: Int,
+        rowData: TableEntry,
+        combineRowsEventState: CombineRowsEventStateTracker,
+        tableData: ProbabilityTableKey
     ) {
         mainUserInput.bind(rowData)
         mainUserInput.updateResultChance(tableData)

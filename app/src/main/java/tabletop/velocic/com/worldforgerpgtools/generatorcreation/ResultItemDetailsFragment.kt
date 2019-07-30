@@ -53,7 +53,7 @@ class ResultItemDetailsFragment : Fragment()
         }
 
         val layoutInflater = LayoutInflater.from(activity) ?:
-        throw IllegalStateException("Attempted to create a LayoutInflater from a null Activity instance")
+            throw IllegalStateException("Attempted to create a LayoutInflater from a null Activity instance")
 
         detailsRecyclerView = result_item_details_content
         detailsRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -94,14 +94,17 @@ class ResultItemDetailsFragment : Fragment()
         const val EXTRA_ROW_INDEX = "tabletop.velocic.com.worldforgerpgtools.row_index"
         const val EXTRA_RESULT_ITEM_DETAILS = "tabletop.velocic.com.worldforgerpgtools.result_item_details"
 
-        fun newInstance(rowIndex: Int, resultItemName: String) : Fragment {
-            return ResultItemDetailsFragment().apply {
+        fun newInstance(rowIndex: Int, resultItemName: String, savedResultItemDetails: ArrayList<ResultItemDetail>? = null) : Fragment =
+            ResultItemDetailsFragment().apply {
                 arguments = bundleOf(
                     ARG_ROW_INDEX to rowIndex,
                     ARG_RESULT_ITEM_NAME to resultItemName
-                )
+                ).apply {
+                    savedResultItemDetails?.let {
+                        putParcelableArrayList(EXTRA_RESULT_ITEM_DETAILS, it)
+                    }
+                }
             }
-        }
     }
 }
 
