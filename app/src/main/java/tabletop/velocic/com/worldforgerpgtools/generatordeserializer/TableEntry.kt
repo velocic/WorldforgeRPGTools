@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import tabletop.velocic.com.worldforgerpgtools.appcommon.parcelableMissingArgumentMessage
 
 class TableEntry(
     @SerializedName("Name")
@@ -20,14 +21,14 @@ class TableEntry(
 ) : Parcelable
 {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("name")),
+        parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("name", "TableEntry")),
         listOf(),
         "",
         null
     ) {
         val resultItemDetailListLoader = object : TypeToken<List<ResultItemDetail>>(){}::class.java.classLoader
         parcel.readList(metadata, resultItemDetailListLoader)
-        diceRangeString = parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("diceRangeString"))
+        diceRangeString = parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("diceRangeString", "TableEntry"))
         rerollSubTable = parcel.readParcelable(RerollSubTable::class.java.classLoader)
     }
 
@@ -92,10 +93,8 @@ class TableEntry(
     }
 
     companion object {
-        private const val missingArgumentMessage = "Failed to retrieve %s from parceled TableEntry."
-
         @JvmField
-        val CREATOR: Parcelable.Creator<TableEntry> = object : Parcelable.Creator<TableEntry>
+        val CREATOR = object : Parcelable.Creator<TableEntry>
         {
             override fun createFromParcel(source: Parcel): TableEntry =
                 TableEntry(source)

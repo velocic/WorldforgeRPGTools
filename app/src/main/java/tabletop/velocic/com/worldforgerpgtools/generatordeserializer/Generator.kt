@@ -1,6 +1,10 @@
 package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+import tabletop.velocic.com.worldforgerpgtools.appcommon.parcelableMissingArgumentMessage
 
 class Generator(
     @SerializedName("Name")
@@ -10,10 +14,11 @@ class Generator(
     var defaultNumResultRolls: Int = 1,
 
     @SerializedName("TableEntries")
-    var table: Array<TableEntry>,
+    var table: List<TableEntry>,
 
     assetPath: String
-) {
+) : Parcelable
+{
     @SerializedName("AssetPath")
     var assetPath = assetPath
         get() {
@@ -30,4 +35,38 @@ class Generator(
 
             return "$field/"
         }
+
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("name", "Generator")),
+        parcel.readInt(),
+        listOf<TableEntry>(),
+        ""
+    ) {
+        val tableClassLoader = object : TypeToken<List<TableEntry>>(){}::class.java.classLoader
+        parcel.readList(table, tableClassLoader)
+        assetPath = parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("assetPath", "Generator"))
+    }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.run {
+            writeString(name)
+            writeInt(defaultNumResultRolls)
+            writeList(table)
+            writeString(assetPath)
+        }
+    }
+
+    override fun describeContents(): Int = 0
+
+    companion object {
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<Generator>
+        {
+            override fun createFromParcel(source: Parcel): Generator =
+                Generator(source)
+
+            override fun newArray(size: Int): Array<Generator?> =
+                arrayOfNulls(size)
+        }
+    }
 }

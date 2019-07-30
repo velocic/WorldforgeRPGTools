@@ -3,6 +3,7 @@ package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.reflect.TypeToken
+import tabletop.velocic.com.worldforgerpgtools.appcommon.parcelableMissingArgumentMessage
 
 class ResultItem(
     val tableGeneratedFrom: String,
@@ -13,8 +14,8 @@ class ResultItem(
 
     constructor(retrieved: Parcel,
                 quantity: Int = retrieved.readInt(),
-                tableGeneratedFrom: String = retrieved.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("tableGeneratedFrom")),
-                name: String = retrieved.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("name"))
+                tableGeneratedFrom: String = retrieved.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("tableGeneratedFrom", "ResultItem")),
+                name: String = retrieved.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("name", "ResultItem"))
     ) : this(tableGeneratedFrom, name, mutableListOf()) {
         this.quantity = quantity
 
@@ -34,10 +35,8 @@ class ResultItem(
     }
 
     companion object {
-        private const val missingArgumentMessage = "Failed to retrieve %s from parceled ResultItem."
-
         @JvmField
-        val CREATOR: Parcelable.Creator<ResultItem> = object : Parcelable.Creator<ResultItem> {
+        val CREATOR = object : Parcelable.Creator<ResultItem> {
             override fun createFromParcel(source: Parcel): ResultItem {
                 return ResultItem(source)
             }

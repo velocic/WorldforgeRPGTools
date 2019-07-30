@@ -44,6 +44,8 @@ object GeneratorImporter {
         currentPath: String
     ) {
         val contents = assetManager.list(currentPath)
+            ?: throw IllegalStateException("Expected an array of filenames, but unexpectedly received null instead.")
+
         val messageDigest = MessageDigest.getInstance("MD5")
 
         if (contents.isNotEmpty()) {

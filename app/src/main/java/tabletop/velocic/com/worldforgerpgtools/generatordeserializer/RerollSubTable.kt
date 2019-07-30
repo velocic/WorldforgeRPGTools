@@ -3,6 +3,7 @@ package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import tabletop.velocic.com.worldforgerpgtools.appcommon.parcelableMissingArgumentMessage
 
 data class RerollSubTable(
     @SerializedName("SubTableName")
@@ -14,8 +15,8 @@ data class RerollSubTable(
 ) : Parcelable
 {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("targetTableName")),
-        parcel.readString() ?: throw IllegalArgumentException(missingArgumentMessage.format("targetTableRange")),
+        parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("targetTableName", "RerollSubTable")),
+        parcel.readString() ?: throw IllegalArgumentException(parcelableMissingArgumentMessage.format("targetTableRange", "RerollSubTable")),
         parcel.readInt()
     )
 
@@ -33,10 +34,8 @@ data class RerollSubTable(
         get() = maxOf(1, _targetTableRollCount)
 
     companion object {
-        private const val missingArgumentMessage = "Failed to retrieve %s from parceled RerollSubTable."
-
         @JvmField
-        val CREATOR: Parcelable.Creator<RerollSubTable> = object : Parcelable.Creator<RerollSubTable> {
+        val CREATOR = object : Parcelable.Creator<RerollSubTable> {
             override fun createFromParcel(source: Parcel): RerollSubTable {
                 return RerollSubTable(source)
             }

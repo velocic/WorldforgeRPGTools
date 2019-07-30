@@ -28,7 +28,7 @@ import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemD
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
-    private val newGenerator = Generator("Placeholder Name", 1, arrayOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
+    private val newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
     lateinit var tableData: ProbabilityTableKey
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -87,8 +87,8 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
 
-    private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : Array<TableEntry> =
-        Array(numEntries) { currentIndex ->
+    private fun generateBlankTableEntries(startIndex: Int = 1, numEntries: Int) : List<TableEntry> =
+        List(numEntries) { currentIndex ->
             TableEntry("", listOf(), "${currentIndex + startIndex}", null)
         }
 
@@ -175,7 +175,7 @@ private class NewGeneratorContentsAdapter(
                 initialRow.rerollSubTable
             )
 
-            generator.table = (rowsBeforeTargetRange + collapsedRow + rowsAfterTargetRange).toTypedArray()
+            generator.table = (rowsBeforeTargetRange + collapsedRow + rowsAfterTargetRange)
 
             clearEventState()
             notifyDataSetChanged()
@@ -202,7 +202,7 @@ private class NewGeneratorContentsAdapter(
         newRows[0].copy(targetRow)
         newRows[0].diceRangeString = "${rangeToSplit.first}"
 
-        generator.table = (rowsBeforeTargetRange + newRows + rowsAfterTargetRange).toTypedArray()
+        generator.table = (rowsBeforeTargetRange + newRows + rowsAfterTargetRange)
         notifyDataSetChanged()
     }
 
