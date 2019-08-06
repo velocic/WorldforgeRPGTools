@@ -10,10 +10,12 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_create_generator.*
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
-    private var newGeneratorCategoryName: TextView? = null
+    private lateinit var newGeneratorCategoryName: TextView
+    private var newGenerator: Generator? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
         inflater.inflate(R.layout.fragment_create_generator, container, false)
@@ -26,7 +28,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         val newGeneratorName = view.edit_text_create_generator_name
         val submitGeneratorButton = view.create_generator_button_submit_new_generator
 
-        newGeneratorCategoryName?.setOnClickListener(::onNewGeneratorCategoryNameClicked)
+        newGeneratorCategoryName.setOnClickListener(::onNewGeneratorCategoryNameClicked)
 
         initializeGeneratorTemplateClickEvents()
     }
@@ -35,7 +37,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         super.onResume()
 
         arguments?.let {
-            newGeneratorCategoryName?.text = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY)
+            newGeneratorCategoryName.text = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY)
         }
     }
 
@@ -50,12 +52,19 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             //Can't set the TextView directly, as this function is called before
             //onResume, and the TextView state gets lost
             arguments = data?.extras
+            return
+        }
+
+        if (requestCode == REQUEST_NEW_GENERATOR_CONTENTS) {
+            newGenerator = data?.getParcelableExtra(NewGeneratorContentsFragment.EXTRA_GENERATOR)
+            return
         }
     }
 
     private fun initializeGeneratorTemplateClickEvents() {
         val transitionToContentsFragment = { chosenTemplate : GeneratorTableTemplate ->
             val contentsFragment = NewGeneratorContentsFragment.newInstance(chosenTemplate)
+            contentsFragment.setTargetFragment(this, REQUEST_NEW_GENERATOR_CONTENTS)
 
             activity?.supportFragmentManager?.beginTransaction()?.run {
                 replace(R.id.fragment_container, contentsFragment)
@@ -90,6 +99,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     companion object {
         const val BACK_STACK_GENERATOR_CREATION_FRAGMENT = "tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.GeneratorCreationFragment"
         private const val REQUEST_NEW_CATEGORY_PATH = 0
+        private const val REQUEST_NEW_GENERATOR_CONTENTS = 1
 
         fun newInstance() : GeneratorCreationFragment
         {

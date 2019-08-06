@@ -60,6 +60,16 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
             fragmentManager,
             this
         )
+
+        new_generator_submit.setOnClickListener {
+            targetFragment?.onActivityResult(
+                targetRequestCode,
+                Activity.RESULT_OK,
+                Intent().apply { putExtra(EXTRA_GENERATOR, newGenerator) }
+            )
+
+            activity?.supportFragmentManager?.popBackStack()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
