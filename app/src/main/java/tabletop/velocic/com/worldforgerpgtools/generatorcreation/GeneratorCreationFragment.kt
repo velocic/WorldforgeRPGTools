@@ -3,18 +3,24 @@ package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_create_generator.*
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
-    private lateinit var newGeneratorCategoryName: TextView
+    private var newGeneratorName = ""
+    private var newGeneratorCategoryName = ""
     private var newGenerator: Generator? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
@@ -23,12 +29,16 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        newGeneratorCategoryName = view.edit_text_create_generator_category
-
-        val newGeneratorName = view.edit_text_create_generator_name
         val submitGeneratorButton = view.create_generator_button_submit_new_generator
+        view.edit_text_create_generator_category.setOnClickListener(::onNewGeneratorCategoryNameClicked)
 
-        newGeneratorCategoryName.setOnClickListener(::onNewGeneratorCategoryNameClicked)
+        edit_text_create_generator_name.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                newGeneratorName = s?.toString() ?: ""
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         initializeGeneratorTemplateClickEvents()
     }
@@ -36,8 +46,11 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onResume() {
         super.onResume()
 
+        edit_text_create_generator_name.setText(newGeneratorName, TextView.BufferType.EDITABLE)
+
         arguments?.let {
-            newGeneratorCategoryName.text = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY)
+            newGeneratorCategoryName = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
+            edit_text_create_generator_category.text = newGeneratorCategoryName
         }
     }
 
@@ -106,4 +119,32 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             return GeneratorCreationFragment()
         }
     }
+}
+
+private class NewGeneratorPreviewAdapter(
+    private val generator: Generator,
+    private val tableData: ProbabilityTableKey,
+    private val layoutInflater: LayoutInflater,
+    private val fragmentManager: FragmentManager,
+    private val targetFragment: GeneratorCreationFragment
+) : RecyclerView.Adapter<NewGeneratorPreviewViewHolder>()
+{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewGeneratorPreviewViewHolder {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getItemCount(): Int = generator.table.size
+
+    override fun onBindViewHolder(holder: NewGeneratorPreviewViewHolder, position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getItemViewType(position: Int): Int = R.layout.list_item_preview_generator_contents
+}
+
+private class NewGeneratorPreviewViewHolder(
+    rowView: View
+) : RecyclerView.ViewHolder(rowView)
+{
+
 }

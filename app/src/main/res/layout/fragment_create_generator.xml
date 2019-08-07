@@ -8,14 +8,14 @@
         android:id="@+id/create_generator_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/create_generator_title"
+        android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
+        android:text="@string/create_generator_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/create_generator_category"
@@ -25,19 +25,19 @@
         android:layout_marginTop="24dp"
         android:text="@string/create_generator_category"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_name"/>
+        app:layout_constraintTop_toBottomOf="@id/create_generator_name" />
 
     <TextView
         android:id="@+id/edit_text_create_generator_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="?attr/editTextColor"
+        android:layout_marginEnd="8dp"
         android:background="?attr/editTextBackground"
+        android:textColor="?attr/editTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/create_generator_category"
-        app:layout_constraintTop_toBottomOf="@+id/create_generator_name"/>
+        app:layout_constraintStart_toEndOf="@+id/create_generator_text_entry_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/create_generator_name" />
 
     <EditText
         android:id="@+id/edit_text_create_generator_name"
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/create_generator_name"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_title"/>
+        app:layout_constraintStart_toEndOf="@+id/create_generator_text_entry_guideline"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_title" />
 
     <TextView
         android:id="@+id/create_generator_name"
@@ -56,123 +56,120 @@
         android:layout_marginTop="16dp"
         android:text="@string/create_generator_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_generator_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/create_generator_title" />
 
     <TextView
         android:id="@+id/create_generator_template_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/generator_template_label_text"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_category"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_category" />
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/create_generator_templates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_template_label"
-        app:layout_constraintBottom_toTopOf="@id/create_generator_preview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:orientation="horizontal"
-        app:columnCount="3"
         app:alignmentMode="alignBounds"
-        >
+        app:columnCount="3"
+        app:layout_constraintBottom_toTopOf="@id/create_generator_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_template_label"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:orientation="horizontal">
 
         <TextView
             android:id="@+id/create_generator_template_1d4"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d4"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d4"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_1d6"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d6"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d6"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_1d8"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d8"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d8"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_1d10"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d10"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d10"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_1d12"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d12"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d12"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_1d20"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_1d20"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_1d20"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_2d6"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_2d6"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_2d6"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_3d6"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_3d6"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_3d6"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
+
         <TextView
             android:id="@+id/create_generator_template_d100"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/distribution_d100"
+            android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_generate_results"
-        />
+            android:gravity="center_horizontal"
+            android:text="@string/distribution_d100"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal" />
 
     </androidx.gridlayout.widget.GridLayout>
 
@@ -181,21 +178,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_templates"
         app:layout_constraintBottom_toTopOf="@id/create_generator_button_submit_new_generator"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-    />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_templates" />
 
     <Button
         android:id="@+id/create_generator_button_submit_new_generator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit_button"
-        app:layout_constraintTop_toBottomOf="@id/create_generator_preview"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-    />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_generator_preview" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/create_generator_text_entry_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="65dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
