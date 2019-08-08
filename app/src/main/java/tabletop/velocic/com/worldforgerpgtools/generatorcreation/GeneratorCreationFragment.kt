@@ -9,19 +9,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_create_generator.*
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
+import kotlinx.android.synthetic.main.list_item_preview_generator_contents.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
+import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
     private var newGeneratorName = ""
     private var newGeneratorCategoryName = ""
-    private var newGenerator: Generator? = null
+    private var pendingNewGeneratorData: PendingNewGeneratorData? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
         inflater.inflate(R.layout.fragment_create_generator, container, false)
@@ -52,6 +55,11 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             newGeneratorCategoryName = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
             edit_text_create_generator_category.text = newGeneratorCategoryName
         }
+
+        pendingNewGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
+            create_generator_templates.visibility = View.VISIBLE
+            create_generator_preview.visibility = View.GONE
+        }()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,8 +77,43 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         }
 
         if (requestCode == REQUEST_NEW_GENERATOR_CONTENTS) {
-            newGenerator = data?.getParcelableExtra(NewGeneratorContentsFragment.EXTRA_GENERATOR)
+            data?.run {
+                pendingNewGeneratorData = PendingNewGeneratorData(
+                    getParcelableExtra(NewGeneratorContentsFragment.EXTRA_GENERATOR),
+                    getParcelableExtra(NewGeneratorContentsFragment.EXTRA_TABLE_DATA)
+                )
+            }
+
             return
+        }
+    }
+
+    private fun displayPendingGeneratorPreview(pendingGeneratorData: PendingNewGeneratorData) {
+        val fragmentManager = activity?.supportFragmentManager ?: throw IllegalStateException("Failed to retrieve" +
+                " a required FragmentManager instance.")
+        val targetFragment = this
+        create_generator_templates.visibility = View.GONE
+
+        val editPendingGeneratorClickListener = editPendingGenerator@{
+            val destination = NewGeneratorContentsFragment.newInstance(pendingGeneratorData)
+            destination.setTargetFragment(targetFragment, REQUEST_NEW_GENERATOR_CONTENTS)
+
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, destination)
+                .addToBackStack(null)
+                .commit()
+
+            return@editPendingGenerator
+        }
+
+        create_generator_preview.apply {
+            adapter = NewGeneratorPreviewAdapter(
+                pendingGeneratorData,
+                layoutInflater,
+                editPendingGeneratorClickListener
+            )
+            layoutManager = LinearLayoutManager(activity)
+            visibility = View.VISIBLE
         }
     }
 
@@ -122,29 +165,51 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 }
 
 private class NewGeneratorPreviewAdapter(
-    private val generator: Generator,
-    private val tableData: ProbabilityTableKey,
+    private val pendingGeneratorData: PendingNewGeneratorData,
     private val layoutInflater: LayoutInflater,
-    private val fragmentManager: FragmentManager,
-    private val targetFragment: GeneratorCreationFragment
+    private val editPendingGenerator: () -> Unit
 ) : RecyclerView.Adapter<NewGeneratorPreviewViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewGeneratorPreviewViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val view = layoutInflater.inflate(R.layout.list_item_preview_generator_contents, parent, false)
+
+        return NewGeneratorPreviewViewHolder(view, pendingGeneratorData.tableData, editPendingGenerator)
     }
 
-    override fun getItemCount(): Int = generator.table.size
+    override fun getItemCount(): Int = pendingGeneratorData.newGenerator.table.size
 
-    override fun onBindViewHolder(holder: NewGeneratorPreviewViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onBindViewHolder(holder: NewGeneratorPreviewViewHolder, position: Int) =
+        holder.bind(pendingGeneratorData.newGenerator.table[position])
 
     override fun getItemViewType(position: Int): Int = R.layout.list_item_preview_generator_contents
 }
 
 private class NewGeneratorPreviewViewHolder(
-    rowView: View
+    rowView: View,
+    private val tableData: ProbabilityTableKey,
+    private val editPendingGenerator: () -> Unit
 ) : RecyclerView.ViewHolder(rowView)
 {
+    private val chanceOfResult = rowView.preview_generator_contents_percent_chance
+    private val rollRange = rowView.preview_generator_contents_roll_range
+    private val result = rowView.preview_generator_contents_result
 
+    init {
+        itemView.setOnClickListener { editPendingGenerator() }
+    }
+
+    fun bind(tableEntry: TableEntry) {
+        val scaledProbability = ProbabilityTables.getProbability(
+            tableEntry.diceRange, tableData
+        ) * 100
+
+        chanceOfResult.text = "${"%.2f".format(scaledProbability)}%"
+        rollRange.text = tableEntry.diceRangeString
+        result.text = tableEntry.name
+    }
 }
+
+data class PendingNewGeneratorData(
+    var newGenerator: Generator,
+    var tableData: ProbabilityTableKey
+)

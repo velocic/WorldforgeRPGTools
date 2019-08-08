@@ -39,10 +39,16 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let { args ->
-            initializeFromExternalArgs(args)
-            arguments = null
+            //Editing a pending generator previously submitted to GeneratorCreationFragment
+            if (args.containsKey(EXTRA_GENERATOR)) {
+                initializeFromExistingGenerator(args)
+            } else {
+                //Creating a new generator from GeneratorCreationFragment for the first time
+                initializeFromExternalArgs(args)
+                arguments = null
+            }
         } ?: savedInstanceState?.let { savedState ->
-            initializeFromSavedState(savedState)
+            initializeFromExistingGenerator(savedState)
         }
 
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
@@ -65,7 +71,10 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
             targetFragment?.onActivityResult(
                 targetRequestCode,
                 Activity.RESULT_OK,
-                Intent().apply { putExtra(EXTRA_GENERATOR, newGenerator) }
+                Intent().apply {
+                    putExtra(EXTRA_GENERATOR, newGenerator)
+                    putExtra(EXTRA_TABLE_DATA, tableData)
+                }
             )
 
             activity?.supportFragmentManager?.popBackStack()
@@ -111,7 +120,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
 
-    private fun initializeFromSavedState(savedInstanceState: Bundle) {
+    private fun initializeFromExistingGenerator(savedInstanceState: Bundle) {
         newGenerator = savedInstanceState.getParcelable(EXTRA_GENERATOR)
             ?: throw IllegalArgumentException(savedStateMissingArgumentMessage.format("newGenerator", "NewGeneratorContentsFragment"))
         tableData = savedInstanceState.getParcelable(EXTRA_TABLE_DATA)
@@ -141,6 +150,14 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
             NewGeneratorContentsFragment().apply {
                 arguments = bundleOf(
                     ARG_CUSTOM_TABLE_SIZE to customTableSize
+                )
+            }
+
+        fun newInstance(pendingNewGeneratorData: PendingNewGeneratorData) =
+            NewGeneratorContentsFragment().apply {
+                arguments = bundleOf(
+                    EXTRA_GENERATOR to pendingNewGeneratorData.newGenerator,
+                    EXTRA_TABLE_DATA to pendingNewGeneratorData.tableData
                 )
             }
     }
