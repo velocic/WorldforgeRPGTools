@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_generator_results.*
 import kotlinx.android.synthetic.main.list_item_generator_results.view.*
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItem
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultRoller
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItem
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultRoller
 
 class GeneratorResultsFragment : androidx.fragment.app.Fragment()
 {
@@ -31,9 +31,9 @@ class GeneratorResultsFragment : androidx.fragment.app.Fragment()
         generatorPath = arguments?.getString(ARG_GENERATOR_PATH) ?: ""
         val numberOfResultsOverride = arguments?.getInt(ARG_NUMBER_OF_RESULTS_OVERRIDE) ?: 0
 
-        val rootCategory = GeneratorImporter.rootGeneratorCategory ?:
+        val rootCategory = GeneratorPersister.rootGeneratorCategory ?:
             throw IllegalStateException("Failed to retrieve the root generator category. Has" +
-                " GeneratorImporter been properly initialized?")
+                " GeneratorPersister been properly initialized?")
 
         val generator = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory) ?:
             throw IllegalStateException("A valid Generator is required to build a result set." +

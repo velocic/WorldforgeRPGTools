@@ -20,12 +20,12 @@ import tabletop.velocic.com.worldforgerpgtools.extensions.combineAscending
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.MainUserInput
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.MergeRowsFlowInteractions
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.newgeneratorcontents.PrimaryFlowInteractions
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
+import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
+import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.savedStateMissingArgumentMessage
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetail
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
@@ -116,7 +116,7 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
             tableData = ProbabilityTableKey(dieSize = it)
         }
 
-        newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorImporter.GENERATOR_DATA_FOLDER)
+        newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorPersister.GENERATOR_DATA_FOLDER)
         newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
     }
 

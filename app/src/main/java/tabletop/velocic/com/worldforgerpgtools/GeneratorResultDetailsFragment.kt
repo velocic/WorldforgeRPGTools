@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import kotlinx.android.synthetic.main.fragment_generated_item_details.*
 import kotlinx.android.synthetic.main.list_item_generated_item_details.view.*
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItem
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItem
 
 class GeneratorResultDetailsFragment : androidx.fragment.app.Fragment()
 {

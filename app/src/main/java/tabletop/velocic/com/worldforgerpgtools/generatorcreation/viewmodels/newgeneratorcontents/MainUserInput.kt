@@ -8,7 +8,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
+import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 import java.lang.IllegalArgumentException
 
 class MainUserInput(

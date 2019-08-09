@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_result_item_details.*
 import kotlinx.android.synthetic.main.list_item_result_item_details_entry.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetail
 
 class ResultItemDetailsFragment : Fragment()
 {

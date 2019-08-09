@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
+package tabletop.velocic.com.worldforgerpgtools.persistence
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -29,7 +29,7 @@ class Generator(
                 firstPathComponent = field.substring(0, firstSlashIndex)
             }
 
-            if (firstPathComponent == GeneratorImporter.GENERATOR_DATA_FOLDER) {
+            if (firstPathComponent == GeneratorPersister.GENERATOR_DATA_FOLDER) {
                 return "${field.substring(firstSlashIndex + 1, field.length)}/"
             }
 

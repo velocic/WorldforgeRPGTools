@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_generators.view.*
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCreationFragment
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorCategory
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorCategory
+import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 
 class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +32,9 @@ class GeneratorSelectionFragment : androidx.fragment.app.Fragment() {
         val fragmentArgs = arguments
         val currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
 
-        GeneratorImporter.import(context)
+        GeneratorPersister.import(context)
 
-        val rootCategory = GeneratorImporter.rootGeneratorCategory
+        val rootCategory = GeneratorPersister.rootGeneratorCategory
 
         //TODO: probably refactor getCategoryFromFull path to pass itself as base node
         val currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory) ?:

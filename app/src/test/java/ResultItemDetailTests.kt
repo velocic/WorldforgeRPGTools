@@ -2,9 +2,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetailDeserializer
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetailSerializer
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetail
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetailDeserializer
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetailSerializer
 
 class ResultItemDetailTests {
     @Test

@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.list_item_preview_generator_contents.view.
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.Generator
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
+import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
+import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {

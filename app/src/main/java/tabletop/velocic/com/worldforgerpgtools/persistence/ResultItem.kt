@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
+package tabletop.velocic.com.worldforgerpgtools.persistence
 
 import android.os.Parcel
 import android.os.Parcelable

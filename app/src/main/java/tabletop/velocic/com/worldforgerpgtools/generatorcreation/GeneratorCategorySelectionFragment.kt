@@ -14,8 +14,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorCategory
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.GeneratorImporter
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorCategory
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 
 import kotlinx.android.synthetic.main.fragment_generator_categories.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
@@ -34,7 +34,7 @@ class GeneratorCategorySelectionFragment : androidx.fragment.app.Fragment() {
         val fragmentArgs = arguments
         currentCategoryName = fragmentArgs?.getString(ARG_CATEGORY_PATH) ?: ""
 
-        val rootCategory = GeneratorImporter.rootGeneratorCategory
+        val rootCategory = GeneratorPersister.rootGeneratorCategory
         currentCategory = rootCategory?.getCategoryFromFullPath(currentCategoryName, rootCategory)
 
         view.button_select_category.setOnClickListener {

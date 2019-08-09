@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.generatordeserializer
+package tabletop.velocic.com.worldforgerpgtools.persistence
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,7 @@ import com.google.gson.JsonSyntaxException
 import java.io.*
 import java.security.MessageDigest
 
-object GeneratorImporter {
+object GeneratorPersister {
     const val GENERATOR_DATA_FOLDER = "GeneratorData"
     private const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
     private const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"

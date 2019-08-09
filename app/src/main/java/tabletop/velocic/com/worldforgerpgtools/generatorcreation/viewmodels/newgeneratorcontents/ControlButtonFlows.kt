@@ -4,8 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.partial_generator_contents_main_buttons.view.*
 import kotlinx.android.synthetic.main.partial_generator_contents_merge_rows_buttons.view.*
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.ResultItemDetail
-import tabletop.velocic.com.worldforgerpgtools.generatordeserializer.TableEntry
+import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetail
+import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
 class PrimaryFlowInteractions(
     private val parent: ViewGroup,
