@@ -15,13 +15,17 @@ object GeneratorPersister {
     private const val IMPORTER_PREFERENCES_FILE = "GeneratorImporterPrefs"
     private const val TAG_GENERATOR_IMPORT = "GENERATOR IMPORT"
     private const val BUFFER_SIZE = 32768
+    private val gson = GsonBuilder().apply{
+        registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailSerializer())
+        registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailDeserializer())
+    }.create()
+
 
     @JvmStatic
     var rootGeneratorCategory: GeneratorCategory? = null
         private set
 
     fun import(context: Context?) {
-
         if (context == null) {
             Log.d(TAG_GENERATOR_IMPORT, "Received a null context while attempting to import data from the filesystem; aborting.")
             return
@@ -34,6 +38,15 @@ object GeneratorPersister {
         prefsEditor.apply()
 
         importGenerators(context)
+    }
+
+    fun export(context: Context, generator: Generator, path: String) {
+        //convert to json string
+        //check that every dir along path exists, if not, create it
+        //create a file named generator.name
+        //write contents to the new file at "path/${generator.name}"
+        //full path is: "${context.filesDir}/$GENERATOR_DATA_FOLDER/$path/${generator.name}"
+        //use File::mkdirs() to create every directory along a path
     }
 
     private fun oneTimeLocalStorageCopy(
@@ -164,11 +177,6 @@ object GeneratorPersister {
     }
 
     private fun populateGenerators(rootNode: GeneratorCategory, assets: AssetManager) : GeneratorCategory {
-        val gson = GsonBuilder().apply{
-            registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailSerializer())
-            registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailDeserializer())
-        }.create()
-
         for (child in rootNode.childCategories) {
             for (jsonDataPath in child.generatorJsonDataPaths) {
                 try {
