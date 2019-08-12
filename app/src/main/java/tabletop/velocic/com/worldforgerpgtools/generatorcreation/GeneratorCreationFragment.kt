@@ -18,6 +18,7 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
@@ -32,7 +33,15 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val submitGeneratorButton = view.create_generator_button_submit_new_generator
+        view.create_generator_button_submit_new_generator.setOnClickListener submitHandler@{
+            val generator = pendingNewGeneratorData?.newGenerator ?: return@submitHandler
+            val nullCheckedContext = context ?: return@submitHandler
+
+            generator.name = newGeneratorName
+            generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$newGeneratorCategoryName"
+            GeneratorPersister.export(nullCheckedContext, generator, newGeneratorCategoryName)
+        }
+
         view.edit_text_create_generator_category.setOnClickListener(::onNewGeneratorCategoryNameClicked)
 
         edit_text_create_generator_name.addTextChangedListener(object : TextWatcher {
@@ -59,6 +68,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         pendingNewGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
             create_generator_templates.visibility = View.VISIBLE
             create_generator_preview.visibility = View.GONE
+            create_generator_button_submit_new_generator.visibility = View.GONE
         }()
     }
 
@@ -115,6 +125,8 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             layoutManager = LinearLayoutManager(activity)
             visibility = View.VISIBLE
         }
+
+        create_generator_button_submit_new_generator.visibility = View.VISIBLE
     }
 
     private fun initializeGeneratorTemplateClickEvents() {

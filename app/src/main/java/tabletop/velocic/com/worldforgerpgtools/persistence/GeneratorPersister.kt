@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Base64
 import android.util.Log
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import java.io.*
@@ -18,6 +20,21 @@ object GeneratorPersister {
     private val gson = GsonBuilder().apply{
         registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailSerializer())
         registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailDeserializer())
+        addSerializationExclusionStrategy(object : ExclusionStrategy {
+            override fun shouldSkipClass(clazz: Class<*>?) = false
+            override fun shouldSkipField(f: FieldAttributes?): Boolean {
+                val exclusionFields = listOf("assetPath")
+                val targetField = f?.name ?: ""
+
+                exclusionFields.forEach {
+                    if (targetField.equals(it, ignoreCase = true)) {
+                        return true
+                    }
+                }
+
+                return false
+            }
+        })
     }.create()
 
 
@@ -41,12 +58,15 @@ object GeneratorPersister {
     }
 
     fun export(context: Context, generator: Generator, path: String) {
-        //convert to json string
-        //check that every dir along path exists, if not, create it
-        //create a file named generator.name
-        //write contents to the new file at "path/${generator.name}"
-        //full path is: "${context.filesDir}/$GENERATOR_DATA_FOLDER/$path/${generator.name}"
-        //use File::mkdirs() to create every directory along a path
+        val exportPath = "${context.filesDir}/$GENERATOR_DATA_FOLDER/$path${generator.name}.json"
+        val exportFile = File(exportPath)
+
+        //Create all directories necessary, but don't create a dir named "{file-name}.json" at the end
+        exportFile.parentFile.mkdirs()
+        val jsonWriter = FileWriter(exportPath)
+        gson.toJson(generator, jsonWriter)
+        jsonWriter.flush()
+        jsonWriter.close()
     }
 
     private fun oneTimeLocalStorageCopy(

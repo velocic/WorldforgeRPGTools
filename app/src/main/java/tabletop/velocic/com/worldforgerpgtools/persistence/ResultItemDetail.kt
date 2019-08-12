@@ -36,12 +36,8 @@ data class ResultItemDetail(var name: String, var content: String) : Parcelable
 
 class ResultItemDetailSerializer : JsonSerializer<ResultItemDetail>
 {
-    override fun serialize(src: ResultItemDetail?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
-        val jsonResultItem = JsonObject()
-        jsonResultItem.addProperty(src?.name, src?.content)
-
-        return JsonPrimitive(jsonResultItem.toString())
-    }
+    override fun serialize(src: ResultItemDetail?, typeOfSrc: Type?, context: JsonSerializationContext?) =
+        JsonObject().apply { addProperty(src?.name, src?.content) }
 }
 
 class ResultItemDetailDeserializer : JsonDeserializer<ResultItemDetail>

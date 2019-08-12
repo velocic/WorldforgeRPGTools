@@ -19,7 +19,6 @@ class Generator(
     assetPath: String
 ) : Parcelable
 {
-    @SerializedName("AssetPath")
     var assetPath = assetPath
         get() {
             val firstSlashIndex = field.indexOf("/")
