@@ -1,6 +1,7 @@
 package tabletop.velocic.com.worldforgerpgtools.generatorcreation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -9,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_create_generator.*
@@ -17,6 +20,7 @@ import kotlinx.android.synthetic.main.list_item_preview_generator_contents.view.
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
+import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMessage
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
@@ -33,13 +37,16 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.create_generator_button_submit_new_generator.setOnClickListener submitHandler@{
-            val generator = pendingNewGeneratorData?.newGenerator ?: return@submitHandler
-            val nullCheckedContext = context ?: return@submitHandler
+        view.create_generator_button_submit_new_generator.setOnClickListener {
+            val action = "finalize new generator table"
+            val nullCheckedContext = context ?:
+                throw IllegalStateException(nullAndroidDependencyMessage.format("Context", action))
+            val nullCheckedFragmentManager = fragmentManager ?:
+                throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", action))
+            val generator = pendingNewGeneratorData?.newGenerator ?:
+                throw IllegalStateException("Pending generator is null; nothing to finalize.")
 
-            generator.name = newGeneratorName
-            generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$newGeneratorCategoryName"
-            GeneratorPersister.export(nullCheckedContext, generator, newGeneratorCategoryName)
+            finalizeNewGenerator(nullCheckedContext, nullCheckedFragmentManager, generator)
         }
 
         view.edit_text_create_generator_category.setOnClickListener(::onNewGeneratorCategoryNameClicked)
@@ -127,6 +134,17 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         }
 
         create_generator_button_submit_new_generator.visibility = View.VISIBLE
+    }
+
+    private fun finalizeNewGenerator(context: Context, fragmentManager: FragmentManager, generator: Generator) {
+        generator.name = newGeneratorName
+        generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$newGeneratorCategoryName"
+        GeneratorPersister.export(context, generator, newGeneratorCategoryName)
+        val displayMessage = resources.getString(R.string.new_generator_successfully_created_message)
+                .format(generator.name, newGeneratorCategoryName)
+
+        Toast.makeText(context, displayMessage, Toast.LENGTH_SHORT).show()
+        fragmentManager.popBackStack()
     }
 
     private fun initializeGeneratorTemplateClickEvents() {
