@@ -165,7 +165,7 @@ private class GeneratorSelectionAdapter(
             return
         }
 
-        holder.bind(currentCategoryNode.generators[position])
+        holder.bind(currentCategoryNode.generators[position - currentCategoryNode.numChildCategories])
     }
 
     override fun getItemViewType(position: Int): Int {
