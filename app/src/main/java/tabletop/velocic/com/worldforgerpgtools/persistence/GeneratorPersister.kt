@@ -20,6 +20,7 @@ object GeneratorPersister {
     private val gson = GsonBuilder().apply{
         registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailSerializer())
         registerTypeAdapter(ResultItemDetail::class.java, ResultItemDetailDeserializer())
+
         addSerializationExclusionStrategy(object : ExclusionStrategy {
             override fun shouldSkipClass(clazz: Class<*>?) = false
             override fun shouldSkipField(f: FieldAttributes?): Boolean {
@@ -36,7 +37,6 @@ object GeneratorPersister {
             }
         })
     }.create()
-
 
     @JvmStatic
     var rootGeneratorCategory: GeneratorCategory? = null
@@ -147,14 +147,12 @@ object GeneratorPersister {
     }
 
     private fun importGenerators(context: Context) {
-        val assetManager = context.assets
-
         val rootGeneratorCategory = loadGeneratorCategories(
             GeneratorCategory("root", GENERATOR_DATA_FOLDER),
             File("${context.filesDir}/$GENERATOR_DATA_FOLDER")
         )
 
-        this.rootGeneratorCategory = populateGenerators(rootGeneratorCategory, assetManager)
+        this.rootGeneratorCategory = populateGenerators(rootGeneratorCategory, "${context.filesDir.path}/")
     }
 
     private fun loadGeneratorCategories(parent: GeneratorCategory, internalStorageTarget: File) : GeneratorCategory {
@@ -196,11 +194,11 @@ object GeneratorPersister {
         return parent
     }
 
-    private fun populateGenerators(rootNode: GeneratorCategory, assets: AssetManager) : GeneratorCategory {
+    private fun populateGenerators(rootNode: GeneratorCategory, rootImportPath: String) : GeneratorCategory {
         for (child in rootNode.childCategories) {
             for (jsonDataPath in child.generatorJsonDataPaths) {
                 try {
-                    val jsonInputReader = InputStreamReader(assets.open(jsonDataPath))
+                    val jsonInputReader = InputStreamReader(FileInputStream(File("$rootImportPath/$jsonDataPath")))
                     val generator = gson.fromJson(jsonInputReader, Generator::class.java)
 
                     generator.assetPath = jsonDataPath
@@ -214,7 +212,7 @@ object GeneratorPersister {
                 }
             }
 
-            populateGenerators(child, assets)
+            populateGenerators(child, rootImportPath)
         }
 
         return rootNode
