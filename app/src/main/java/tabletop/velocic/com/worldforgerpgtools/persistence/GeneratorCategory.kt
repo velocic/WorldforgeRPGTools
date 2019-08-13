@@ -100,14 +100,16 @@ class GeneratorCategory(
 
         val slashCharIndex = fullQualifiedPath.indexOf("/")
 
-        //No more path to reduce. Return the generator with the name matching fullQualifiedPath
-        if (slashCharIndex == -1) {
-            return node.getGenerator(fullQualifiedPath)
-        }
-
         //Get the next generator along the path down the tree and recurse
         val nextCategoryName = fullQualifiedPath.substring(0, slashCharIndex)
         val reducedPath = fullQualifiedPath.substring(slashCharIndex + 1)
+
+        //No more path to reduce. Return the generator with the name matching fullQualifiedPath
+        if (slashCharIndex == -1) {
+            return node.getGenerator(fullQualifiedPath)
+        } else if (nextCategoryName.equals(GeneratorPersister.GENERATOR_DATA_FOLDER, ignoreCase = true)) {
+            return node.getGenerator(reducedPath)
+        }
 
         return getGeneratorFromFullPath(reducedPath, node.getCategory(nextCategoryName))
     }

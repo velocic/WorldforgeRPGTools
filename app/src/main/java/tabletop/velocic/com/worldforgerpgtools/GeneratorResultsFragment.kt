@@ -36,7 +36,7 @@ class GeneratorResultsFragment : androidx.fragment.app.Fragment()
                 " GeneratorPersister been properly initialized?")
 
         val generator = rootCategory.getGeneratorFromFullPath(generatorPath, rootCategory) ?:
-            throw IllegalStateException("A valid Generator is required to build a result set." +
+            throw IllegalStateException("A valid Generator is required to build a result set. " +
                 "Is $generatorPath the correct target?")
 
         val activityInstance = activity ?: throw IllegalStateException("GeneratorResultsFragment cannot" +
