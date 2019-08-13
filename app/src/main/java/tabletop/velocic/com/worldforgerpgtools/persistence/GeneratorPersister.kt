@@ -37,12 +37,19 @@ object GeneratorPersister {
             }
         })
     }.create()
+    private var hasImported = false
 
     @JvmStatic
     var rootGeneratorCategory: GeneratorCategory? = null
         private set
 
     fun import(context: Context?) {
+        if (hasImported) {
+            return
+        }
+
+        hasImported = true
+
         if (context == null) {
             Log.d(TAG_GENERATOR_IMPORT, "Received a null context while attempting to import data from the filesystem; aborting.")
             return
@@ -195,23 +202,23 @@ object GeneratorPersister {
     }
 
     private fun populateGenerators(rootNode: GeneratorCategory, rootImportPath: String) : GeneratorCategory {
-        for (child in rootNode.childCategories) {
-            for (jsonDataPath in child.generatorJsonDataPaths) {
-                try {
-                    val jsonInputReader = InputStreamReader(FileInputStream(File("$rootImportPath/$jsonDataPath")))
-                    val generator = gson.fromJson(jsonInputReader, Generator::class.java)
+        for (jsonDataPath in rootNode.generatorJsonDataPaths) {
+            try {
+                val jsonInputReader = InputStreamReader(FileInputStream(File("$rootImportPath/$jsonDataPath")))
+                val generator = gson.fromJson(jsonInputReader, Generator::class.java)
 
-                    generator.assetPath = jsonDataPath
-                    child.generators.add(generator)
-                } catch (e: IOException) {
-                    Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize $jsonDataPath: ${e.message}")
-                    continue
-                } catch (e: JsonSyntaxException) {
-                    Log.d(TAG_GENERATOR_IMPORT, "Invalid JSON syntax in $jsonDataPath: ${e.message}")
-                    continue
-                }
+                generator.assetPath = jsonDataPath
+                rootNode.generators.add(generator)
+            } catch (e: IOException) {
+                Log.d(TAG_GENERATOR_IMPORT, "Failed to deserialize $jsonDataPath: ${e.message}")
+                continue
+            } catch (e: JsonSyntaxException) {
+                Log.d(TAG_GENERATOR_IMPORT, "Invalid JSON syntax in $jsonDataPath: ${e.message}")
+                continue
             }
+        }
 
+        for (child in rootNode.childCategories) {
             populateGenerators(child, rootImportPath)
         }
 
