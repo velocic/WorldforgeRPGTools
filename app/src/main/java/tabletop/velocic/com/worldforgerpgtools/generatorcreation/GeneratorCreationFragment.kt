@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +19,14 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMessage
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.MainUserInput
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
-    private var newGeneratorName = ""
-    private var newGeneratorCategoryName = ""
+    private lateinit var inputFields: MainUserInput
     private var pendingNewGeneratorData: PendingNewGeneratorData? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
@@ -49,15 +47,16 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             finalizeNewGenerator(nullCheckedContext, nullCheckedFragmentManager, generator)
         }
 
-        view.edit_text_create_generator_category.setOnClickListener(::onNewGeneratorCategoryNameClicked)
+        val checkedFragmentManager = fragmentManager ?:
+            throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", "initialize GeneratorCreationFragment"))
 
-        edit_text_create_generator_name.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                newGeneratorName = s?.toString() ?: ""
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        inputFields = MainUserInput(
+            edit_text_create_generator_name,
+            edit_text_create_generator_category,
+            checkedFragmentManager,
+            this,
+            REQUEST_NEW_CATEGORY_PATH
+        )
 
         initializeGeneratorTemplateClickEvents()
     }
@@ -65,12 +64,10 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onResume() {
         super.onResume()
 
-        edit_text_create_generator_name.setText(newGeneratorName, TextView.BufferType.EDITABLE)
+        //TODO: fixed by LiveData once implemented
+//        edit_text_create_generator_name.setText(newGeneratorName, TextView.BufferType.EDITABLE)
 
-        arguments?.let {
-            newGeneratorCategoryName = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
-            edit_text_create_generator_category.text = newGeneratorCategoryName
-        }
+        arguments?.let { inputFields.categoryName = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: "" }
 
         pendingNewGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
             create_generator_templates.visibility = View.VISIBLE
@@ -137,11 +134,11 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     }
 
     private fun finalizeNewGenerator(context: Context, fragmentManager: FragmentManager, generator: Generator) {
-        generator.name = newGeneratorName
-        generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$newGeneratorCategoryName"
-        GeneratorPersister.export(context, generator, newGeneratorCategoryName)
+        generator.name = inputFields.generatorName
+        generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/${inputFields.categoryName}"
+        GeneratorPersister.export(context, generator, inputFields.categoryName)
         val displayMessage = resources.getString(R.string.new_generator_successfully_created_message)
-                .format(generator.name, newGeneratorCategoryName)
+            .format(generator.name, inputFields.categoryName)
 
         Toast.makeText(context, displayMessage, Toast.LENGTH_SHORT).show()
         fragmentManager.popBackStack()

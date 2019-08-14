@@ -5,22 +5,28 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCategorySelectionFragment
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCreationFragment
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.PendingNewGeneratorData
 
 class MainUserInput(
-    generatorNameField: EditText,
-    categoryNameField: TextView,
+    private val generatorNameField: EditText,
+    private val categoryNameField: TextView,
     fragmentManager: FragmentManager,
     parentFragment: GeneratorCreationFragment,
     newCategoryPathRequestCode: Int
 )
 {
     var generatorName = ""
+        set(value) {
+            generatorNameField.setText(value, TextView.BufferType.EDITABLE)
+        }
+
     var categoryName = ""
+        set(value) {
+            field = value
+            categoryNameField.text = value
+        }
 
     init {
         categoryNameField.setOnClickListener {
