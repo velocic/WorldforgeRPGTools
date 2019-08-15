@@ -18,10 +18,6 @@ class MainUserInput(
 )
 {
     var generatorName = ""
-        set(value) {
-            generatorNameField.setText(value, TextView.BufferType.EDITABLE)
-        }
-
     var categoryName = ""
         set(value) {
             field = value

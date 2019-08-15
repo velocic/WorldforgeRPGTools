@@ -101,8 +101,8 @@ class GeneratorCategory(
         val slashCharIndex = fullQualifiedPath.indexOf("/")
 
         //Get the next generator along the path down the tree and recurse
-        val nextCategoryName = fullQualifiedPath.substring(0, slashCharIndex)
-        val reducedPath = fullQualifiedPath.substring(slashCharIndex + 1)
+        val nextCategoryName = if (slashCharIndex < 0) { "" } else { fullQualifiedPath.substring(0, slashCharIndex) }
+        val reducedPath = if (slashCharIndex < 0) { "" } else { fullQualifiedPath.substring(slashCharIndex + 1) }
 
         //No more path to reduce. Return the generator with the name matching fullQualifiedPath
         if (slashCharIndex == -1) {

@@ -137,8 +137,12 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         generator.name = inputFields.generatorName
         generator.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/${inputFields.categoryName}"
         GeneratorPersister.export(context, generator, inputFields.categoryName)
-        val displayMessage = resources.getString(R.string.new_generator_successfully_created_message)
-            .format(generator.name, inputFields.categoryName)
+
+        val displayMessage = if (inputFields.categoryName == "") {
+            resources.getString(R.string.new_generator_successfully_created_message).format(generator.name, inputFields.categoryName)
+        } else  {
+            resources.getString(R.string.new_generator_successfully_created_at_subfolder_message).format(generator.name, inputFields.categoryName)
+        }
 
         Toast.makeText(context, displayMessage, Toast.LENGTH_SHORT).show()
         fragmentManager.popBackStack()

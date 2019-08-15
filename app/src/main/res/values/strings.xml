@@ -17,7 +17,8 @@
     <string name="generator_template_label_text">Templates</string>
     <string name="result_item_details_title">Add details for "%s"</string>
     <string name="result_item_details_add_row_button_text">Add Field</string>
-    <string name="new_generator_successfully_created_message">Created %s at %s</string>
+    <string name="new_generator_successfully_created_at_subfolder_message">Created %s at %s</string>
+    <string name="new_generator_successfully_created_message">Created %s</string>
     <string name="distribution_1d4">1d4</string>
     <string name="distribution_1d6">1d6</string>
     <string name="distribution_1d8">1d8</string>
