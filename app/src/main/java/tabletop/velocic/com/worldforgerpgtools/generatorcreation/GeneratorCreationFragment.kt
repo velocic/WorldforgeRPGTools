@@ -31,7 +31,6 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
     private lateinit var generatorCreationViewModel: GeneratorCreationViewModel
     private lateinit var viewEvents: GeneratorCreationViewEvents
-    private var pendingNewGeneratorData: PendingNewGeneratorData? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
         inflater.inflate(R.layout.fragment_create_generator, container, false)
@@ -45,9 +44,9 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
                 throw IllegalStateException(nullAndroidDependencyMessage.format("Context", action))
             val nullCheckedFragmentManager = fragmentManager ?:
                 throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", action))
-            val generator = pendingNewGeneratorData?.newGenerator ?:
+            val generator = generatorCreationViewModel.pendingGeneratorData.value?.newGenerator ?:
                 throw IllegalStateException("Pending generator is null; nothing to finalize.")
-            val generatorPath = pendingNewGeneratorData?.newGenerator?.assetPath ?:
+            val generatorPath = generatorCreationViewModel.pendingGeneratorData.value?.newGenerator?.assetPath ?:
                 throw IllegalArgumentException("Pending generator path is null; nowhere to put the new generator.")
 
             finalizeNewGenerator(nullCheckedContext, nullCheckedFragmentManager, generator, generatorPath)
@@ -59,20 +58,28 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         generatorCreationViewModel = ViewModelProviders.of(this)[GeneratorCreationViewModel::class.java]
 
         generatorCreationViewModel.generatorName.observe(this, Observer<String> { generatorName ->
-            pendingNewGeneratorData?.newGenerator?.name = generatorName
+            generatorCreationViewModel.pendingGeneratorData.value?.newGenerator?.name = generatorName
         })
 
         generatorCreationViewModel.categoryName.observe(this, Observer<String> { categoryName ->
-            pendingNewGeneratorData?.newGenerator?.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$categoryName"
+            generatorCreationViewModel.pendingGeneratorData.value?.newGenerator?.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$categoryName"
+        })
+
+        generatorCreationViewModel.pendingGeneratorData.observe(this, Observer { pendingGeneratorData ->
+            pendingGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
+                create_generator_templates.visibility = View.VISIBLE
+                create_generator_preview.visibility = View.GONE
+                create_generator_button_submit_new_generator.visibility = View.GONE
+            }()
         })
 
         viewEvents = GeneratorCreationViewEvents(
-                edit_text_create_generator_name,
-                edit_text_create_generator_category,
-                generatorCreationViewModel,
-                nullCheckedFragmentManager,
-                this,
-                REQUEST_NEW_CATEGORY_PATH
+            edit_text_create_generator_name,
+            edit_text_create_generator_category,
+            generatorCreationViewModel,
+            nullCheckedFragmentManager,
+            this,
+            REQUEST_NEW_CATEGORY_PATH
         )
 
         initializeGeneratorTemplateClickEvents()
@@ -87,12 +94,6 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             generatorCreationViewModel.categoryName.value = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
             edit_text_create_generator_category.text = generatorCreationViewModel.categoryName.value
         }
-
-        pendingNewGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
-            create_generator_templates.visibility = View.VISIBLE
-            create_generator_preview.visibility = View.GONE
-            create_generator_button_submit_new_generator.visibility = View.GONE
-        }()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,7 +112,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 
         if (requestCode == REQUEST_NEW_GENERATOR_CONTENTS) {
             data?.run {
-                pendingNewGeneratorData = PendingNewGeneratorData(
+                generatorCreationViewModel.pendingGeneratorData.value = PendingNewGeneratorData(
                     getParcelableExtra(NewGeneratorContentsFragment.EXTRA_GENERATOR),
                     getParcelableExtra(NewGeneratorContentsFragment.EXTRA_TABLE_DATA)
                 )
@@ -186,18 +187,6 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         create_generator_template_2d6.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.TwoDSix) }
         create_generator_template_3d6.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.ThreeDSix) }
         create_generator_template_d100.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDOneHundred) }
-    }
-
-    private fun onNewGeneratorCategoryNameClicked(view: View) {
-        val textView = view as TextView
-        val generatorCategorySelectionFragment = GeneratorCategorySelectionFragment.newInstance(textView.text.toString())
-        generatorCategorySelectionFragment.setTargetFragment(this, REQUEST_NEW_CATEGORY_PATH)
-
-        activity?.supportFragmentManager?.beginTransaction()?.apply {
-            replace(R.id.fragment_container, generatorCategorySelectionFragment)
-            addToBackStack(BACK_STACK_GENERATOR_CREATION_FRAGMENT)
-            commit()
-        }
     }
 
     companion object {
