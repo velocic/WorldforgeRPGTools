@@ -21,14 +21,16 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMessage
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.PendingGeneratorViewModel
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.GeneratorCreationViewEvents
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.GeneratorCreationViewModel
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
-    private lateinit var pendingGeneratorViewModel: PendingGeneratorViewModel
+    private lateinit var generatorCreationViewModel: GeneratorCreationViewModel
+    private lateinit var viewEvents: GeneratorCreationViewEvents
     private var pendingNewGeneratorData: PendingNewGeneratorData? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
@@ -51,18 +53,27 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             finalizeNewGenerator(nullCheckedContext, nullCheckedFragmentManager, generator, generatorPath)
         }
 
-        val checkedFragmentManager = fragmentManager ?:
+        val nullCheckedFragmentManager = fragmentManager ?:
             throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", "initialize GeneratorCreationFragment"))
 
-        pendingGeneratorViewModel = ViewModelProviders.of(this)[PendingGeneratorViewModel::class.java]
+        generatorCreationViewModel = ViewModelProviders.of(this)[GeneratorCreationViewModel::class.java]
 
-        pendingGeneratorViewModel.generatorName.observe(this, Observer<String> { generatorName ->
+        generatorCreationViewModel.generatorName.observe(this, Observer<String> { generatorName ->
             pendingNewGeneratorData?.newGenerator?.name = generatorName
         })
 
-        pendingGeneratorViewModel.categoryName.observe(this, Observer<String> { categoryName ->
+        generatorCreationViewModel.categoryName.observe(this, Observer<String> { categoryName ->
             pendingNewGeneratorData?.newGenerator?.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$categoryName"
         })
+
+        viewEvents = GeneratorCreationViewEvents(
+            edit_text_create_generator_name,
+            edit_text_create_generator_category,
+            generatorCreationViewModel,
+            nullCheckedFragmentManager,
+            this,
+            REQUEST_NEW_CATEGORY_PATH
+        )
 
         initializeGeneratorTemplateClickEvents()
     }
@@ -70,11 +81,11 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     override fun onResume() {
         super.onResume()
 
-        edit_text_create_generator_name.setText(pendingGeneratorViewModel.generatorName.value, TextView.BufferType.EDITABLE)
+        edit_text_create_generator_name.setText(generatorCreationViewModel.generatorName.value, TextView.BufferType.EDITABLE)
 
         arguments?.let {
-            pendingGeneratorViewModel.categoryName.value = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
-            edit_text_create_generator_category.text = pendingGeneratorViewModel.categoryName.value
+            generatorCreationViewModel.categoryName.value = it.getString(GeneratorCategorySelectionFragment.EXTRA_SELECTED_CATEGORY) ?: ""
+            edit_text_create_generator_category.text = generatorCreationViewModel.categoryName.value
         }
 
         pendingNewGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {

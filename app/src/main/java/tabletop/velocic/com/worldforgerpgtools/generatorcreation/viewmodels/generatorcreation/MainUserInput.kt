@@ -11,60 +11,53 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCategorySelectionFragment
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCreationFragment
 
-class PendingGeneratorViewModel : ViewModel()
+class GeneratorCreationViewModel : ViewModel()
 {
-    val generatorName: MutableLiveData<String> by lazy { MutableLiveData() }
-    val categoryName: MutableLiveData<String> by lazy { MutableLiveData() }
+    val generatorName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val categoryName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 }
 
-//class MainUserInput(
-//    private val generatorNameField: EditText,
-//    private val categoryNameField: TextView,
-//    fragmentManager: FragmentManager,
-//    parentFragment: GeneratorCreationFragment,
-//    newCategoryPathRequestCode: Int
-//) : ViewModel()
-//{
-//    val generatorName: MutableLiveData<String> by lazy { MutableLiveData() }
-//    val categoryName: MutableLiveData<String> by lazy { MutableLiveData() }
-////    var categoryName = ""
-////        set(value) {
-////            field = value
-////            categoryNameField.text = value
-////        }
-//
-//    init {
-//        categoryNameField.setOnClickListener {
-//            onNewGeneratorCategoryNameClicked(
-//                it as TextView,
-//                fragmentManager,
-//                parentFragment,
-//                newCategoryPathRequestCode
-//            )
-//        }
-//
-//        generatorNameField.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//                generatorName = s?.toString() ?: ""
-//            }
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//        })
-//    }
-//
-//    private fun onNewGeneratorCategoryNameClicked(
-//        categoryNameField: TextView,
-//        fragmentManager: FragmentManager,
-//        parentFragment: GeneratorCreationFragment,
-//        newCategoryPathRequestCode: Int
-//    ) {
-//        val generatorCategorySelectionFragment = GeneratorCategorySelectionFragment.newInstance(categoryNameField.text.toString())
-//        generatorCategorySelectionFragment.setTargetFragment(parentFragment, newCategoryPathRequestCode)
-//
-//        fragmentManager.beginTransaction().apply {
-//            replace(R.id.fragment_container, generatorCategorySelectionFragment)
-//            addToBackStack(GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT)
-//            commit()
-//        }
-//    }
-//}
+class GeneratorCreationViewEvents(
+    generatorNameField: EditText,
+    categoryNameField: TextView,
+    private val viewModel: GeneratorCreationViewModel,
+    fragmentManager: FragmentManager,
+    parentFragment: GeneratorCreationFragment,
+    newCategoryPathRequestCode: Int
+)
+{
+    init {
+        categoryNameField.setOnClickListener {
+            onNewGeneratorCategoryNameClicked(
+                it as TextView,
+                fragmentManager,
+                parentFragment,
+                newCategoryPathRequestCode
+            )
+        }
+
+        generatorNameField.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.generatorName.value = s?.toString() ?: ""
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+    }
+
+    private fun onNewGeneratorCategoryNameClicked(
+        categoryNameField: TextView,
+        fragmentManager: FragmentManager,
+        parentFragment: GeneratorCreationFragment,
+        newCategoryPathRequestCode: Int
+    ) {
+        val generatorCategorySelectionFragment = GeneratorCategorySelectionFragment.newInstance(categoryNameField.text.toString())
+        generatorCategorySelectionFragment.setTargetFragment(parentFragment, newCategoryPathRequestCode)
+
+        fragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, generatorCategorySelectionFragment)
+            addToBackStack(GeneratorCreationFragment.BACK_STACK_GENERATOR_CREATION_FRAGMENT)
+            commit()
+        }
+    }
+}
