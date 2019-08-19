@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,11 +10,13 @@ import androidx.lifecycle.ViewModel
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCategorySelectionFragment
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.GeneratorCreationFragment
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.PendingNewGeneratorData
 
 class GeneratorCreationViewModel : ViewModel()
 {
     val generatorName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val categoryName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val pendingGeneratorData: MutableLiveData<PendingNewGeneratorData?> by lazy { MutableLiveData<PendingNewGeneratorData?>() }
 }
 
 class GeneratorCreationViewEvents(

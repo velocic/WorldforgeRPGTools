@@ -21,8 +21,8 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMessage
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.GeneratorCreationViewEvents
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.generatorcreation.GeneratorCreationViewModel
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationViewEvents
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationViewModel
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
@@ -67,12 +67,12 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         })
 
         viewEvents = GeneratorCreationViewEvents(
-            edit_text_create_generator_name,
-            edit_text_create_generator_category,
-            generatorCreationViewModel,
-            nullCheckedFragmentManager,
-            this,
-            REQUEST_NEW_CATEGORY_PATH
+                edit_text_create_generator_name,
+                edit_text_create_generator_category,
+                generatorCreationViewModel,
+                nullCheckedFragmentManager,
+                this,
+                REQUEST_NEW_CATEGORY_PATH
         )
 
         initializeGeneratorTemplateClickEvents()
