@@ -21,7 +21,8 @@ import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
 import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMessage
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationViewEvents
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationInputEvents
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationPreviewManager
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationViewModel
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
@@ -30,7 +31,8 @@ import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 {
     private lateinit var generatorCreationViewModel: GeneratorCreationViewModel
-    private lateinit var viewEvents: GeneratorCreationViewEvents
+    private lateinit var inputEvents: GeneratorCreationInputEvents
+    private lateinit var previewManager: GeneratorCreationPreviewManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View =
         inflater.inflate(R.layout.fragment_create_generator, container, false)
@@ -52,8 +54,11 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             finalizeNewGenerator(nullCheckedContext, nullCheckedFragmentManager, generator, generatorPath)
         }
 
+        val nullDependencyMessageAction = "initialize GeneratorCreationFragment"
         val nullCheckedFragmentManager = fragmentManager ?:
-            throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", "initialize GeneratorCreationFragment"))
+            throw IllegalStateException(nullAndroidDependencyMessage.format("FragmentManager", nullDependencyMessageAction))
+        val inflater = layoutInflater ?:
+            throw IllegalStateException(nullAndroidDependencyMessage.format("LayoutInflater", nullDependencyMessageAction))
 
         generatorCreationViewModel = ViewModelProviders.of(this)[GeneratorCreationViewModel::class.java]
 
@@ -65,15 +70,23 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             generatorCreationViewModel.pendingGeneratorData.value?.newGenerator?.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$categoryName"
         })
 
+        previewManager = GeneratorCreationPreviewManager(
+            create_generator_templates,
+            create_generator_preview,
+            create_generator_button_submit_new_generator,
+            nullCheckedFragmentManager,
+            this,
+            inflater,
+            LinearLayoutManager(activity),
+            REQUEST_NEW_GENERATOR_CONTENTS
+        )
+
         generatorCreationViewModel.pendingGeneratorData.observe(this, Observer { pendingGeneratorData ->
-            pendingGeneratorData?.let { displayPendingGeneratorPreview(it) } ?: {
-                create_generator_templates.visibility = View.VISIBLE
-                create_generator_preview.visibility = View.GONE
-                create_generator_button_submit_new_generator.visibility = View.GONE
-            }()
+            pendingGeneratorData?.let { previewManager.displayPendingGeneratorPreview(it) } ?:
+                { previewManager.displayGeneratorTemplates() }()
         })
 
-        viewEvents = GeneratorCreationViewEvents(
+        inputEvents = GeneratorCreationInputEvents(
             edit_text_create_generator_name,
             edit_text_create_generator_category,
             generatorCreationViewModel,
@@ -81,8 +94,6 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
             this,
             REQUEST_NEW_CATEGORY_PATH
         )
-
-        initializeGeneratorTemplateClickEvents()
     }
 
     override fun onResume() {
@@ -117,40 +128,8 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
                     getParcelableExtra(NewGeneratorContentsFragment.EXTRA_TABLE_DATA)
                 )
             }
-
             return
         }
-    }
-
-    private fun displayPendingGeneratorPreview(pendingGeneratorData: PendingNewGeneratorData) {
-        val fragmentManager = activity?.supportFragmentManager ?: throw IllegalStateException("Failed to retrieve" +
-                " a required FragmentManager instance.")
-        val targetFragment = this
-        create_generator_templates.visibility = View.GONE
-
-        val editPendingGeneratorClickListener = editPendingGenerator@{
-            val destination = NewGeneratorContentsFragment.newInstance(pendingGeneratorData)
-            destination.setTargetFragment(targetFragment, REQUEST_NEW_GENERATOR_CONTENTS)
-
-            fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, destination)
-                .addToBackStack(null)
-                .commit()
-
-            return@editPendingGenerator
-        }
-
-        create_generator_preview.apply {
-            adapter = NewGeneratorPreviewAdapter(
-                pendingGeneratorData,
-                layoutInflater,
-                editPendingGeneratorClickListener
-            )
-            layoutManager = LinearLayoutManager(activity)
-            visibility = View.VISIBLE
-        }
-
-        create_generator_button_submit_new_generator.visibility = View.VISIBLE
     }
 
     private fun finalizeNewGenerator(context: Context, fragmentManager: FragmentManager, generator: Generator, generatorPath: String) {
@@ -166,29 +145,6 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         fragmentManager.popBackStack()
     }
 
-    private fun initializeGeneratorTemplateClickEvents() {
-        val transitionToContentsFragment = { chosenTemplate : GeneratorTableTemplate ->
-            val contentsFragment = NewGeneratorContentsFragment.newInstance(chosenTemplate)
-            contentsFragment.setTargetFragment(this, REQUEST_NEW_GENERATOR_CONTENTS)
-
-            activity?.supportFragmentManager?.beginTransaction()?.run {
-                replace(R.id.fragment_container, contentsFragment)
-                addToBackStack(null)
-                commit()
-            }
-        }
-
-        create_generator_template_1d4.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDFour) }
-        create_generator_template_1d6.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDSix) }
-        create_generator_template_1d8.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDEight) }
-        create_generator_template_1d10.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDTen) }
-        create_generator_template_1d12.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDTwelve) }
-        create_generator_template_1d20.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDTwenty) }
-        create_generator_template_2d6.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.TwoDSix) }
-        create_generator_template_3d6.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.ThreeDSix) }
-        create_generator_template_d100.setOnClickListener { transitionToContentsFragment(GeneratorTableTemplate.OneDOneHundred) }
-    }
-
     companion object {
         const val BACK_STACK_GENERATOR_CREATION_FRAGMENT = "tabletop.velocic.com.worldforgerpgtools.GeneratorCreation.GeneratorCreationFragment"
         private const val REQUEST_NEW_CATEGORY_PATH = 0
@@ -201,7 +157,7 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
     }
 }
 
-private class NewGeneratorPreviewAdapter(
+class NewGeneratorPreviewAdapter(
     private val pendingGeneratorData: PendingNewGeneratorData,
     private val layoutInflater: LayoutInflater,
     private val editPendingGenerator: () -> Unit
@@ -221,7 +177,7 @@ private class NewGeneratorPreviewAdapter(
     override fun getItemViewType(position: Int): Int = R.layout.list_item_preview_generator_contents
 }
 
-private class NewGeneratorPreviewViewHolder(
+class NewGeneratorPreviewViewHolder(
     rowView: View,
     private val tableData: ProbabilityTableKey,
     private val editPendingGenerator: () -> Unit
