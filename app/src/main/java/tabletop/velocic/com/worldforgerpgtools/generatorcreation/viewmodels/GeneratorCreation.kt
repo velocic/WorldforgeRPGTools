@@ -14,13 +14,14 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_create_generator.view.*
 import tabletop.velocic.com.worldforgerpgtools.R
+import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.*
+import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 
 class GeneratorCreationViewModel : ViewModel()
 {
     val generatorName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val categoryName: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    val pendingGeneratorData: MutableLiveData<PendingNewGeneratorData?> by lazy { MutableLiveData<PendingNewGeneratorData?>() }
 }
 
 class GeneratorCreationInputEvents(
@@ -69,25 +70,25 @@ class GeneratorCreationInputEvents(
 }
 
 class GeneratorCreationPreviewManager(
-        private val templates: ViewGroup,
-        private val preview: RecyclerView,
-        private val submit: Button,
-        private val fragmentManager: FragmentManager,
-        private val parentFragment: GeneratorCreationFragment,
-        private val inflater: LayoutInflater,
-        private val layoutManager: RecyclerView.LayoutManager,
-        private val newGeneratorContentsRequestCode: Int
+    private val templates: ViewGroup,
+    private val preview: RecyclerView,
+    private val submit: Button,
+    private val fragmentManager: FragmentManager,
+    private val parentFragment: GeneratorCreationFragment,
+    private val inflater: LayoutInflater,
+    private val layoutManager: RecyclerView.LayoutManager,
+    private val newGeneratorContentsRequestCode: Int
 )
 {
     init {
         initializeGeneratorTemplateClickEvents()
     }
 
-    fun displayPendingGeneratorPreview(pendingGeneratorData: PendingNewGeneratorData) {
+    fun displayPendingGeneratorPreview(pendingGenerator: Generator, probabilityTableKey: ProbabilityTableKey) {
         templates.visibility = View.GONE
 
         val editPendingGeneratorClickListener = editPendingGenerator@{
-            val destination = NewGeneratorContentsFragment.newInstance(pendingGeneratorData)
+            val destination = NewGeneratorContentsFragment.newInstance(pendingGenerator, probabilityTableKey)
             destination.setTargetFragment(parentFragment, newGeneratorContentsRequestCode)
 
             fragmentManager.beginTransaction()
@@ -100,9 +101,10 @@ class GeneratorCreationPreviewManager(
 
         preview.let {
             it.adapter = NewGeneratorPreviewAdapter(
-                    pendingGeneratorData,
-                    inflater,
-                    editPendingGeneratorClickListener
+                pendingGenerator,
+                probabilityTableKey,
+                inflater,
+                editPendingGeneratorClickListener
             )
             it.layoutManager = layoutManager
             it.visibility = View.VISIBLE

@@ -153,11 +153,11 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
                 )
             }
 
-        fun newInstance(pendingNewGeneratorData: PendingNewGeneratorData) =
+        fun newInstance(pendingGenerator: Generator, probabilityTableKey: ProbabilityTableKey) =
             NewGeneratorContentsFragment().apply {
                 arguments = bundleOf(
-                    EXTRA_GENERATOR to pendingNewGeneratorData.newGenerator,
-                    EXTRA_TABLE_DATA to pendingNewGeneratorData.tableData
+                    EXTRA_GENERATOR to pendingGenerator,
+                    EXTRA_TABLE_DATA to probabilityTableKey
                 )
             }
     }
