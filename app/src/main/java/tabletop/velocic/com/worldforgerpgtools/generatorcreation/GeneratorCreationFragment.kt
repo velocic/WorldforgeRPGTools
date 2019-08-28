@@ -129,6 +129,8 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
         }
 
         if (requestCode == REQUEST_NEW_GENERATOR_CONTENTS) {
+            pendingGeneratorData = ViewModelProviders.of(this)[PendingGeneratorViewModel::class.java]
+
             data?.run {
                 pendingGeneratorData.newGenerator.value = getParcelableExtra(NewGeneratorContentsFragment.EXTRA_GENERATOR)
                 pendingGeneratorData.tableData.value = getParcelableExtra(NewGeneratorContentsFragment.EXTRA_TABLE_DATA)
