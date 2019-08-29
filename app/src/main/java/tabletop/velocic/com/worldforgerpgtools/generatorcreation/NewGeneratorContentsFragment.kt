@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_new_generator_contents.*
@@ -25,18 +28,20 @@ import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 import tabletop.velocic.com.worldforgerpgtools.R
 import tabletop.velocic.com.worldforgerpgtools.appcommon.savedStateMissingArgumentMessage
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.common.PendingGeneratorViewModel
 import tabletop.velocic.com.worldforgerpgtools.persistence.ResultItemDetail
 
 class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 {
-    private lateinit var newGenerator: Generator
-    private lateinit var tableData: ProbabilityTableKey
+    private lateinit var pendingGeneratorData: PendingGeneratorViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_new_generator_contents, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        pendingGeneratorData = ViewModelProviders.of(this)[PendingGeneratorViewModel::class.java]
 
         arguments?.let { args ->
             //Editing a pending generator previously submitted to GeneratorCreationFragment
@@ -53,14 +58,20 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 
         val layoutInflater = LayoutInflater.from(activity) ?: throw IllegalStateException("Attempted to create" +
             " a LayoutInflater from a null Activity instance")
-
         val fragmentManager = activity?.supportFragmentManager ?: throw IllegalStateException("Failed to retrieve" +
             " a required FragmentManager instance.")
 
+        val generator = pendingGeneratorData.newGenerator.value ?: throw IllegalArgumentException(
+            "No Generator instance available to initialize from."
+        )
+        val probabilityTableKey = pendingGeneratorData.tableData.value ?: throw IllegalArgumentException(
+            "Missing required probability lookup key for display of new Generator entries."
+        )
+
         new_generator_contents.layoutManager = LinearLayoutManager(activity)
         new_generator_contents.adapter = NewGeneratorContentsAdapter(
-            newGenerator,
-            tableData,
+            generator,
+            probabilityTableKey,
             layoutInflater,
             resources,
             fragmentManager,
@@ -72,8 +83,8 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
                 targetRequestCode,
                 Activity.RESULT_OK,
                 Intent().apply {
-                    putExtra(EXTRA_GENERATOR, newGenerator)
-                    putExtra(EXTRA_TABLE_DATA, tableData)
+                    putExtra(EXTRA_GENERATOR, generator)
+                    putExtra(EXTRA_TABLE_DATA, probabilityTableKey)
                 }
             )
 
@@ -86,6 +97,8 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         val illegalStateMessage = "Received call to onActivityResult with a null intent (i.e. no result data)"
 
         when (requestCode) {
+            pendingGeneratorData = ViewModelProviders.of(this)[PendingGeneratorViewModel::class.java]
+
             REQUEST_RESULT_ITEM_DETAILS -> if (resultCode == Activity.RESULT_OK) {
                 val targetRow = data?.getIntExtra(ResultItemDetailsFragment.EXTRA_ROW_INDEX, -1)
                     ?: throw IllegalStateException(missingArgumentMessage.format("targetRow", "RESULT_ITEM_DETAILS"))
@@ -111,19 +124,24 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
         val customTableSize = args.getInt(ARG_CUSTOM_TABLE_SIZE)
 
         tableTemplate?.let {
-            tableData = it.tableData
+            pendingGeneratorData.tableData.value = it.tableData
         } ?: customTableSize.let {
-            tableData = ProbabilityTableKey(dieSize = it)
+            pendingGeneratorData.tableData.value = ProbabilityTableKey(dieSize = it)
         }
 
-        newGenerator = Generator("Placeholder Name", 1, listOf(), GeneratorPersister.GENERATOR_DATA_FOLDER)
-        newGenerator.table = generateBlankTableEntries(tableData.numDie, getProbabilityTableSizeFromKey(tableData))
+        val tableData = pendingGeneratorData.tableData.value!!
+
+        pendingGeneratorData.newGenerator.value = Generator("Placeholder Name", 1, listOf(), GeneratorPersister.GENERATOR_DATA_FOLDER)
+        pendingGeneratorData.newGenerator.value?.table = generateBlankTableEntries(
+            tableData.numDie,
+            getProbabilityTableSizeFromKey(tableData)
+        )
     }
 
     private fun initializeFromExistingGenerator(savedInstanceState: Bundle) {
-        newGenerator = savedInstanceState.getParcelable(EXTRA_GENERATOR)
+        pendingGeneratorData.newGenerator.value = savedInstanceState.getParcelable(EXTRA_GENERATOR)
             ?: throw IllegalArgumentException(savedStateMissingArgumentMessage.format("newGenerator", "NewGeneratorContentsFragment"))
-        tableData = savedInstanceState.getParcelable(EXTRA_TABLE_DATA)
+        pendingGeneratorData.tableData.value = savedInstanceState.getParcelable(EXTRA_TABLE_DATA)
             ?: throw IllegalArgumentException(savedStateMissingArgumentMessage.format("tableData", "NewGeneratorContentsFragment"))
     }
 

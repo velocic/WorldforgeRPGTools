@@ -24,7 +24,7 @@ import tabletop.velocic.com.worldforgerpgtools.appcommon.nullAndroidDependencyMe
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationInputEvents
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationPreviewManager
 import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.GeneratorCreationViewModel
-import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.PendingGeneratorViewModel
+import tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.common.PendingGeneratorViewModel
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry

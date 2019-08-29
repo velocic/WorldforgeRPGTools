@@ -1,4 +1,4 @@
-package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels
+package tabletop.velocic.com.worldforgerpgtools.generatorcreation.viewmodels.common
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
