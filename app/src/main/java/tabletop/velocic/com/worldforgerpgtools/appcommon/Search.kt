@@ -70,6 +70,64 @@ fun umbrellaSearchRelatedTableEntries(
     return matchingResults
 }
 
-private fun determineSimilarityScore(first: String, second: String) : Int {
-    return 0
+fun determineSimilarityScore(first: String, second: String) : Double =
+    determineNormalizedLevenshteinDistance(first, second)
+
+private fun determineNormalizedLevenshteinDistance(first: String, second: String) : Double {
+    val maxEditDistance = maxOf(first.length, second.length).toDouble()
+
+    if (first.isEmpty() || second.isEmpty()) {
+        return 0.0
+    }
+
+    if (first == second) {
+        return 1.0
+    }
+
+    val costMatrix = Array(first.length) { Array(second.length) { 0 } }
+    for (i in 0 until first.length) {
+        for (j in 0 until second.length) {
+            if (first[i] != second[j]) {
+                costMatrix[i][j] = 1
+            }
+        }
+    }
+
+    val similarityMatrix = Array(first.length) { Array(second.length) { 0 } }
+    for (index in 0 until first.length) {
+        similarityMatrix[0][index] = index
+    }
+
+    for (index in 0 until second.length) {
+        similarityMatrix[index][0] = index
+    }
+
+    for (i in 0 until first.length) {
+        for (j in 0 until second.length) {
+            val hasValidCellAbove = i - 1 >= 0
+            val hasValidCellLeft = j - 1 >= 0
+            val hasValidCellTopLeft = hasValidCellAbove && hasValidCellLeft
+            val tentativeEditDistances = mutableListOf<Int>()
+
+            if (hasValidCellAbove) {
+                tentativeEditDistances.add(similarityMatrix[i - 1][j] + 1)
+            }
+
+            if (hasValidCellLeft) {
+                tentativeEditDistances.add(similarityMatrix[i][j - 1] + 1)
+            }
+
+            if (hasValidCellTopLeft) {
+                tentativeEditDistances.add(similarityMatrix[i - 1][j - 1] + costMatrix[i - 1][j - 1])
+            }
+
+            similarityMatrix[i][j] = tentativeEditDistances.reduce { minimum, currentElement ->
+                if (currentElement < minimum) currentElement else minimum
+            }
+        }
+    }
+
+    val totalEditDistance = similarityMatrix[similarityMatrix.lastIndex][similarityMatrix[0].lastIndex].toDouble()
+
+    return 1 - (totalEditDistance / maxEditDistance)
 }
