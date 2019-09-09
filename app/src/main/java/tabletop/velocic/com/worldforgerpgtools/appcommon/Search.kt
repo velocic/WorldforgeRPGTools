@@ -73,7 +73,7 @@ fun umbrellaSearchRelatedTableEntries(
 fun determineSimilarityScore(first: String, second: String) : Double =
     determineNormalizedLevenshteinDistance(first, second)
 
-private fun determineNormalizedLevenshteinDistance(first: String, second: String) : Double {
+fun determineNormalizedLevenshteinDistance(first: String, second: String) : Double {
     val maxEditDistance = maxOf(first.length, second.length).toDouble()
 
     if (first.isEmpty() || second.isEmpty()) {
@@ -93,17 +93,17 @@ private fun determineNormalizedLevenshteinDistance(first: String, second: String
         }
     }
 
-    val similarityMatrix = Array(first.length) { Array(second.length) { 0 } }
-    for (index in 0 until first.length) {
+    val similarityMatrix = Array(first.length + 1) { Array(second.length + 1) { 0 } }
+    for (index in 1 until first.length) {
         similarityMatrix[0][index] = index
     }
 
-    for (index in 0 until second.length) {
+    for (index in 1 until second.length) {
         similarityMatrix[index][0] = index
     }
 
-    for (i in 0 until first.length) {
-        for (j in 0 until second.length) {
+    for (i in 1..first.length) {
+        for (j in 1..second.length) {
             val hasValidCellAbove = i - 1 >= 0
             val hasValidCellLeft = j - 1 >= 0
             val hasValidCellTopLeft = hasValidCellAbove && hasValidCellLeft
@@ -122,7 +122,7 @@ private fun determineNormalizedLevenshteinDistance(first: String, second: String
             }
 
             similarityMatrix[i][j] = tentativeEditDistances.reduce { minimum, currentElement ->
-                if (currentElement < minimum) currentElement else minimum
+                if (currentElement < minimum) { currentElement } else { minimum }
             }
         }
     }
