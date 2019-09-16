@@ -67,10 +67,12 @@ class GeneratorCreationFragment : androidx.fragment.app.Fragment()
 
         generatorCreationViewModel.generatorName.observe(this, Observer<String> { generatorName ->
             pendingGeneratorData.newGenerator.value?.name = generatorName
+            previewManager.newGeneratorName = generatorName
         })
 
         generatorCreationViewModel.categoryName.observe(this, Observer<String> { categoryName ->
             pendingGeneratorData.newGenerator.value?.assetPath = "${GeneratorPersister.GENERATOR_DATA_FOLDER}/$categoryName"
+            previewManager.newGeneratorCategory = categoryName
         })
 
         previewManager = GeneratorCreationPreviewManager(

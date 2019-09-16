@@ -15,7 +15,6 @@ class Generator(
 
     @SerializedName("TableEntries")
     var table: List<TableEntry>,
-
     assetPath: String
 ) : Parcelable
 {
@@ -33,6 +32,10 @@ class Generator(
             }
 
             return "$field/"
+        }
+    val parent: GeneratorCategory?
+        get() = GeneratorPersister.rootGeneratorCategory?.let {
+            it.getCategoryFromFullPath("${GeneratorPersister.GENERATOR_DATA_FOLDER}/$assetPath", it)
         }
 
     constructor(parcel: Parcel) : this(

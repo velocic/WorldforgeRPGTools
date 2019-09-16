@@ -24,7 +24,7 @@ object GeneratorPersister {
         addSerializationExclusionStrategy(object : ExclusionStrategy {
             override fun shouldSkipClass(clazz: Class<*>?) = false
             override fun shouldSkipField(f: FieldAttributes?): Boolean {
-                val exclusionFields = listOf("assetPath")
+                val exclusionFields = listOf("assetPath", "parent")
                 val targetField = f?.name ?: ""
 
                 exclusionFields.forEach {

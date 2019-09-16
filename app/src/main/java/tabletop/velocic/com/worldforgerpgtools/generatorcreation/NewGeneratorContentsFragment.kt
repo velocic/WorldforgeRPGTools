@@ -115,6 +115,10 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
     private fun initializeFromExternalArgs(args: Bundle) {
         val tableTemplate = args.getSerializable(ARG_GENERATOR_TABLE_TEMPLATE) as GeneratorTableTemplate?
         val customTableSize = args.getInt(ARG_CUSTOM_TABLE_SIZE)
+        val generatorName = args.getString(ARG_GENERATOR_NAME) ?:
+            throw IllegalArgumentException("Missing required generator name to initialize from table template.")
+        val generatorCategory = args.getString(ARG_GENERATOR_CATEGORY) ?:
+            throw IllegalArgumentException("Missing required generator category to initialize from table template.")
 
         tableTemplate?.let {
             pendingGeneratorData.tableData.value = it.tableData
@@ -124,7 +128,13 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
 
         val tableData = pendingGeneratorData.tableData.value!!
 
-        pendingGeneratorData.newGenerator.value = Generator("Placeholder Name", 1, listOf(), GeneratorPersister.GENERATOR_DATA_FOLDER)
+        pendingGeneratorData.newGenerator.value = Generator(
+            generatorName,
+            1,
+            listOf(),
+            generatorCategory
+        )
+
         pendingGeneratorData.newGenerator.value?.table = generateBlankTableEntries(
             tableData.numDie,
             getProbabilityTableSizeFromKey(tableData)
@@ -139,14 +149,18 @@ class NewGeneratorContentsFragment : androidx.fragment.app.Fragment()
     companion object {
         private const val ARG_GENERATOR_TABLE_TEMPLATE = "generator_table_template"
         private const val ARG_CUSTOM_TABLE_SIZE = "custom_table_size"
+        private const val ARG_GENERATOR_NAME = "generator_name"
+        private const val ARG_GENERATOR_CATEGORY = "generator_category"
         const val EXTRA_TABLE_DATA = "tabletop.velocic.com.worldforgerpgtools.table_data"
         const val EXTRA_GENERATOR = "tabletop.velocic.com.worldforgerpgtools.generator"
         const val REQUEST_RESULT_ITEM_DETAILS = 0
 
-        fun newInstance(generatorTableTemplate: GeneratorTableTemplate): NewGeneratorContentsFragment =
+        fun newInstance(generatorTableTemplate: GeneratorTableTemplate, name: String, category: String): NewGeneratorContentsFragment =
             NewGeneratorContentsFragment().apply {
                 arguments = bundleOf(
-                    ARG_GENERATOR_TABLE_TEMPLATE to generatorTableTemplate
+                    ARG_GENERATOR_TABLE_TEMPLATE to generatorTableTemplate,
+                    ARG_GENERATOR_NAME to name,
+                    ARG_GENERATOR_CATEGORY to category
                 )
             }
 

@@ -80,6 +80,9 @@ class GeneratorCreationPreviewManager(
     private val newGeneratorContentsRequestCode: Int
 )
 {
+    var newGeneratorName = ""
+    var newGeneratorCategory = ""
+
     init {
         initializeGeneratorTemplateClickEvents()
     }
@@ -121,7 +124,7 @@ class GeneratorCreationPreviewManager(
 
     private fun initializeGeneratorTemplateClickEvents() {
         val transitionToContentsFragment = { chosenTemplate : GeneratorTableTemplate ->
-            val contentsFragment = NewGeneratorContentsFragment.newInstance(chosenTemplate)
+            val contentsFragment = NewGeneratorContentsFragment.newInstance(chosenTemplate, newGeneratorName, newGeneratorCategory)
             contentsFragment.setTargetFragment(parentFragment, newGeneratorContentsRequestCode)
 
             fragmentManager.beginTransaction().run {
