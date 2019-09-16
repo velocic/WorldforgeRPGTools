@@ -197,6 +197,7 @@ private class NewGeneratorContentsAdapter(
 
         return NewGeneratorContentsViewHolder(
             view,
+            generator,
             this::combineRowsEventHandler,
             this::expandCombinedRowsEventHandler,
             this::editDetailsEventHandler,
@@ -287,6 +288,7 @@ private class NewGeneratorContentsAdapter(
 
 private class NewGeneratorContentsViewHolder(
     rowView: View,
+    parentGenerator: Generator,
     combineRowsEventHandler: (Int, Boolean) -> Unit,
     expandCombinedRowsEventHandler: (Int) -> Unit,
     editDetailsEventHandler: (Int, String, ArrayList<ResultItemDetail>?) -> Unit,
@@ -295,7 +297,7 @@ private class NewGeneratorContentsViewHolder(
 {
     private val selectedRowColor = ResourcesCompat.getColor(resources, R.color.colorSelectedRow, null)
     private val unselectedRowColor = ResourcesCompat.getColor(resources, R.color.colorUnselectedRow, null)
-    private val mainUserInput = MainUserInput(rowView.generator_contents_main_body as ViewGroup)
+    private val mainUserInput = MainUserInput(rowView.generator_contents_main_body as ViewGroup, parentGenerator)
     private val primaryFlow = PrimaryFlowInteractions(
         rowView.generator_contents_main_buttons as ViewGroup,
         editDetailsClickHandler = editDetailsEventHandler,

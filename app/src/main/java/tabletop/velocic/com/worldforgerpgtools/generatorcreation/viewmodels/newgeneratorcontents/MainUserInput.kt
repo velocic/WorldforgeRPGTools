@@ -8,11 +8,14 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
+import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
+import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 import java.lang.IllegalArgumentException
 
 class MainUserInput(
-    parent: ViewGroup
+    parent: ViewGroup,
+    private val parentGenerator: Generator
 )
 {
     private var boundTableEntry: TableEntry? = null

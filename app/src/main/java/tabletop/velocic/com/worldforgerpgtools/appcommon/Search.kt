@@ -85,8 +85,8 @@ fun determineNormalizedLevenshteinDistance(first: String, second: String) : Doub
     }
 
     val costMatrix = Array(first.length) { Array(second.length) { 0 } }
-    for (i in 0 until first.length) {
-        for (j in 0 until second.length) {
+    for (i in first.indices) {
+        for (j in second.indices) {
             if (first[i] != second[j]) {
                 costMatrix[i][j] = 1
             }

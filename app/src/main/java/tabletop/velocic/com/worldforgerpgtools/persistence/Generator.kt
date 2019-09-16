@@ -28,14 +28,15 @@ class Generator(
             }
 
             if (firstPathComponent == GeneratorPersister.GENERATOR_DATA_FOLDER) {
-                return "${field.substring(firstSlashIndex + 1, field.length)}/"
+                val resultPath = field.substring(firstSlashIndex + 1, field.length)
+                return if (resultPath.last() == '/') { resultPath } else { "$resultPath/" }
             }
 
-            return "$field/"
+            return if (field.last() == '/') { field } else { "$field/" }
         }
     val parent: GeneratorCategory?
         get() = GeneratorPersister.rootGeneratorCategory?.let {
-            it.getCategoryFromFullPath("${GeneratorPersister.GENERATOR_DATA_FOLDER}/$assetPath", it)
+            it.getCategoryFromFullPath(assetPath, it)
         }
 
     constructor(parcel: Parcel) : this(
