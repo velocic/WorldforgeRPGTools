@@ -3,7 +3,7 @@ package tabletop.velocic.com.worldforgerpgtools.appcommon
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
-private const val UMBRELLA_SEARCH_MATCH_THRESHOLD = 0
+private const val UMBRELLA_SEARCH_MATCH_THRESHOLD = 0.95
 
 fun umbrellaSearchRelatedTableEntries(partialEntryName: String, parentGeneratorName: String, startCategory: GeneratorCategory) : List<TableEntry> =
     umbrellaSearchRelatedTableEntries(partialEntryName, parentGeneratorName, startCategory, startCategory, ArrayList<GeneratorCategory>())
@@ -37,7 +37,8 @@ fun umbrellaSearchRelatedTableEntries(
 
         for (tableEntry in generator.table) {
             val entrySimilarityScore = determineSimilarityScore(tableEntry.name, partialEntryName)
-            if (categorySimilarityScore + generatorSimilarityScore + entrySimilarityScore > UMBRELLA_SEARCH_MATCH_THRESHOLD) {
+            val normalizedCombinedScore = categorySimilarityScore + generatorSimilarityScore + entrySimilarityScore / 1.75
+            if (normalizedCombinedScore > UMBRELLA_SEARCH_MATCH_THRESHOLD) {
                 matchingResults.add(tableEntry)
             }
         }
@@ -95,11 +96,11 @@ fun determineNormalizedLevenshteinDistance(first: String, second: String) : Doub
 
     val similarityMatrix = Array(first.length + 1) { Array(second.length + 1) { 0 } }
     for (index in 1 until first.length) {
-        similarityMatrix[0][index] = index
+        similarityMatrix[index][0] = index
     }
 
     for (index in 1 until second.length) {
-        similarityMatrix[index][0] = index
+        similarityMatrix[0][index] = index
     }
 
     for (i in 1..first.length) {

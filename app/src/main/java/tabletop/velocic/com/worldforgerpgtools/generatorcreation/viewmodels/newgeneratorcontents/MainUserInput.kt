@@ -8,6 +8,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.partial_generator_contents_main_body.view.*
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTableKey
 import tabletop.velocic.com.worldforgerpgtools.appcommon.ProbabilityTables
+import tabletop.velocic.com.worldforgerpgtools.appcommon.umbrellaSearchRelatedTableEntries
 import tabletop.velocic.com.worldforgerpgtools.persistence.Generator
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorPersister
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
@@ -52,6 +53,13 @@ class MainUserInput(
                 boundTableEntry?.name = s?.toString()
                     ?: throw IllegalArgumentException("Attempted to store a user-provided table" +
                             "result entry, but unexpectedly received a bad Editable. ")
+
+                val tableEntryName = s.toString()
+                val prepopResults = parentGenerator.parent?.let { parentCategory ->
+                    umbrellaSearchRelatedTableEntries(tableEntryName, parentGenerator.name, parentCategory)
+                } ?: listOf()
+
+                val debug = 5
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
