@@ -1,24 +1,35 @@
 package tabletop.velocic.com.worldforgerpgtools.appcommon
 
+import tabletop.velocic.com.worldforgerpgtools.extensions.magnitude
+import tabletop.velocic.com.worldforgerpgtools.extensions.normalize
+import tabletop.velocic.com.worldforgerpgtools.extensions.minus
 import tabletop.velocic.com.worldforgerpgtools.persistence.GeneratorCategory
 import tabletop.velocic.com.worldforgerpgtools.persistence.TableEntry
 
-private const val UMBRELLA_SEARCH_MATCH_THRESHOLD = 0.95
+private const val UMBRELLA_SEARCH_MATCH_THRESHOLD = 0.25 //0.0 = exact match, 2.0 = 100% different
 
 fun umbrellaSearchRelatedTableEntries(partialEntryName: String, parentGeneratorName: String, startCategory: GeneratorCategory) : List<TableEntry> =
-    umbrellaSearchRelatedTableEntries(partialEntryName, parentGeneratorName, startCategory, startCategory, ArrayList<GeneratorCategory>())
+    umbrellaSearchRelatedTableEntries(partialEntryName, parentGeneratorName, startCategory, startCategory, ArrayList<GeneratorCategory>()).sortedWith(
+        Comparator { first, second ->
+            when {
+                first.distance > second.distance -> 1
+                first.distance < second.distance -> -1
+                else -> 0
+            }
+        }
+    ).map { it.tableEntry }
 
-fun umbrellaSearchRelatedTableEntries(
+private fun umbrellaSearchRelatedTableEntries(
     partialEntryName: String,
     parentGeneratorName: String,
     initialCategory: GeneratorCategory,
     currentCategory: GeneratorCategory,
     memo: MutableList<GeneratorCategory>
-) : List<TableEntry> {
+) : List<SearchResult> {
     //If memo.contains(currentCategory.categoryPath), return
     //Iterate all generators in current category
         //Iterate all tableEntry in generator.tableEntries
-            //If name score > threshold, add to results
+            //If normalized baselineVector - normalized similarityVector magnitude < threshold, add to results
     //Iterate all child categories and recurse
     //Recurse on currentCategory.parentCategory
 
@@ -28,18 +39,21 @@ fun umbrellaSearchRelatedTableEntries(
     }
 
     memo.add(currentCategory)
-    val matchingResults = arrayListOf<TableEntry>()
+    val matchingResults = arrayListOf<SearchResult>()
 
-    //Weight the results: matching entry > matching generator > matching category
-    val categorySimilarityScore = determineSimilarityScore(initialCategory.assetPath, currentCategory.assetPath) / 4
+    val categorySimilarityScore = determineSimilarityScore(initialCategory.assetPath, currentCategory.assetPath)
     for (generator in currentCategory.generators) {
-        val generatorSimilarityScore = determineSimilarityScore(generator.name, parentGeneratorName) / 2
+        val generatorSimilarityScore = determineSimilarityScore(generator.name, parentGeneratorName)
 
         for (tableEntry in generator.table) {
             val entrySimilarityScore = determineSimilarityScore(tableEntry.name, partialEntryName)
-            val normalizedCombinedScore = categorySimilarityScore + generatorSimilarityScore + entrySimilarityScore / 1.75
-            if (normalizedCombinedScore > UMBRELLA_SEARCH_MATCH_THRESHOLD) {
-                matchingResults.add(tableEntry)
+
+            val similarityVector = listOf(categorySimilarityScore, generatorSimilarityScore, entrySimilarityScore).normalize()
+            val baselineVector = listOf(1, 1, 1).normalize()
+            val vectorDistance = (baselineVector - similarityVector).magnitude()
+
+            if (vectorDistance < UMBRELLA_SEARCH_MATCH_THRESHOLD) {
+                matchingResults.add(SearchResult(tableEntry, vectorDistance))
             }
         }
     }
@@ -72,7 +86,7 @@ fun umbrellaSearchRelatedTableEntries(
 }
 
 fun determineSimilarityScore(first: String, second: String) : Double =
-    determineNormalizedLevenshteinDistance(first, second)
+    determineNormalizedLevenshteinDistance(first.toLowerCase(), second.toLowerCase())
 
 fun determineNormalizedLevenshteinDistance(first: String, second: String) : Double {
     val maxEditDistance = maxOf(first.length, second.length).toDouble()
@@ -132,3 +146,5 @@ fun determineNormalizedLevenshteinDistance(first: String, second: String) : Doub
 
     return 1 - (totalEditDistance / maxEditDistance)
 }
+
+private class SearchResult(val tableEntry: TableEntry, val distance: Double)
